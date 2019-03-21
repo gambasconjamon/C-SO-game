@@ -1,0 +1,28 @@
+# depslib dependency file v1.0
+1553184300 source:/home/samuel/FV/C-SO/main.cpp
+	<iostream>
+	<SFML/Graphics.hpp>
+	"Game.h"
+
+1553102088 source:/home/samuel/FV/C-SO/src/Enemy.cpp
+	"Enemy.h"
+
+1553185170 source:/home/samuel/FV/C-SO/src/Game.cpp
+	"Game.h"
+
+1553102136 source:/home/samuel/FV/C-SO/src/Item.cpp
+	"Item.h"
+
+1553101970 source:/home/samuel/FV/C-SO/src/Level.cpp
+	"Level.h"
+
+1553102122 source:/home/samuel/FV/C-SO/src/Map.cpp
+	"Map.h"
+
+1553185071 source:/home/samuel/FV/C-SO/src/physicsState.cpp
+	"physicsState.h"
+
+1553185231 source:/home/samuel/FV/C-SO/src/Player.cpp
+	"Player.h"
+	<SFML/Graphics.hpp>
+

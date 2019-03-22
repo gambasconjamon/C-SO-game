@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1553184300 source:/home/samuel/FV/C-SO/main.cpp
+1553250183 source:/home/samuel/FV/C-SO/main.cpp
 	<iostream>
 	<SFML/Graphics.hpp>
 	"Game.h"
@@ -7,7 +7,7 @@
 1553102088 source:/home/samuel/FV/C-SO/src/Enemy.cpp
 	"Enemy.h"
 
-1553185170 source:/home/samuel/FV/C-SO/src/Game.cpp
+1553258913 source:/home/samuel/FV/C-SO/src/Game.cpp
 	"Game.h"
 
 1553102136 source:/home/samuel/FV/C-SO/src/Item.cpp
@@ -19,10 +19,36 @@
 1553102122 source:/home/samuel/FV/C-SO/src/Map.cpp
 	"Map.h"
 
-1553185071 source:/home/samuel/FV/C-SO/src/physicsState.cpp
+1553251248 source:/home/samuel/FV/C-SO/src/physicsState.cpp
 	"physicsState.h"
 
-1553185231 source:/home/samuel/FV/C-SO/src/Player.cpp
+1553255151 source:/home/samuel/FV/C-SO/src/Player.cpp
 	"Player.h"
 	<SFML/Graphics.hpp>
+
+1553102075 source:/home/samuel/FV/C-SO/src/GRender.cpp
+	"GRender.h"
+
+1553102054 source:/home/samuel/FV/C-SO/src/GSprite.cpp
+	"GSprite.h"
+
+1553258430 /home/samuel/FV/C-SO/include/Game.h
+	"Player.h"
+	"Mapa.h"
+	<iostream>
+	<vector>
+	<math.h>
+	<SFML/Graphics.hpp>
+
+1553252731 /home/samuel/FV/C-SO/include/Player.h
+	<iostream>
+	<vector>
+	<SFML/Graphics.hpp>
+
+1553258477 /home/samuel/FV/C-SO/include/Mapa.h
+	<SFML/Graphics.hpp>
+	<iostream>
+
+1553258510 source:/home/samuel/FV/C-SO/src/Mapa.cpp
+	"Mapa.h"
 

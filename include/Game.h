@@ -1,7 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 #include "Player.h"
-#include "Level.h"
+#include "Mapa.h"
+
 #include <iostream>
 #include <vector>
 #include <math.h>
@@ -21,18 +22,24 @@ class Game
         void render(double i);//Se le pasa la interpolacion
 
 
+
     protected:
 
     private:
-     /**GLOBAL **/
     static const sf::Time	timePerFrame;
-    /**GLOBAL **/
+
+
+    ///JUGADOR
     Player *player;
-    Level *lvl;
+    ///...
+    ///MAPA
+    Mapa *mapa;
+    ///...
+
+
 
     sf::Clock updateClock;
     sf::Time elapsedTime;
-
     sf::RenderWindow * window;
 
     bool			eUp;

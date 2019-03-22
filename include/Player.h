@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include "physicsState.h"
+
 using namespace std;
 
 
@@ -15,6 +15,10 @@ class Player
         void updatePlayer(double velx, double vely, sf::Time et);
         void drawPlayer(sf::RenderWindow& w, double i);
         void setFrame(int f);
+        vector<double> getPos();
+        sf::Sprite getSprite();
+        void setTouchingFloor(bool t);
+
         void setDir(int d,int f);
 
     protected:
@@ -22,8 +26,11 @@ class Player
     private:
     sf::Texture  texture;
     sf::Sprite sprite;
+
+
+    bool touchingFloor;
+    vector<double> posNow,posBef,vel;
     vector<double> renderPos;
-    physicsState ps;
 
     int dir,frame;
     vector< vector< sf::Rect<int> > > frames;

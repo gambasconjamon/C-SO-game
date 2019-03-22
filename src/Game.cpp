@@ -11,16 +11,21 @@ Game::Game(int resol_x, int resol_y, string gamename)
     window= new sf::RenderWindow(sf::VideoMode(resol_x,resol_y),gamename);
     window->setVerticalSyncEnabled(true);
     player= new Player();
+    mapa= new Mapa(0);
+
+
     //Para los eventos
     eUp=false;
     eDown=false;
     eLeft=false;
     eRight=false;
+
 }
 
-void Game::Gloop(){
+void Game::Gloop()
+{
 
-while (window->isOpen())
+    while (window->isOpen())
     {
 
         //Proceso mis eventos
@@ -52,35 +57,30 @@ void Game::handleEvents()
     if (window->pollEvent(event))
     {
 
-        switch (event.type)
-        {
-        case sf::Event::KeyPressed:
-
+        if(event.type==sf::Event::KeyPressed)
             handleInputs(event.key.code, true);
-            break;
 
-        case sf::Event::KeyReleased:
-
+        if(event.type==sf::Event::KeyReleased)
             handleInputs(event.key.code, false);
-            break;
 
-        case sf::Event::Closed:
+        if(event.type==sf::Event::Closed)
             window->close();
-            break;
-        }
+
+
     }
+
 
 }
 void Game::handleInputs(sf::Keyboard::Key key, bool isPressed)
 {
 
-    if (key == sf::Keyboard::Up)            //Traslaciones
+    if (key == sf::Keyboard::Space)            //Traslaciones
         eUp = isPressed;
-    else if (key == sf::Keyboard::Down)
+    if (key == sf::Keyboard::Down)
         eDown = isPressed;
-    else if (key == sf::Keyboard::Left)
+    if (key == sf::Keyboard::Left)
         eLeft = isPressed;
-    else if (key == sf::Keyboard::Right)
+    if (key == sf::Keyboard::Right)
         eRight = isPressed;
 
 }
@@ -88,17 +88,8 @@ void Game::handleInputs(sf::Keyboard::Key key, bool isPressed)
 void Game::updateGameState(sf::Time t)
 {
 
-    double x=0,y=0,potencia=50;
+    double x=0,y=0,potencia=100;
     int frame=0;
-
-    /*if(t.asSeconds()>timePerFrame.asSeconds())
-    {
-        frame+=1;
-        if(frame>1)
-        {
-            frame=-1;
-        }
-    }*/
 
     if(eRight)
     {
@@ -106,26 +97,35 @@ void Game::updateGameState(sf::Time t)
         y=0.0;
         player->setDir(2,frame);
     }
-    else if(eLeft)
+    if(eLeft)
     {
         x=-potencia;
         y=0.0;
         player->setDir(3,frame);//Decimos a donde esta mirando el sprite
     }
-    else if(eUp)
+    if(eUp)
     {
         x=0.0;
-        y=-potencia;
+        y=-potencia*5;
         player->setDir(1,frame);//Decimos a donde esta mirando el sprite
     }
-    else if(eDown)
-    {
-        x=0.0;
-        y=potencia;;
-        player->setDir(0,frame);//Decimos a donde esta mirando el sprite
+    /* else if(eDown)
+     {
+         x=0.0;
+         y=potencia;;
+         player->setDir(0,frame);//Decimos a donde esta mirando el sprite
 
+     }*/
+
+    //collision
+    if((player->getSprite().getGlobalBounds().intersects(mapa->getElemento(0,0).getGlobalBounds()))||(player->getPos()[1]>=430)){
+    //if(player->getPos()[1]<430){
+        player->setTouchingFloor(true);
     }
-
+    else
+    {
+        player->setTouchingFloor(false);
+    }
 
     player->updatePlayer(x,y,t);
 
@@ -137,9 +137,9 @@ void Game::render(double i)
     window->clear();
     player->drawPlayer(*window,i);
     //lvl.drawLevel(*ventana,i);
+    mapa->drawMapa(*window,i);
     window->display();
 }
-
 
 Game::~Game()
 {

@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 using namespace std;
 
-Player::Player(): ps()
+Player::Player()
 {
     //inicializamos matriz de frames
     frames.resize(4);
@@ -30,12 +30,19 @@ Player::Player(): ps()
     sprite.setOrigin(28/2,44/2);
     sprite.setTextureRect(frames[0][0]);
     sprite.scale(1.5,1.5);
+
+
     renderPos.push_back(0.0);
     renderPos.push_back(0.0);
+
+    posNow.push_back(300.0),posNow.push_back(400.0);
+    posBef.push_back(0.0),posBef.push_back(0.0);
+    vel.push_back(0.0),vel.push_back(0.0);
 
 
     dir=1;
     frame=0;
+    touchingFloor=false;
 }
 
 
@@ -51,12 +58,40 @@ void Player::setDir(int d,int f)
         frame=f;
     }
 }
+void Player::setTouchingFloor(bool t)
+{
+
+    touchingFloor=t;
+}
+vector<double> Player::getPos()
+{
+
+    return posNow;
+
+}
+sf::Sprite Player::getSprite()
+{
+    return sprite;
+}
 
 void Player::updatePlayer(double velx, double vely, sf::Time et)
 {
 
-    ps.setVel(velx,vely);//Cambia el booleano para quitar aceleracion o ponerla
-    ps.updateState(et);
+    posBef=posNow;
+
+    if(touchingFloor){
+    cout<<"Tocando el suelo"<<endl;
+     vel[1]=vely;
+    }else{
+    cout<<"En el aire"<<endl;
+    vel[1]+=980*et.asSeconds();
+    }
+
+
+    vel[0]=velx;
+    posNow[0] += vel[0]*et.asSeconds();
+    posNow[1] += vel[1]*et.asSeconds();
+
 
 }
 
@@ -65,9 +100,11 @@ void Player::drawPlayer(sf::RenderWindow& w, double i)
 
     sprite.setTextureRect(frames[dir][frame]);
 
-    renderPos[0]=(ps.getPosNow()[0]-ps.getPosBef()[0])*i+ps.getPosBef()[0];
-    renderPos[1]=(ps.getPosNow()[1]-ps.getPosBef()[1])*i+ps.getPosBef()[1];
+    renderPos[0]=(posNow[0]-posBef[0])*i+posBef[0];
+    renderPos[1]=(posNow[1]-posBef[1])*i+posBef[1];
+
     sprite.setPosition(renderPos[0],renderPos[1]);
+
     w.draw(sprite);
 
 }

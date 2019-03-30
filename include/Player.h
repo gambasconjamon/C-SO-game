@@ -12,11 +12,14 @@ class Player
     public:
         Player();
         virtual ~Player();
-        void updatePlayer(double velx, double vely, sf::Time et);
+        void updatePlayer(double velx, double vely, sf::Time et, float of);
         void drawPlayer(sf::RenderWindow& w, double i);
         void setFrame(int f);
+
         vector<double> getPos();
         sf::Sprite getSprite();
+        sf::Rect<float> getColliderTop();
+        sf::Rect<float>  getColliderDown();
         void setTouchingFloor(bool t);
 
         void setDir(int d,int f);
@@ -26,9 +29,15 @@ class Player
     private:
     sf::Texture  texture;
     sf::Sprite sprite;
+    sf::Rect<float>  colliderTop;
+    sf::Rect<float>  colliderDown;
+    sf::RectangleShape collisionBox;
 
 
     bool touchingFloor;
+    bool touchingLeft;
+    bool touchingRight;
+
     vector<double> posNow,posBef,vel;
     vector<double> renderPos;
 

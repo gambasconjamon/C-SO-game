@@ -10,12 +10,13 @@ Game::Game(int resol_x, int resol_y, string gamename)
     //ctor
     window= new sf::RenderWindow(sf::VideoMode(resol_x,resol_y),gamename);
     window->setVerticalSyncEnabled(true);
+
     player= new Player();
     mapa= new Mapa(0);
 
 
     //Para los eventos
-    eUp=false;
+    eJump=false;
     eDown=false;
     eLeft=false;
     eRight=false;
@@ -37,6 +38,7 @@ void Game::Gloop()
             elapsedTime=updateClock.restart();
 
             //updateamos dependiendo del tiempo pasado
+
             updateGameState(elapsedTime);
         }
 
@@ -75,7 +77,7 @@ void Game::handleInputs(sf::Keyboard::Key key, bool isPressed)
 {
 
     if (key == sf::Keyboard::Space)            //Traslaciones
-        eUp = isPressed;
+        eJump = isPressed;
     if (key == sf::Keyboard::Down)
         eDown = isPressed;
     if (key == sf::Keyboard::Left)
@@ -84,6 +86,8 @@ void Game::handleInputs(sf::Keyboard::Key key, bool isPressed)
         eRight = isPressed;
 
 }
+
+
 
 void Game::updateGameState(sf::Time t)
 {
@@ -103,10 +107,10 @@ void Game::updateGameState(sf::Time t)
         y=0.0;
         player->setDir(3,frame);//Decimos a donde esta mirando el sprite
     }
-    if(eUp)
+    if(eJump)
     {
         x=0.0;
-        y=-potencia*5;
+        y=-potencia*4;
         player->setDir(1,frame);//Decimos a donde esta mirando el sprite
     }
     /* else if(eDown)
@@ -117,19 +121,31 @@ void Game::updateGameState(sf::Time t)
 
      }*/
 
-    //collision
-    if((player->getSprite().getGlobalBounds().intersects(mapa->getElemento(0,0).getGlobalBounds()))||(player->getPos()[1]>=430)){
-    //if(player->getPos()[1]<430){
-        player->setTouchingFloor(true);
-    }
-    else
+    player->updatePlayer(x,y,t,handleCollision()); //Handle collision devuelve el offset de interseccion
+
+
+}
+
+float Game::handleCollision()
+{
+
+    float offsety=0;
+    player->setTouchingFloor(false);
+    for(int i=0; i<mapa->getElementos(0).size(); i++)
     {
-        player->setTouchingFloor(false);
+
+        if(player->getColliderDown().intersects(mapa->getElementos(0)[i].getGlobalBounds()))
+        {
+         player->setTouchingFloor(true);
+            offsety= player->getColliderDown().top-mapa->getElementos(0)[i].getGlobalBounds().top+1;
+            //cout<<"Offset de colision "<<offset  << endl;
+
+
+        }
+
     }
 
-    player->updatePlayer(x,y,t);
-
-
+    return offsety;
 }
 
 void Game::render(double i)

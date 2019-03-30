@@ -34,11 +34,12 @@ Player::Player()
 
     renderPos.push_back(0.0);
     renderPos.push_back(0.0);
-
-    posNow.push_back(300.0),posNow.push_back(400.0);
+    posNow.push_back(300.0),posNow.push_back(200.0);
     posBef.push_back(0.0),posBef.push_back(0.0);
     vel.push_back(0.0),vel.push_back(0.0);
 
+    colliderTop= sf::FloatRect(posNow[0],posNow[1]-45,50,15);
+    colliderDown= sf::FloatRect(posNow[0],posNow[1] +45,45,15);
 
     dir=1;
     frame=0;
@@ -74,23 +75,36 @@ sf::Sprite Player::getSprite()
     return sprite;
 }
 
-void Player::updatePlayer(double velx, double vely, sf::Time et)
+sf::Rect<float>  Player::getColliderTop()
 {
+    return colliderTop;
+}
+sf::Rect<float>  Player::getColliderDown()
+{
+    return colliderDown;
+}
+
+void Player::updatePlayer(double velx, double vely, sf::Time et, float of)
+{
+
 
     posBef=posNow;
 
-    if(touchingFloor){
-    cout<<"Tocando el suelo"<<endl;
-     vel[1]=vely;
-    }else{
-    cout<<"En el aire"<<endl;
-    vel[1]+=980*et.asSeconds();
+    if(touchingFloor)
+    {
+        //cout<<"Tocando el suelo"<<endl;
+        vel[1]=vely;
+    }
+    else
+    {
+        //cout<<"En el aire"<<endl;
+        vel[1]+=480*et.asSeconds();
     }
 
 
     vel[0]=velx;
     posNow[0] += vel[0]*et.asSeconds();
-    posNow[1] += vel[1]*et.asSeconds();
+    posNow[1] += vel[1]*et.asSeconds()-of;
 
 
 }
@@ -105,6 +119,17 @@ void Player::drawPlayer(sf::RenderWindow& w, double i)
 
     sprite.setPosition(renderPos[0],renderPos[1]);
 
+   // colliderTop.top=renderPos[1]-45;
+   // colliderTop.left=renderPos[0];
+    colliderDown.top=renderPos[1]+35;
+    colliderDown.left=renderPos[0];
+
+
+    w.draw(sprite);
+    collisionBox.setSize(sf::Vector2f(colliderDown.width,colliderDown.height));
+    collisionBox.setFillColor(sf::Color(100, 250, 50));
+    collisionBox.setPosition(colliderDown.left,colliderDown.top);
+    w.draw(collisionBox);
     w.draw(sprite);
 
 }

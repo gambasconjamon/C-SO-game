@@ -19,6 +19,7 @@ class Game
         void updateGameState(sf::Time et);
         void handleEvents();
         void handleInputs(sf::Keyboard::Key key, bool isPressed);
+        float handleCollision();
         void render(double i);//Se le pasa la interpolacion
 
 
@@ -42,7 +43,7 @@ class Game
     sf::Time elapsedTime;
     sf::RenderWindow * window;
 
-    bool			eUp;
+    bool			eJump;
     bool			eDown;
     bool			eRight;
     bool			eLeft;

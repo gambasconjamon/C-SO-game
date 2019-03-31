@@ -20,9 +20,14 @@ class Player
         sf::Sprite getSprite();
         sf::Rect<float> getColliderTop();
         sf::Rect<float>  getColliderDown();
-        void setTouchingFloor(bool t);
 
-        void setDir(int d,int f);
+        void setTouchingFloor(bool t);
+         void setTouchingEscalera(bool t);
+
+         bool isTouchingFloor();
+         bool isTouchingEscalera();
+
+
 
     protected:
 
@@ -35,6 +40,7 @@ class Player
 
 
     bool touchingFloor;
+    bool touchingEscalera;
     bool touchingLeft;
     bool touchingRight;
 

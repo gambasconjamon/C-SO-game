@@ -2,7 +2,7 @@
 using namespace std;
 
 /** GLOBAL **/
-const sf::Time Game::timePerFrame = sf::milliseconds(1000.0/25.0);
+const sf::Time Game::timePerFrame = sf::milliseconds(1000.0/20.0);
 /** GLOBAL **/
 
 Game::Game(int resol_x, int resol_y, string gamename)
@@ -21,6 +21,8 @@ Game::Game(int resol_x, int resol_y, string gamename)
     eLeft=false;
     eRight=false;
 
+    gravity=0;
+
 }
 
 void Game::Gloop()
@@ -38,6 +40,8 @@ void Game::Gloop()
             elapsedTime=updateClock.restart();
 
             //updateamos dependiendo del tiempo pasado
+
+
 
             updateGameState(elapsedTime);
         }
@@ -84,6 +88,8 @@ void Game::handleInputs(sf::Keyboard::Key key, bool isPressed)
         eLeft = isPressed;
     if (key == sf::Keyboard::Right)
         eRight = isPressed;
+        if (key == sf::Keyboard::Up)
+        eUp = isPressed;
 
 }
 
@@ -95,32 +101,44 @@ void Game::updateGameState(sf::Time t)
     double x=0,y=0,potencia=100;
     int frame=0;
 
+
     if(eRight)
     {
         x=potencia;
-        y=0.0;
-        player->setDir(2,frame);
+
+       // player->setDir(2,frame);
     }
     if(eLeft)
     {
         x=-potencia;
-        y=0.0;
-        player->setDir(3,frame);//Decimos a donde esta mirando el sprite
+
+        //player->setDir(3,frame);//Decimos a donde esta mirando el sprite
     }
     if(eJump)
     {
-        x=0.0;
-        y=-potencia*4;
-        player->setDir(1,frame);//Decimos a donde esta mirando el sprite
+
+
+            if(player->isTouchingFloor()){
+            y=-potencia*2.5;
+            }
+
     }
-    /* else if(eDown)
-     {
-         x=0.0;
-         y=potencia;;
-         player->setDir(0,frame);//Decimos a donde esta mirando el sprite
+    if(eUp){
 
-     }*/
 
+
+            if(player->isTouchingEscalera())
+            y=-potencia;
+
+    }
+    else if(eDown)
+    {
+
+
+            y=potencia;
+
+
+    }
     player->updatePlayer(x,y,t,handleCollision()); //Handle collision devuelve el offset de interseccion
 
 
@@ -131,19 +149,29 @@ float Game::handleCollision()
 
     float offsety=0;
     player->setTouchingFloor(false);
-    for(int i=0; i<mapa->getElementos(0).size(); i++)
-    {
-
-        if(player->getColliderDown().intersects(mapa->getElementos(0)[i].getGlobalBounds()))
+    player->setTouchingEscalera(false);
+    for(int t=0 ; t<2; t++)
+        for(int i=0; i<mapa->getElementos(t).size(); i++)
         {
-         player->setTouchingFloor(true);
-            offsety= player->getColliderDown().top-mapa->getElementos(0)[i].getGlobalBounds().top+1;
-            //cout<<"Offset de colision "<<offset  << endl;
 
+            if(player->getColliderDown().intersects(mapa->getElementos(t)[i].getGlobalBounds()))
+            {
+
+                if (t==0)
+                {
+                    player->setTouchingFloor(true);
+                    offsety= player->getColliderDown().top-mapa->getElementos(t)[i].getGlobalBounds().top+1;
+                    //cout<<"Offset de colision "<<offset  << endl;
+                }
+                if (t==1)
+                {
+                    player->setTouchingEscalera(true);
+                }
+
+
+            }
 
         }
-
-    }
 
     return offsety;
 }

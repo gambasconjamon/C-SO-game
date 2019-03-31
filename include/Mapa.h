@@ -21,10 +21,10 @@ class Mapa
       ///MAPA
       std::string blueprint;
     sf::Texture Base;
-   vector<sf::Sprite> plataformas; //1
-    vector<sf::Sprite> escaleras; //2
-    vector<sf::Sprite> trampolines;//3
-    vector<sf::Sprite> balancines;//4*/
+   vector<sf::Sprite> plataformas; //0
+    vector<sf::Sprite> escaleras; //1
+    vector<sf::Sprite> trampolines;//2
+    vector<sf::Sprite> balancines;//3*/
     ///...
 };
 

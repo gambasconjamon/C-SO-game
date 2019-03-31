@@ -9,27 +9,19 @@ Player::Player()
     for (int i = 0 ; i < 4 ; i++)
         frames[i].resize(2);
 
-    frames[0][0]=sf::IntRect(10, 4,28, 44);//Frente 0----0
-    frames[0][1]=sf::IntRect(58, 6,28, 42);//Frente 1----1
-    frames[1][0]=sf::IntRect(8,146,32, 46);//Detras 0----2
-    frames[1][1]=sf::IntRect(56, 148,32, 44);//Detras 1--3
-    frames[2][0]=sf::IntRect(6, 98,40, 46);//SideR 0-----4
-    frames[2][1]=sf::IntRect(54, 100,40, 44);//SideR 1---5
-    frames[3][0]=sf::IntRect(2, 50,40, 46);//SideL 0-----6
-    frames[3][1]=sf::IntRect(50, 52,40, 44);//SideL 1----7
-
+    frames[0][0]=sf::IntRect(0, 0,32, 32);//Frente 0----0
     //La carga de texturas podria ser otra clase
-    texture.loadFromFile("resources/sp_alien_texture.png");
-    if (!texture.loadFromFile("resources/sp_alien_texture.png"))
+    texture.loadFromFile("resources/Sunny-land-files/PNG/sprites/player/player.png");
+    if (!texture.loadFromFile("resources/Sunny-land-files/PNG/sprites/player/player.png"))
     {
-        std::cerr << "Error cargando la imagen sp_alien_texture.png";
+        std::cerr << "Error cargando la imagen player.png";
         exit(0);
     }
 
     sprite.setTexture(texture);
     sprite.setOrigin(28/2,44/2);
     sprite.setTextureRect(frames[0][0]);
-    sprite.scale(1.5,1.5);
+    sprite.scale(1.2,1.2);
 
 
     renderPos.push_back(0.0);
@@ -38,8 +30,8 @@ Player::Player()
     posBef.push_back(0.0),posBef.push_back(0.0);
     vel.push_back(0.0),vel.push_back(0.0);
 
-    colliderTop= sf::FloatRect(posNow[0],posNow[1]-45,50,15);
-    colliderDown= sf::FloatRect(posNow[0],posNow[1] +45,45,15);
+//    colliderTop= sf::FloatRect(posNow[0],posNow[1]-45,50,15);
+    colliderDown= sf::FloatRect(posNow[0],posNow[1],15,10);
 
     dir=1;
     frame=0;
@@ -51,19 +43,28 @@ void Player::setFrame(int f)
 {
     frame=f;
 }
-void Player::setDir(int d,int f)
-{
-    if(d>=0&&f>=0)
-    {
-        dir=d;
-        frame=f;
-    }
-}
+
 void Player::setTouchingFloor(bool t)
 {
 
     touchingFloor=t;
 }
+void Player::setTouchingEscalera(bool t)
+{
+    touchingEscalera=t;
+}
+bool Player::isTouchingFloor()
+{
+    return touchingFloor;
+
+}
+bool Player::isTouchingEscalera()
+{
+    return touchingEscalera;
+}
+
+
+
 vector<double> Player::getPos()
 {
 
@@ -90,16 +91,26 @@ void Player::updatePlayer(double velx, double vely, sf::Time et, float of)
 
     posBef=posNow;
 
-    if(touchingFloor)
+
+    if(isTouchingEscalera())
     {
-        //cout<<"Tocando el suelo"<<endl;
+        cout<<"Tocando el suelo o escalera"<<endl;
         vel[1]=vely;
+        of=0;
+
+    }
+
+    if(isTouchingFloor()){
+        vel[1]=vely;
+
     }
     else
     {
         //cout<<"En el aire"<<endl;
-        vel[1]+=480*et.asSeconds();
+        if(vel[1]<150)
+        vel[1]+=980*et.asSeconds();
     }
+
 
 
     vel[0]=velx;
@@ -112,17 +123,19 @@ void Player::updatePlayer(double velx, double vely, sf::Time et, float of)
 void Player::drawPlayer(sf::RenderWindow& w, double i)
 {
 
-    sprite.setTextureRect(frames[dir][frame]);
+    //sprite.setTextureRect(frames[dir][frame]);
+    sprite.setTextureRect(frames[0][0]);
+
 
     renderPos[0]=(posNow[0]-posBef[0])*i+posBef[0];
     renderPos[1]=(posNow[1]-posBef[1])*i+posBef[1];
 
     sprite.setPosition(renderPos[0],renderPos[1]);
 
-   // colliderTop.top=renderPos[1]-45;
-   // colliderTop.left=renderPos[0];
-    colliderDown.top=renderPos[1]+35;
-    colliderDown.left=renderPos[0];
+    // colliderTop.top=renderPos[1]-45;
+    // colliderTop.left=renderPos[0];
+    colliderDown.top=renderPos[1]+9;
+    colliderDown.left=renderPos[0]-8;
 
 
     w.draw(sprite);

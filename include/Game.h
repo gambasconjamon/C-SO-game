@@ -47,8 +47,10 @@ class Game
     bool			eDown;
     bool			eRight;
     bool			eLeft;
+    bool            eUp;
 
     double interpolation;
+    double gravity;
 
 
 };

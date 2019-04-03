@@ -24,7 +24,9 @@ class Mapa
       std::string blueprint;
     sf::Texture *Base;
     sf::Texture *Items;
+    sf::Texture *Props;
     sf::Texture *Bg;
+    sf::Sprite sbg;
    vector<sf::Sprite> plataformas; //0
     vector<sf::Sprite> escaleras; //1
     vector<sf::Sprite> trampolines;//2

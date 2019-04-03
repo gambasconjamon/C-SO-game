@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include "Game.h"
+
 
 using namespace std;
 
@@ -24,9 +24,11 @@ class Player
 
         void setTouchingFloor(bool t);
          void setTouchingEscalera(bool t);
+          void setTouchingTrampolin(bool t);
 
          bool isTouchingFloor();
          bool isTouchingEscalera();
+         bool isTouchingTrampolin();
 
 
 
@@ -42,6 +44,7 @@ class Player
 
     bool touchingFloor;
     bool touchingEscalera;
+    bool touchingTrampolin;
     bool touchingLeft;
     bool touchingRight;
 

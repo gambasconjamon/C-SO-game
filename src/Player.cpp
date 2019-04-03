@@ -23,14 +23,13 @@ Player::Player()
     sprite.setTextureRect(frames[0][0]);
     sprite.scale(1.2,1.2);
 
-
     renderPos.push_back(0.0);
     renderPos.push_back(0.0);
     posNow.push_back(300.0),posNow.push_back(200.0);
     posBef.push_back(0.0),posBef.push_back(0.0);
     vel.push_back(0.0),vel.push_back(0.0);
 
-//    colliderTop= sf::FloatRect(posNow[0],posNow[1]-45,50,15);
+
     colliderDown= sf::FloatRect(posNow[0],posNow[1],15,10);
 
     dir=1;
@@ -53,6 +52,11 @@ void Player::setTouchingEscalera(bool t)
 {
     touchingEscalera=t;
 }
+void Player::setTouchingTrampolin(bool t)
+{
+    touchingTrampolin=t;
+}
+
 bool Player::isTouchingFloor()
 {
     return touchingFloor;
@@ -61,6 +65,10 @@ bool Player::isTouchingFloor()
 bool Player::isTouchingEscalera()
 {
     return touchingEscalera;
+}
+bool Player::isTouchingTrampolin()
+{
+    return touchingTrampolin;
 }
 
 
@@ -91,9 +99,9 @@ void Player::updatePlayer(double velx, double vely, sf::Time et, float of)
 
     posBef=posNow;
 
-    if(isTouchingFloor()||isTouchingEscalera())
+    if(isTouchingFloor()||isTouchingEscalera()||isTouchingTrampolin())
     {
-        if(isTouchingEscalera())
+        if(isTouchingEscalera())//Escalera
         {
             cout<<"Tocando el suelo o escalera"<<endl;
             vel[1]=vely;
@@ -101,18 +109,25 @@ void Player::updatePlayer(double velx, double vely, sf::Time et, float of)
 
         }
 
-        if(isTouchingFloor())
+        if(isTouchingFloor())//Suelo
         {
             vel[1]=vely;
 
         }
+        if(isTouchingTrampolin()&&of>0)//Trampolin: Si el offset es = 0, esta a la altura del trampolin, no se activa, solo lo hace cuando cae encime, que of>0
+        {
+        cout<<"Offset del trampolin: "<<of<<endl;
+            vel[1]=-100*4.5;
+
+        }
     }
-    else
+    else//aire
     {
         //cout<<"En el aire"<<endl;
         if(vel[1]<150)
             vel[1]+=980*et.asSeconds();
     }
+
 
 
 

@@ -155,6 +155,7 @@ float Game::handleCollision()
     float offsety=0;
     player->setTouchingFloor(false);
     player->setTouchingEscalera(false);
+    player->setTouchingTrampolin(false);
     for(int t=0 ; t<5; t++)
         for(int i=0; i<mapa->getElementos(t).size(); i++)
         {
@@ -171,6 +172,12 @@ float Game::handleCollision()
                 if (t==1)
                 {
                     player->setTouchingEscalera(true);
+
+                }
+                if (t==2)
+                {
+                    offsety= player->getColliderDown().top-mapa->getElementos(t)[i].getGlobalBounds().top+1;
+                    player->setTouchingTrampolin(true);
 
                 }
 
@@ -195,9 +202,10 @@ float Game::handleCollision()
 void Game::render(double i)
 {
     window->clear();
-    player->drawPlayer(*window,i);
+
     //lvl.drawLevel(*ventana,i);
     mapa->drawMapa(*window,i);
+    player->drawPlayer(*window,i);
     window->display();
 }
 

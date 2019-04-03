@@ -13,27 +13,27 @@ Mapa::Mapa(int id)
     blueprint += "bbbbbbbbbbbbbbbbe--------------------e-b.";
     blueprint += "bbbbbbbbbbbbbbbbe--------------------e-b.";
     blueprint += "bbbbbbbbbbbbbbbbe--------------------e-b.";
-    blueprint += "bbbbbbbbbbbbbbbbeppppppppp--r-------lepb.";
+    blueprint += "bbbbbbbbbbbbbbbbeppppppppp^-r-------lepb.";
     blueprint += "b---------------e--------------------e-b.";
     blueprint += "b---------------e--------------------e-b.";
     blueprint += "b---------------e--------------------e-b.";
     blueprint += "b---------------e--------------------e-b.";
-    blueprint += "beppppppprflpppper-------ppppppp--pppepb.";
+    blueprint += "beppppppprflpppper-------ppppppp^-pppepb.";
     blueprint += "be--------------e--------------------e-b.";
     blueprint += "be--------------e----------f---------e-b.";
     blueprint += "be--------------e--------------------e-b.";
     blueprint += "be--------------e--------------------e-b.";
-    blueprint += "beppr----lppppppepp--pr-------lppppppe-b.";
+    blueprint += "beppr----lppppppepp^-pr-------lppppppe-b.";
     blueprint += "be--------------e--------------------e-b.";
     blueprint += "be--------------e--------------------e-b.";
     blueprint += "be--------------e--------------------e-b.";
     blueprint += "be--------------e--------------------e-b.";
-    blueprint += "beppp--pr----lppeppppp--lp--pppppppppepb.";
+    blueprint += "beppp^-pr----lppeppppp--lp^-pppppppppepb.";
     blueprint += "b--f---------------------------------e-b.";
     blueprint += "b------------------------------------e-b.";
     blueprint += "b------------------------------------e-b.";
     blueprint += "b------------------------------------e-b.";
-    blueprint += "bppppppppppppppppppppppppppppppppppppppb.";
+    blueprint += "bppppppppp^-pppppppppppppppppppppppppppb.";
 
     Bg = new sf::Texture();
     Bg->loadFromFile("resources/Sunny-land-files/PNG/environment/layers/back.png");
@@ -43,6 +43,10 @@ Mapa::Mapa(int id)
         exit(0);
     }
 
+    sbg.setTexture(*Bg);
+    sbg.setTextureRect(sf::IntRect(0, 0,384,240));
+    sbg.setPosition(0,0);
+    sbg.scale(2,2);
 
     Base = new sf::Texture();
     Base->loadFromFile("resources/Sunny-land-files/PNG/environment/layers/tileset.png");
@@ -61,8 +65,16 @@ Mapa::Mapa(int id)
         std::cerr << "Error cargando la imagen sp_alien_texture.png";
         exit(0);
     }
-    sf::Sprite item_s;
-    item_s.setTexture(*Items);
+
+
+    Props = new sf::Texture();
+    Props->loadFromFile("resources/Sunny-land-files/PNG/environment/layers/props.png");
+    if (!Props->loadFromFile("resources/Sunny-land-files/PNG/environment/layers/props.png"))
+    {
+        std::cerr << "Error cargando la imagen sp_alien_texture.png";
+        exit(0);
+    }
+
 
 
     int mx=0,my=0,i=0;
@@ -70,30 +82,40 @@ Mapa::Mapa(int id)
     {
         if(blueprint.at(i) == 'p')
         {
+            map_s.setTexture(*Base);
+
             map_s.setTextureRect(sf::IntRect(16*3, 16,16,16));
             map_s.setPosition(mx*16,my*16);
             plataformas.push_back(map_s);
         }
         if(blueprint.at(i) == 'l')
         {
+        map_s.setTexture(*Base);
+
             map_s.setTextureRect(sf::IntRect(16, 16,16,16));
             map_s.setPosition(mx*16,my*16);
             plataformas.push_back(map_s);
         }
         if(blueprint.at(i) == 'r')
         {
+        map_s.setTexture(*Base);
+
             map_s.setTextureRect(sf::IntRect(16*5, 16,16,16));
             map_s.setPosition(mx*16,my*16);
             plataformas.push_back(map_s);
         }
         if(blueprint.at(i) == 'e')
         {
+        map_s.setTexture(*Base);
+
             map_s.setTextureRect(sf::IntRect(112,160,16,16));
             map_s.setPosition(mx*16,my*16);
             escaleras.push_back(map_s);
         }
         if(blueprint.at(i) == 'b')
         {
+        map_s.setTexture(*Base);
+
             map_s.setTextureRect(sf::IntRect(16,320,16,16));
             map_s.setPosition(mx*16,my*16);
             escaleras.push_back(map_s);
@@ -101,10 +123,21 @@ Mapa::Mapa(int id)
 
         if(blueprint.at(i) == 'f')
         {
-            item_s.setTextureRect(sf::IntRect(0,3,17,15));
-            item_s.setPosition(mx*16,my*16);
-            items.push_back(item_s);
+        map_s.setTexture(*Items);
+
+            map_s.setTextureRect(sf::IntRect(0,3,17,15));
+            map_s.setPosition(mx*16,my*16);
+            items.push_back(map_s);
             cout<<items.size()<<endl;
+        }
+        if(blueprint.at(i) == '^')
+        {
+         map_s.setTexture(*Props);
+
+            map_s.setTextureRect(sf::IntRect(256,191,32,16));
+            map_s.setPosition(mx*16,my*16);
+            trampolines.push_back(map_s);
+            cout<<trampolines.size()<<endl;
         }
 
         mx++;
@@ -158,6 +191,7 @@ vector<sf::Sprite> Mapa::getElementos(int tipo)
 void Mapa::drawMapa(sf::RenderWindow& w, double i)
 {
 
+ w.draw(sbg);
 
     for(int i=0; i<plataformas.size(); i++)
     {
@@ -170,13 +204,18 @@ void Mapa::drawMapa(sf::RenderWindow& w, double i)
 
 
     }
+    for(int i=0; i<trampolines.size(); i++)
+    {
+        w.draw(trampolines[i]);
+
+
+    }
     for(int i=0; i<items.size(); i++)
     {
         w.draw(items[i]);
 
 
     }
-
 
 
 }

@@ -3,13 +3,16 @@ using namespace std;
 
 /** GLOBAL **/
 const sf::Time Game::timePerFrame = sf::milliseconds(1000.0/20.0);
+const float Game::Gscale = 1.5;
 /** GLOBAL **/
 
 Game::Game(int resol_x, int resol_y, string gamename)
 {
+
     //ctor
     window= new sf::RenderWindow(sf::VideoMode(resol_x,resol_y),gamename);
     window->setVerticalSyncEnabled(true);
+
 
     player= new Player();
     mapa= new Mapa(0);
@@ -88,7 +91,7 @@ void Game::handleInputs(sf::Keyboard::Key key, bool isPressed)
         eLeft = isPressed;
     if (key == sf::Keyboard::Right)
         eRight = isPressed;
-        if (key == sf::Keyboard::Up)
+    if (key == sf::Keyboard::Up)
         eUp = isPressed;
 
 }
@@ -106,7 +109,7 @@ void Game::updateGameState(sf::Time t)
     {
         x=potencia;
 
-       // player->setDir(2,frame);
+        // player->setDir(2,frame);
     }
     if(eLeft)
     {
@@ -118,16 +121,18 @@ void Game::updateGameState(sf::Time t)
     {
 
 
-            if(player->isTouchingFloor()){
+        if(player->isTouchingFloor())
+        {
             y=-potencia*2.5;
-            }
+        }
 
     }
-    if(eUp){
+    if(eUp)
+    {
 
 
 
-            if(player->isTouchingEscalera())
+        if(player->isTouchingEscalera())
             y=-potencia;
 
     }
@@ -135,7 +140,7 @@ void Game::updateGameState(sf::Time t)
     {
 
 
-            y=potencia;
+        y=potencia;
 
 
     }
@@ -150,11 +155,11 @@ float Game::handleCollision()
     float offsety=0;
     player->setTouchingFloor(false);
     player->setTouchingEscalera(false);
-    for(int t=0 ; t<2; t++)
+    for(int t=0 ; t<5; t++)
         for(int i=0; i<mapa->getElementos(t).size(); i++)
         {
 
-            if(player->getColliderDown().intersects(mapa->getElementos(t)[i].getGlobalBounds()))
+            if(t<4&&player->getColliderDown().intersects(mapa->getElementos(t)[i].getGlobalBounds()))
             {
 
                 if (t==0)
@@ -166,9 +171,20 @@ float Game::handleCollision()
                 if (t==1)
                 {
                     player->setTouchingEscalera(true);
+
                 }
 
 
+
+            }
+            else if(player->getSprite().getGlobalBounds().intersects(mapa->getElementos(t)[i].getGlobalBounds()))
+            {
+                if (t==4)
+                {
+                    cout<<"This is cerezas numero: " <<i <<endl;
+
+                    mapa->deleteElemento(4,i);
+                }
             }
 
         }

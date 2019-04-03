@@ -91,24 +91,27 @@ void Player::updatePlayer(double velx, double vely, sf::Time et, float of)
 
     posBef=posNow;
 
-
-    if(isTouchingEscalera())
+    if(isTouchingFloor()||isTouchingEscalera())
     {
-        cout<<"Tocando el suelo o escalera"<<endl;
-        vel[1]=vely;
-        of=0;
+        if(isTouchingEscalera())
+        {
+            cout<<"Tocando el suelo o escalera"<<endl;
+            vel[1]=vely;
+            of=0;
 
-    }
+        }
 
-    if(isTouchingFloor()){
-        vel[1]=vely;
+        if(isTouchingFloor())
+        {
+            vel[1]=vely;
 
+        }
     }
     else
     {
         //cout<<"En el aire"<<endl;
         if(vel[1]<150)
-        vel[1]+=980*et.asSeconds();
+            vel[1]+=980*et.asSeconds();
     }
 
 
@@ -125,25 +128,19 @@ void Player::drawPlayer(sf::RenderWindow& w, double i)
 
     //sprite.setTextureRect(frames[dir][frame]);
     sprite.setTextureRect(frames[0][0]);
-
-
     renderPos[0]=(posNow[0]-posBef[0])*i+posBef[0];
     renderPos[1]=(posNow[1]-posBef[1])*i+posBef[1];
-
     sprite.setPosition(renderPos[0],renderPos[1]);
+    w.draw(sprite);
 
-    // colliderTop.top=renderPos[1]-45;
-    // colliderTop.left=renderPos[0];
     colliderDown.top=renderPos[1]+9;
     colliderDown.left=renderPos[0]-8;
 
-
-    w.draw(sprite);
     collisionBox.setSize(sf::Vector2f(colliderDown.width,colliderDown.height));
     collisionBox.setFillColor(sf::Color(100, 250, 50));
     collisionBox.setPosition(colliderDown.left,colliderDown.top);
     w.draw(collisionBox);
-    w.draw(sprite);
+
 
 }
 

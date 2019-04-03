@@ -2,7 +2,6 @@
 #define GAME_H
 #include "Player.h"
 #include "Mapa.h"
-
 #include <iostream>
 #include <vector>
 #include <math.h>
@@ -28,6 +27,7 @@ class Game
 
     private:
     static const sf::Time	timePerFrame;
+    static const float Gscale;
 
 
     ///JUGADOR

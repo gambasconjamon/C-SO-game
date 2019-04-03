@@ -30,7 +30,7 @@ class Mapa
    vector<sf::Sprite> plataformas; //0
     vector<sf::Sprite> escaleras; //1
     vector<sf::Sprite> trampolines;//2
-    vector<sf::Sprite> balancines;//3
+    vector<sf::Sprite> puertas;//3
     vector<sf::Sprite> items;//4
     ///...
 };

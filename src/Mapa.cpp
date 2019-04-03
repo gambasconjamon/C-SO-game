@@ -7,7 +7,7 @@ Mapa::Mapa(int id)
     blueprint += "b-------------bb-----------------------b.";
     blueprint += "b-------------bb-----------------------b.";
     blueprint += "b-------bbbbbbbb----------f------------b.";
-    blueprint += "b---------bbbbbb-----------------------b.";
+    blueprint += "b---------bbbbbb--------------------d--b.";
     blueprint += "b---------bbbbbbepppppr------lpppppppepb.";
     blueprint += "b-------bbbbbbbbe--------------------e-b.";
     blueprint += "bbbbbbbbbbbbbbbbe--------------------e-b.";
@@ -22,7 +22,7 @@ Mapa::Mapa(int id)
     blueprint += "be--------------e--------------------e-b.";
     blueprint += "be--------------e----------f---------e-b.";
     blueprint += "be--------------e--------------------e-b.";
-    blueprint += "be--------------e--------------------e-b.";
+    blueprint += "be--------------e---------------d----e-b.";
     blueprint += "beppr----lppppppepp^-pr-------lppppppe-b.";
     blueprint += "be--------------e--------------------e-b.";
     blueprint += "be--------------e--------------------e-b.";
@@ -139,6 +139,15 @@ Mapa::Mapa(int id)
             trampolines.push_back(map_s);
             cout<<trampolines.size()<<endl;
         }
+        if(blueprint.at(i) == 'd')
+        {
+         map_s.setTexture(*Props);
+
+            map_s.setTextureRect(sf::IntRect(14,63,22,33));
+            map_s.setPosition(mx*16,my*16-16);
+            puertas.push_back(map_s);
+            cout<<puertas.size()<<endl;
+        }
 
         mx++;
         if(blueprint.at(i) == '.')
@@ -180,7 +189,7 @@ vector<sf::Sprite> Mapa::getElementos(int tipo)
         return trampolines;
 
     if(tipo==3)
-        return balancines;
+        return puertas;
 
     if(tipo==4)
         return items;
@@ -207,6 +216,12 @@ void Mapa::drawMapa(sf::RenderWindow& w, double i)
     for(int i=0; i<trampolines.size(); i++)
     {
         w.draw(trampolines[i]);
+
+
+    }
+    for(int i=0; i<puertas.size(); i++)
+    {
+        w.draw(puertas[i]);
 
 
     }

@@ -25,10 +25,14 @@ class Player
         void setTouchingFloor(bool t);
          void setTouchingEscalera(bool t);
           void setTouchingTrampolin(bool t);
+          void setTouchingPuerta(bool t);
+          void setUltPuerta(int d,sf::Vector2f c);
 
          bool isTouchingFloor();
          bool isTouchingEscalera();
          bool isTouchingTrampolin();
+         bool isTouchingPuerta();
+         int getUltPuerta();
 
 
 
@@ -41,10 +45,13 @@ class Player
     sf::Rect<float>  colliderDown;
     sf::RectangleShape collisionBox;
 
+    int ultPuerta;
+    sf::Vector2f crdPuerta;
 
     bool touchingFloor;
     bool touchingEscalera;
     bool touchingTrampolin;
+    bool touchingPuerta;
     bool touchingLeft;
     bool touchingRight;
 

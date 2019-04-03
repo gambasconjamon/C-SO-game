@@ -23,6 +23,7 @@ Player::Player()
     sprite.setTextureRect(frames[0][0]);
     sprite.scale(1.2,1.2);
 
+
     renderPos.push_back(0.0);
     renderPos.push_back(0.0);
     posNow.push_back(300.0),posNow.push_back(200.0);
@@ -56,6 +57,15 @@ void Player::setTouchingTrampolin(bool t)
 {
     touchingTrampolin=t;
 }
+void Player::setTouchingPuerta(bool t)
+{
+    touchingPuerta=t;
+}
+void Player::setUltPuerta(int d, sf::Vector2f c)
+{
+   crdPuerta=c;
+   ultPuerta=d;
+}
 
 bool Player::isTouchingFloor()
 {
@@ -69,6 +79,15 @@ bool Player::isTouchingEscalera()
 bool Player::isTouchingTrampolin()
 {
     return touchingTrampolin;
+}
+bool Player::isTouchingPuerta()
+{
+    return touchingPuerta;
+}
+
+int Player::getUltPuerta()
+{
+    return ultPuerta;
 }
 
 
@@ -120,6 +139,7 @@ void Player::updatePlayer(double velx, double vely, sf::Time et, float of)
             vel[1]=-100*4.5;
 
         }
+
     }
     else//aire
     {
@@ -127,13 +147,20 @@ void Player::updatePlayer(double velx, double vely, sf::Time et, float of)
         if(vel[1]<150)
             vel[1]+=980*et.asSeconds();
     }
-
-
-
-
     vel[0]=velx;
+
+
+
+
+
+    if(isTouchingPuerta()){
+     posNow[0] = crdPuerta.x;
+    posNow[1] = crdPuerta.y;
+
+    }else{
     posNow[0] += vel[0]*et.asSeconds();
     posNow[1] += vel[1]*et.asSeconds()-of;
+    }
 
 
 }

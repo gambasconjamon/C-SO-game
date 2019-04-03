@@ -151,11 +151,13 @@ void Game::updateGameState(sf::Time t)
 
 float Game::handleCollision()
 {
+int last=0;
 
     float offsety=0;
     player->setTouchingFloor(false);
     player->setTouchingEscalera(false);
     player->setTouchingTrampolin(false);
+    player->setTouchingPuerta(false);
     for(int t=0 ; t<5; t++)
         for(int i=0; i<mapa->getElementos(t).size(); i++)
         {
@@ -178,6 +180,20 @@ float Game::handleCollision()
                 {
                     offsety= player->getColliderDown().top-mapa->getElementos(t)[i].getGlobalBounds().top+1;
                     player->setTouchingTrampolin(true);
+
+                }
+                 if (t==3)
+                {
+
+                    offsety= player->getColliderDown().top-mapa->getElementos(t)[i].getGlobalBounds().top+1;
+                    if(i==0 && (i+1)<mapa->getElementos(t).size()){
+                    last=i+1;
+                    }else {
+                    last=i-1;
+                    }
+                    player->setUltPuerta(i,mapa->getElementos(t)[last].getPosition());
+                    player->setTouchingPuerta(true);
+
 
                 }
 

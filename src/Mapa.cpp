@@ -4,21 +4,21 @@ Mapa::Mapa(int id)
 {
     //Aqui ira un loop que genera el mapa, mientras voy a hacer solo una plataforma
 
-    blueprint += "b-------------bb-----------------------b.";
-    blueprint += "b-------------bb-----------------------b.";
-    blueprint += "b-------bbbbbbbb----------f------------b.";
-    blueprint += "b---------bbbbbb--------------------d--b.";
-    blueprint += "b---------bbbbbbepppppr------lpppppppepb.";
-    blueprint += "b-------bbbbbbbbe--------------------e-b.";
+    blueprint += "bwwwwwwwwwwwwbbb-----------------------b.";
+    blueprint += "bwwwwwwwwwwwwbbb-----------------------b.";
+    blueprint += "bwwwwwwwbbbbbbbb----------f------------b.";
+    blueprint += "bbwwwwwwwbbbbbbb--------------------d--b.";
+    blueprint += "bwwwwwwwbbbbbbbbepppppr------lpppppppepb.";
+    blueprint += "bwwwwwwwwbbbbbbbe--------------------e-b.";
     blueprint += "bbbbbbbbbbbbbbbbe--------------------e-b.";
-    blueprint += "bbbbbbbbbbbbbbbbe--------------------e-b.";
-    blueprint += "bbbbbbbbbbbbbbbbe--------------------e-b.";
-    blueprint += "bbbbbbbbbbbbbbbbeppppppppp^-r-------lepb.";
+    blueprint += "b---------------e--------------------e-b.";
+    blueprint += "b---------------e--------------------e-b.";
+    blueprint += "b---------------eppppppppp^-r-------lepb.";
     blueprint += "b---------------e--------------------e-b.";
     blueprint += "b---------------e--------------------e-b.";
     blueprint += "b---------------e--------------------e-b.";
     blueprint += "b---------------e--------------------e-b.";
-    blueprint += "beppppppprflpppper-------ppppppp^-pppepb.";
+    blueprint += "beppppppr-flpppper-------ppppppp^-pppepb.";
     blueprint += "be--------------e--------------------e-b.";
     blueprint += "be--------------e----------f---------e-b.";
     blueprint += "be--------------e--------------------e-b.";
@@ -117,6 +117,14 @@ Mapa::Mapa(int id)
         map_s.setTexture(*Base);
 
             map_s.setTextureRect(sf::IntRect(16,320,16,16));
+            map_s.setPosition(mx*16,my*16);
+            escaleras.push_back(map_s);
+        }
+        if(blueprint.at(i) == 'w')
+        {
+        map_s.setTexture(*Base);
+
+            map_s.setTextureRect(sf::IntRect(48,48,16,16));
             map_s.setPosition(mx*16,my*16);
             escaleras.push_back(map_s);
         }

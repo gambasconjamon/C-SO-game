@@ -122,7 +122,7 @@ void Player::updatePlayer(double velx, double vely, sf::Time et, float of)
     {
         if(isTouchingEscalera())//Escalera
         {
-            cout<<"Tocando el suelo o escalera"<<endl;
+
             vel[1]=vely;
             of=0;
 
@@ -135,7 +135,7 @@ void Player::updatePlayer(double velx, double vely, sf::Time et, float of)
         }
         if(isTouchingTrampolin()&&of>0)//Trampolin: Si el offset es = 0, esta a la altura del trampolin, no se activa, solo lo hace cuando cae encime, que of>0
         {
-        cout<<"Offset del trampolin: "<<of<<endl;
+
             vel[1]=-100*4.5;
 
         }
@@ -154,7 +154,7 @@ void Player::updatePlayer(double velx, double vely, sf::Time et, float of)
 
 
     if(isTouchingPuerta()){
-     posNow[0] = crdPuerta.x;
+     posNow[0] = crdPuerta.x-20;
     posNow[1] = crdPuerta.y;
 
     }else{

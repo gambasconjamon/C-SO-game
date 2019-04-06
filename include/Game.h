@@ -5,7 +5,10 @@
 #include <iostream>
 #include <vector>
 #include <math.h>
+#include <sstream>
+#include <iomanip>
 #include <SFML/Graphics.hpp>
+
 using namespace std;
 
 
@@ -15,6 +18,8 @@ class Game
         Game(int resol_x, int resol_y, string gamename);
         virtual ~Game();
         void Gloop();
+        void updateDataScore(int i_score,int i_hiscore,int i_round,int i_time,int i_en,int i_bal,int i_lives);
+        void drawDataScore();
         void updateGameState(sf::Time et);
         void handleEvents();
         void handleInputs(sf::Keyboard::Key key, bool isPressed);
@@ -28,7 +33,7 @@ class Game
     private:
     static const sf::Time	timePerFrame;
     static const float Gscale;
-
+    static const int time_limit;
 
     ///JUGADOR
     Player *player;
@@ -40,8 +45,14 @@ class Game
 
 
     sf::Clock updateClock;
+    sf::Clock Timer;
+
     sf::Time elapsedTime;
     sf::RenderWindow * window;
+
+    int i_score,i_hiscore,i_round,i_time,i_en,i_bal,i_lives;
+    sf::Font font;
+    sf::Text t_score,t_hiscore,t_round,t_time,t_en,t_bal,t_lives;
 
     bool			eJump;
     bool			eDown;

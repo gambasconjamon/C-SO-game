@@ -2,6 +2,7 @@
 #define GAME_H
 #include "Player.h"
 #include "Mapa.h"
+#include "Enemigo.h"
 #include <iostream>
 #include <vector>
 #include <math.h>
@@ -24,6 +25,7 @@ class Game
         void handleEvents();
         void handleInputs(sf::Keyboard::Key key, bool isPressed);
         float handleCollision();
+        float handleECollision();
         void render(double i);//Se le pasa la interpolacion
 
 
@@ -41,7 +43,7 @@ class Game
     ///MAPA
     Mapa *mapa;
     ///...
-
+    Enemigo *enemigo;
 
 
     sf::Clock updateClock;

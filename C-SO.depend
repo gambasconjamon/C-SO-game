@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1554302570 source:/home/samuel/FV/C-SO/main.cpp
+1556127141 source:/home/samuel/FV/C-SO/main.cpp
 	<iostream>
 	<SFML/Graphics.hpp>
 	"Game.h"
@@ -7,7 +7,7 @@
 1553102088 source:/home/samuel/FV/C-SO/src/Enemy.cpp
 	"Enemy.h"
 
-1554555445 source:/home/samuel/FV/C-SO/src/Game.cpp
+1556130785 source:/home/samuel/FV/C-SO/src/Game.cpp
 	"Game.h"
 
 1553102136 source:/home/samuel/FV/C-SO/src/Item.cpp
@@ -22,7 +22,7 @@
 1553251248 source:/home/samuel/FV/C-SO/src/physicsState.cpp
 	"physicsState.h"
 
-1554308852 source:/home/samuel/FV/C-SO/src/Player.cpp
+1556127984 source:/home/samuel/FV/C-SO/src/Player.cpp
 	"Player.h"
 	<SFML/Graphics.hpp>
 
@@ -32,23 +32,39 @@
 1553102054 source:/home/samuel/FV/C-SO/src/GSprite.cpp
 	"GSprite.h"
 
-1553258430 /home/samuel/FV/C-SO/include/Game.h
+1556013695 /home/samuel/FV/C-SO/include/Game.h
 	"Player.h"
 	"Mapa.h"
+	"Enemigo.h"
 	<iostream>
 	<vector>
 	<math.h>
+	<sstream>
+	<iomanip>
 	<SFML/Graphics.hpp>
 
-1553252731 /home/samuel/FV/C-SO/include/Player.h
+1555055179 /home/samuel/FV/C-SO/include/Player.h
 	<iostream>
 	<vector>
 	<SFML/Graphics.hpp>
 
-1553258477 /home/samuel/FV/C-SO/include/Mapa.h
+1556034406 /home/samuel/FV/C-SO/include/Mapa.h
+	"Balancin.h"
 	<SFML/Graphics.hpp>
 	<iostream>
+	<string.h>
 
-1554555576 source:/home/samuel/FV/C-SO/src/Mapa.cpp
+1556131261 source:/home/samuel/FV/C-SO/src/Mapa.cpp
 	"Mapa.h"
+
+1554572412 /home/samuel/FV/C-SO/include/Balancin.h
+
+1556033925 /home/samuel/FV/C-SO/include/Enemigo.h
+	<iostream>
+	<vector>
+	<SFML/Graphics.hpp>
+
+1556131541 source:/home/samuel/FV/C-SO/src/Enemigo.cpp
+	"Enemigo.h"
+	<SFML/Graphics.hpp>
 

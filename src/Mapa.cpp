@@ -7,33 +7,35 @@ Mapa::Mapa(int id)
     blueprint += "bwwwwwwwwwwwwbbb-----------------------b.";
     blueprint += "bwwwwwwwwwwwwbbb-----------------------b.";
     blueprint += "bwwwwwwwbbbbbbbb----------f------------b.";
-    blueprint += "bbwwwwwwwbbbbbbb--------------------d--b.";
+    blueprint += "bbwwwwwwwbbbbbbbE-----j------j------dE-b.";
     blueprint += "bwwwwwwwbbbbbbbbepppppr------lpppppppepb.";
     blueprint += "bwwwwwwwwbbbbbbbe--------------------e-b.";
     blueprint += "bbbbbbbbbbbbbbbbe--------------------e-b.";
     blueprint += "b---------------e--------------------e-b.";
-    blueprint += "b---------------e--------------------e-b.";
+    blueprint += "b---------------E-------j---j--------E-b.";
     blueprint += "b---------------eppppppppp^-r-------lepb.";
     blueprint += "b---------------e--------------------e-b.";
     blueprint += "b---------------e--------------------e-b.";
     blueprint += "b---------------e--------------------e-b.";
-    blueprint += "b---------------e--------------------e-b.";
+    blueprint += "b-------j-j-----E--------j-----j--j--E-b.";
     blueprint += "beppppppr-flpppper-------ppppppp^-pppepb.";
     blueprint += "be--------------e--------------------e-b.";
     blueprint += "be--------------e----------f---------e-b.";
     blueprint += "be--------------e--------------------e-b.";
-    blueprint += "be--------------e---------------d----e-b.";
+    blueprint += "be--j----j------E----j--------j-d----E-b.";
     blueprint += "beppr----lppppppepp^-pr-------lppppppe-b.";
     blueprint += "be--------------e--------------------e-b.";
     blueprint += "be--------------e--------------------e-b.";
     blueprint += "be--------------e--------------------e-b.";
-    blueprint += "be--------------e--------------------e-b.";
+    blueprint += "be--j--j--------E----j---j--j---o----E-b.";
     blueprint += "beppp^-pr----lppeppppp--lp^-pppppppppepb.";
     blueprint += "b--f---------------------------------e-b.";
     blueprint += "b------------------------------------e-b.";
     blueprint += "b------------------------------------e-b.";
-    blueprint += "b------------------------------------e-b.";
+    blueprint += "b--------j--j---j--------------------E-b.";
     blueprint += "bppppppppp^-pppppppppppppppppppppppppppb.";
+
+
 
     Bg = new sf::Texture();
     Bg->loadFromFile("resources/Sunny-land-files/PNG/environment/layers/back.png");
@@ -80,6 +82,7 @@ Mapa::Mapa(int id)
     int mx=0,my=0,i=0;
     for( i=0; i< blueprint.size(); i++)
     {
+    map_s.setOrigin(0,0);
         if(blueprint.at(i) == 'p')
         {
             map_s.setTexture(*Base);
@@ -156,6 +159,40 @@ Mapa::Mapa(int id)
             puertas.push_back(map_s);
             cout<<puertas.size()<<endl;
         }
+        if(blueprint.at(i) == 'o')
+        {
+         map_s.setTexture(*Props);
+
+            map_s.setTextureRect(sf::IntRect(219,26,80,16));
+            map_s.setOrigin(40,8);
+            map_s.setPosition(mx*16,my*16-8);
+            balancines.push_back(map_s);
+            b_toggles.push_back(false);
+
+
+            cout<<balancines.size()<<endl;
+        }
+         if(blueprint.at(i) == 'j')
+        {
+
+            a_salto.push_back(sf::FloatRect(mx*16,my*16+16,16,8));
+            cout<<"a saltoo:"<<a_salto.size()<<endl;
+
+        }
+        if(blueprint.at(i) == 'E')
+        {
+
+            map_s.setTexture(*Base);
+            map_s.setTextureRect(sf::IntRect(112,160,16,16));
+            map_s.setPosition(mx*16,my*16);
+            escaleras.push_back(map_s);
+
+            a_escalera.push_back(sf::FloatRect(mx*16,my*16,16,16));
+            cout<<"a escalera:"<<a_escalera.size()<<endl;
+
+        }
+
+
 
         mx++;
         if(blueprint.at(i) == '.')
@@ -202,8 +239,22 @@ vector<sf::Sprite> Mapa::getElementos(int tipo)
     if(tipo==4)
         return items;
 
+    if(tipo==5)
+        return balancines;
+
+
+
 
 }
+vector< sf::Rect<float> > Mapa::getAccion(int tipo)
+{
+
+        if(tipo==6)
+        return a_salto;
+
+        if(tipo==7)
+        return a_escalera;
+        }
 
 void Mapa::drawMapa(sf::RenderWindow& w, double i)
 {
@@ -236,6 +287,32 @@ void Mapa::drawMapa(sf::RenderWindow& w, double i)
     for(int i=0; i<items.size(); i++)
     {
         w.draw(items[i]);
+
+
+    }
+    for(int i=0; i<balancines.size(); i++)
+    {
+        w.draw(balancines[i]);
+
+
+    }
+    for(int i=0; i<a_salto.size(); i++)
+    {
+        sf::RectangleShape action;
+        action.setSize(sf::Vector2f(a_salto[i].width,a_salto[i].height));
+    action.setFillColor(sf::Color(100, 250, 50));
+    action.setPosition(a_salto[i].left,a_salto[i].top);
+        w.draw(action);
+
+
+    }
+    for(int i=0; i<a_escalera.size(); i++)
+    {
+        sf::RectangleShape action;
+        action.setSize(sf::Vector2f(a_escalera[i].width,a_escalera[i].height));
+    action.setFillColor(sf::Color(100, 250, 50));
+    action.setPosition(a_escalera[i].left,a_escalera[i].top);
+        w.draw(action);
 
 
     }

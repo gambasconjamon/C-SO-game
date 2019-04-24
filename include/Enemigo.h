@@ -1,5 +1,5 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef ENEMIGO_H
+#define ENEMIGO_H
 #include <iostream>
 #include <vector>
 #include <SFML/Graphics.hpp>
@@ -8,13 +8,13 @@
 using namespace std;
 
 
-class Player
+class Enemigo
 {
     public:
-        Player();
-        virtual ~Player();
-        void updatePlayer(double velx, double vely, sf::Time et, float of);
-        void drawPlayer(sf::RenderWindow& w, double i);
+        Enemigo();
+        virtual ~Enemigo();
+        void updateEnemigo(sf::Time et, float of);
+        void drawEnemigo(sf::RenderWindow& w, double i);
         void setFrame(int f);
 
         vector<double> getPos();
@@ -26,13 +26,21 @@ class Player
         void setTouchingEscalera(bool t);
         void setTouchingTrampolin(bool t);
         void setTouchingPuerta(bool t);
+        void setDecidingJump(bool t);
+        void setDecidingStairs(bool t);
           void setUltPuerta(int d,sf::Vector2f c);
 
          bool isTouchingFloor();
          bool isTouchingEscalera();
          bool isTouchingTrampolin();
          bool isTouchingPuerta();
+         bool isDecidingJump();
+         bool isDecidingStairs();
          int getUltPuerta();
+
+         /**IA**/
+         //sf::Clock mover;
+         int dir;
 
 
 
@@ -54,11 +62,13 @@ class Player
     bool touchingPuerta;
     bool touchingLeft;
     bool touchingRight;
+    bool DecidingJump,DecidingStairs;
+    bool decidedj,decideds,sube,baja;
 
     vector<double> posNow,posBef,vel;
     vector<double> renderPos;
 
-    int dir,frame;
+//    int dir,frame;
     vector< vector< sf::Rect<int> > > frames;
 };
 

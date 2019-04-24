@@ -24,9 +24,9 @@ Player::Player()
     sprite.scale(1.2,1.2);
 
 
-    renderPos.push_back(0.0);
-    renderPos.push_back(0.0);
-    posNow.push_back(300.0),posNow.push_back(200.0);
+    renderPos.push_back(17.0);
+    renderPos.push_back(300.0);
+    posNow.push_back(17.0),posNow.push_back(150.0);
     posBef.push_back(0.0),posBef.push_back(0.0);
     vel.push_back(0.0),vel.push_back(0.0);
 
@@ -118,6 +118,18 @@ void Player::updatePlayer(double velx, double vely, sf::Time et, float of)
 
     posBef=posNow;
 
+   /**MAP DELIMITER**/
+    if((velx<0)&&posNow[0]<16){
+    velx=0;
+    dir=1;
+    }
+    if((velx>0)&&posNow[0]>624){
+    velx=0;
+    dir=0;
+    }
+    /**MAP DELIMITER**/
+
+
     if(isTouchingFloor()||isTouchingEscalera()||isTouchingTrampolin())
     {
         if(isTouchingEscalera())//Escalera
@@ -144,8 +156,13 @@ void Player::updatePlayer(double velx, double vely, sf::Time et, float of)
     else//aire
     {
         //cout<<"En el aire"<<endl;
-        if(vel[1]<150)
+        if(vel[1]<130)
             vel[1]+=980*et.asSeconds();
+
+         if(vel[1]>129)///Esto simula lo de que no puede avanzar mucho en el aire
+         velx=0;
+
+
     }
     vel[0]=velx;
 

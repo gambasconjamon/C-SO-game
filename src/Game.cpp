@@ -18,6 +18,7 @@ Game::Game(int resol_x, int resol_y, string gamename)
 
     player= new Player();
     mapa= new Mapa(0);
+    enemigo= new Enemigo();
 
     i_score=0,i_hiscore=300,i_round=00,i_time=100,i_en=5,i_bal=5,i_lives=2;
 
@@ -127,7 +128,7 @@ void Game::drawDataScore()
     t_score.setPosition(16.0,-8.0);
 
     t_hiscore.setFont(font);
-   std::stringstream ss1;  // #include <sstream>
+    std::stringstream ss1;  // #include <sstream>
     ss1 << setw(5) << setfill('0') << i_hiscore;
     t_hiscore.setString("hi-score  "+ss1.str()+"");
     t_hiscore.setCharacterSize(23);
@@ -195,32 +196,34 @@ void Game::drawDataScore()
     window->draw(t_time);
     window->draw(t_en);
     window->draw(t_bal);
-     window->draw(t_lives);
+    window->draw(t_lives);
 
 }
 
 void Game::updateGameState(sf::Time t)
 {
 
+
     double x=0,y=0,potencia=100;
     int frame=0;
 
     this->i_time=timelimit-Timer.getElapsedTime().asSeconds();
+    if(this->i_time==0)
+    {
+        exit(0);
+    }
     if(eRight)
     {
         x=potencia;
 
-        // player->setDir(2,frame);
     }
     if(eLeft)
     {
         x=-potencia;
 
-        //player->setDir(3,frame);//Decimos a donde esta mirando el sprite
     }
     if(eJump)
     {
-
 
         if(player->isTouchingFloor())
         {
@@ -230,12 +233,8 @@ void Game::updateGameState(sf::Time t)
     }
     if(eUp)
     {
-
-
-
         if(player->isTouchingEscalera())
             y=-potencia;
-
     }
     else if(eDown)
     {
@@ -246,6 +245,7 @@ void Game::updateGameState(sf::Time t)
 
     }
     player->updatePlayer(x,y,t,handleCollision()); //Handle collision devuelve el offset de interseccion
+    enemigo->updateEnemigo(t,handleECollision());
 
 
 }
@@ -319,13 +319,106 @@ float Game::handleCollision()
     return offsety;
 }
 
+float Game::handleECollision()
+{
+    int last=0;
+
+    float offsety=0;
+    enemigo->setTouchingFloor(false);
+    enemigo->setTouchingEscalera(false);
+    enemigo->setTouchingTrampolin(false);
+    enemigo->setTouchingPuerta(false);
+    for(int t=0 ; t<8; t++)
+    {
+        if(t<6)
+        {
+            for(int i=0; i<mapa->getElementos(t).size(); i++)
+            {
+
+                if(t<4&&enemigo->getColliderDown().intersects(mapa->getElementos(t)[i].getGlobalBounds()))
+                {
+
+                    if (t==0)
+                    {
+                        enemigo->setTouchingFloor(true);
+                        offsety= enemigo->getColliderDown().top-mapa->getElementos(t)[i].getGlobalBounds().top+1;
+                        //cout<<"Offset de colision "<<offset  << endl;
+                    }
+                    if (t==1)
+                    {
+                        enemigo->setTouchingEscalera(true);
+
+                    }
+                    if (t==2)
+                    {
+                        offsety= enemigo->getColliderDown().top-mapa->getElementos(t)[i].getGlobalBounds().top+1;
+                        enemigo->setTouchingTrampolin(true);
+
+                    }
+                    if (t==3)
+                    {
+
+                        offsety= enemigo->getColliderDown().top-mapa->getElementos(t)[i].getGlobalBounds().top+1;
+                        if(i==0 && (i+1)<mapa->getElementos(t).size())
+                        {
+                            last=i+1;
+                        }
+                        else
+                        {
+                            last=i-1;
+                        }
+                        enemigo->setUltPuerta(i,mapa->getElementos(t)[last].getPosition());
+                        enemigo->setTouchingPuerta(true);
+
+
+                    }
+
+
+
+
+
+                }
+
+
+            }
+        }
+
+        if (t>=6)
+        {
+            for(int i=0; i<mapa->getAccion(t).size(); i++)
+            {
+                if(enemigo->getColliderDown().intersects(mapa->getAccion(t)[i]))
+                {
+
+
+                    offsety= enemigo->getColliderDown().top-mapa->getAccion(t)[i].top+1;
+                    if(t==6)
+                    enemigo->setDecidingJump(true);
+
+                    if(t==7)
+                    enemigo->setDecidingStairs(true);
+
+
+
+                }
+            }
+
+        }
+    }
+
+    return offsety;
+}
+
 void Game::render(double i)
 {
     window->clear();
 
     //lvl.drawLevel(*ventana,i);
+
     mapa->drawMapa(*window,i);
+    enemigo->drawEnemigo(*window,i);
     player->drawPlayer(*window,i);
+
     this->drawDataScore();
     window->display();
 }

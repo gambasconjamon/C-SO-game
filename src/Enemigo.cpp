@@ -24,14 +24,15 @@ Enemigo::Enemigo()
     sprite.scale(1.2,1.2);
 
 
-    renderPos.push_back(17.0);
+    renderPos.push_back(100.0);
     renderPos.push_back(300.0);
-    posNow.push_back(17.0),posNow.push_back(150.0);
+    posNow.push_back(100.0),posNow.push_back(150.0);
     posBef.push_back(0.0),posBef.push_back(0.0);
     vel.push_back(0.0),vel.push_back(0.0);
 
 
     colliderDown= sf::FloatRect(posNow[0],posNow[1],15,10);
+    colliderTop= sf::FloatRect(posNow[0],posNow[1],15,10);
 
     dir= rand() % 1;
 //    frame=0;
@@ -131,37 +132,36 @@ sf::Rect<float>  Enemigo::getColliderDown()
     return colliderDown;
 }
 
-void Enemigo::updateEnemigo( sf::Time et, float of)
+void Enemigo::updateEnemigo(double x, double y, sf::Time et, float of)
 {
 
     double velx=0.0, vely=0.0, pow=70;
     posBef=posNow;
 
-    cout<<baja<<endl;
+
     /**AI SECTION**/
 
 
     if(isDecidingJump())
     {
-     sube=false;
+        sube=false;
         baja=false;
-        cout<<"zona de accion: salto"<<endl;
         if(!decidedj)
         {
             int salto = rand() % 2;
             if(!salto)
             {
-                cout<<"salto"<<endl;
+
                 vely-=pow*3.5;
             }
             else
             {
-                dir= rand() % 2;
-                cout<<"cambio dir"<<endl;
+                //dir= rand() % 2;
+
             }
             decidedj=true;
 
-            cout<<"decidido"<<endl;
+
         }
         DecidingJump=false;
 
@@ -174,7 +174,7 @@ void Enemigo::updateEnemigo( sf::Time et, float of)
 
     if(isDecidingStairs())
     {
-        cout<<"zona de accion: escalera"<<endl;
+
         if(!decideds)
         {
             sube=false;
@@ -186,16 +186,16 @@ void Enemigo::updateEnemigo( sf::Time et, float of)
                 int subeobaja = rand() % 2;
                 if(!subeobaja)
                 {
-                    cout<<"escala"<<endl;
+
                     vely-=pow;
                     sube=true;
                     baja=false;
                 }
                 else
                 {
-                    if(posNow[1]<464)
+                    if(posNow[1]>464)
                     {
-                        cout<<"baja"<<endl;
+
                         vely=pow;
                         sube=false;
                         baja=true;
@@ -204,12 +204,12 @@ void Enemigo::updateEnemigo( sf::Time et, float of)
             }
             else
             {
-                dir= rand() % 2;
-                cout<<"cambio dir"<<endl;
+                //dir= rand() % 2;
+
             }
             decideds=true;
 
-            cout<<"decidido"<<endl;
+
         }
         DecidingStairs=false;
 
@@ -220,20 +220,38 @@ void Enemigo::updateEnemigo( sf::Time et, float of)
         decideds=false;
     }
 
-
-    if(dir==1)
-        velx=pow;
+    if((abs((int)(x-posNow[0]))<30)&&(abs((int)(y-posNow[1]))<30))
+    {
+        if(x<posNow[0])
+        {
+            velx=-pow;
+        }
+        else
+        {
+            velx=pow;
+        }
+        if(y<posNow[1])
+            vely=-pow;
+        else
+            vely=pow;
+    }
     else
-        velx=-pow;
+    {
 
+        if(dir==1)
+            velx=pow;
+        else
+            velx=-pow;
+
+    }
     if(sube)
     {
-        vely-=pow;
+        vely=-pow;
         velx=0;
     }
     if(baja)
     {
-        vely+=pow;
+        vely=+pow;
         velx=0;
     }
 
@@ -324,11 +342,16 @@ void Enemigo::drawEnemigo(sf::RenderWindow& w, double i)
 
     colliderDown.top=renderPos[1]+9;
     colliderDown.left=renderPos[0]-8;
+     colliderTop.top=renderPos[1]-9;
+    colliderTop.left=renderPos[0]-8;
 
     collisionBox.setSize(sf::Vector2f(colliderDown.width,colliderDown.height));
     collisionBox.setFillColor(sf::Color(100, 250, 50));
     collisionBox.setPosition(colliderDown.left,colliderDown.top);
     w.draw(collisionBox);
+    collisionBox.setPosition(colliderTop.left,colliderTop.top);
+    w.draw(collisionBox);
+
 
 
 }

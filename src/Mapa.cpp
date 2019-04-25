@@ -165,9 +165,14 @@ Mapa::Mapa(int id)
 
             map_s.setTextureRect(sf::IntRect(219,26,80,16));
             map_s.setOrigin(40,8);
-            map_s.setPosition(mx*16,my*16-8);
+            map_s.setPosition(mx*16,my*16);
+            map_s.rotate(30);
             balancines.push_back(map_s);
+            b_rights.push_back(sf::FloatRect(mx*16+16,my*16+16,16,8));
+            b_lefts.push_back(sf::FloatRect(mx*16-32,my*16-16,16,8));
             b_toggles.push_back(false);
+            map_s.rotate(-30);
+
 
 
             cout<<balancines.size()<<endl;
@@ -187,7 +192,7 @@ Mapa::Mapa(int id)
             map_s.setPosition(mx*16,my*16);
             escaleras.push_back(map_s);
 
-            a_escalera.push_back(sf::FloatRect(mx*16,my*16,16,16));
+            a_escalera.push_back(sf::FloatRect(mx*16+4,my*16,8,16));
             cout<<"a escalera:"<<a_escalera.size()<<endl;
 
         }
@@ -246,13 +251,37 @@ vector<sf::Sprite> Mapa::getElementos(int tipo)
 
 
 }
+
+void Mapa::updateBalancin(int id){
+if(b_toggles[id]==true){
+b_toggles[id]=false;
+balancines[id].rotate(70);
+b_rights[id].top+=32;
+b_lefts[id].top-=32;
+}else{
+b_toggles[id]=true;
+balancines[id].rotate(-70);
+b_rights[id].top-=32;
+b_lefts[id].top+=32;
+}
+}
+bool Mapa::getBalancinTog(int id){
+
+
+return b_toggles[id];
+}
 vector< sf::Rect<float> > Mapa::getAccion(int tipo)
 {
 
-        if(tipo==6)
+         if(tipo==6)
+        return b_rights;
+ if(tipo==7)
+        return b_lefts;
+
+        if(tipo==8)
         return a_salto;
 
-        if(tipo==7)
+        if(tipo==9)
         return a_escalera;
         }
 
@@ -313,6 +342,26 @@ void Mapa::drawMapa(sf::RenderWindow& w, double i)
     action.setFillColor(sf::Color(100, 250, 50));
     action.setPosition(a_escalera[i].left,a_escalera[i].top);
         w.draw(action);
+
+
+    }
+    for(int i=0; i<b_rights.size(); i++)
+    {
+        sf::RectangleShape trampolindcha;
+        trampolindcha.setSize(sf::Vector2f(b_rights[i].width,b_rights[i].height));
+    trampolindcha.setFillColor(sf::Color(200, 150, 50));
+    trampolindcha.setPosition(b_rights[i].left,b_rights[i].top);
+        w.draw(trampolindcha);
+
+
+    }
+for(int i=0; i<b_lefts.size(); i++)
+    {
+        sf::RectangleShape trampolinizqda;
+        trampolinizqda.setSize(sf::Vector2f(b_lefts[i].width,b_lefts[i].height));
+    trampolinizqda.setFillColor(sf::Color(200, 150, 50));
+    trampolinizqda.setPosition(b_lefts[i].left,b_lefts[i].top);
+        w.draw(trampolinizqda);
 
 
     }

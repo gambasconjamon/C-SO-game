@@ -32,6 +32,7 @@ Player::Player()
 
 
     colliderDown= sf::FloatRect(posNow[0],posNow[1],15,10);
+     colliderTop= sf::FloatRect(posNow[0],posNow[1],15,10);
 
     dir=1;
     frame=0;
@@ -194,10 +195,14 @@ void Player::drawPlayer(sf::RenderWindow& w, double i)
 
     colliderDown.top=renderPos[1]+9;
     colliderDown.left=renderPos[0]-8;
+    colliderTop.top=renderPos[1]-9;
+    colliderTop.left=renderPos[0]-8;
 
     collisionBox.setSize(sf::Vector2f(colliderDown.width,colliderDown.height));
     collisionBox.setFillColor(sf::Color(100, 250, 50));
     collisionBox.setPosition(colliderDown.left,colliderDown.top);
+    w.draw(collisionBox);
+    collisionBox.setPosition(colliderTop.left,colliderTop.top);
     w.draw(collisionBox);
 
 

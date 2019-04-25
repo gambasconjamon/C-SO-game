@@ -22,8 +22,10 @@ class Game
         void updateDataScore(int i_score,int i_hiscore,int i_round,int i_time,int i_en,int i_bal,int i_lives);
         void drawDataScore();
         void updateGameState(sf::Time et);
+        void updateBalancines();
         void handleEvents();
         void handleInputs(sf::Keyboard::Key key, bool isPressed);
+        float handleBalancin();
         float handleCollision();
         float handleECollision();
         void render(double i);//Se le pasa la interpolacion

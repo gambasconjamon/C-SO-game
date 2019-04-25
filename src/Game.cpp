@@ -245,8 +245,13 @@ void Game::updateGameState(sf::Time t)
 
     }
     player->updatePlayer(x,y,t,handleCollision()); //Handle collision devuelve el offset de interseccion
-    enemigo->updateEnemigo(t,handleECollision());
+    enemigo->updateEnemigo(player->getPos()[0],player->getPos()[1],t,handleECollision());
+    handleBalancin();
 
+
+}
+void Game::updateBalancines()
+{
 
 }
 
@@ -303,6 +308,7 @@ float Game::handleCollision()
 
 
 
+
             }
             else if(player->getSprite().getGlobalBounds().intersects(mapa->getElementos(t)[i].getGlobalBounds()))
             {
@@ -328,7 +334,7 @@ float Game::handleECollision()
     enemigo->setTouchingEscalera(false);
     enemigo->setTouchingTrampolin(false);
     enemigo->setTouchingPuerta(false);
-    for(int t=0 ; t<8; t++)
+    for(int t=0 ; t<10; t++)
     {
         if(t<6)
         {
@@ -392,11 +398,14 @@ float Game::handleECollision()
 
 
                     offsety= enemigo->getColliderDown().top-mapa->getAccion(t)[i].top+1;
-                    if(t==6)
-                    enemigo->setDecidingJump(true);
 
-                    if(t==7)
-                    enemigo->setDecidingStairs(true);
+                    if(t==8)
+                        enemigo->setDecidingJump(true);
+
+                    if(t==9)
+                        enemigo->setDecidingStairs(true);
+
+
 
 
 
@@ -409,6 +418,85 @@ float Game::handleECollision()
     return offsety;
 }
 
+float Game::handleBalancin()
+{
+
+    bool endol=false,endor=false,enupl=false,enupr=false,pldol=false,pldor=false,plupl=false,plupr=false,tog=false;
+    int id=0;
+    for(int t=6 ; t<8; t++)
+    {
+        for(int i=0; i<mapa->getAccion(t).size(); i++)
+        {
+            if(player->getColliderDown().intersects(mapa->getAccion(t)[i]))
+            {
+                if(t==6)
+                {
+
+                    pldor=true;
+
+
+                }
+                if(t==7)
+                {
+                    pldol=true;
+                }
+
+                id=i;
+            }
+            if(player->getColliderTop().intersects(mapa->getAccion(t)[i]))
+            {
+                if(t==6)
+                {
+
+                    plupr=true;
+
+
+                }
+                if(t==7)
+                {
+                    plupl=true;
+                }
+id=i;
+            }
+            if(enemigo->getColliderDown().intersects(mapa->getAccion(t)[i]))
+            {
+                if(t==6)
+                {
+
+                    endor=true;
+
+
+                }
+                if(t==7)
+                {
+                    endol=true;
+                }
+id=i;
+            }
+            if(enemigo->getColliderTop().intersects(mapa->getAccion(t)[i]))
+            {
+                if(t==6)
+                {
+                    enupr=true;
+                }
+                if(t==7)
+                {
+                    enupl=true;
+                }
+id=i;
+            }
+        }
+    }
+
+//endor&&pldol&&mapa->getBalancinTog(id)==false
+    if(pldol&&mapa->getBalancinTog(id)==false){
+
+    mapa->updateBalancin(id);
+    }
+
+
+    return 0.0;
+}
 void Game::render(double i)
 {
     window->clear();

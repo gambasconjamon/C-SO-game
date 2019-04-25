@@ -1,6 +1,6 @@
 #ifndef MAPA_H
 #define MAPA_H
-#include "Balancin.h"
+
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string.h>
@@ -18,6 +18,8 @@ class Mapa
         vector<sf::Sprite> getElementos(int tipo);
         vector< sf::Rect<float> > getAccion(int tipo);
         void deleteElemento(int tipo,int i );
+        void updateBalancin(int id);
+        bool getBalancinTog(int id);
 
     protected:
 

@@ -99,6 +99,13 @@ vector<double> Player::getPos()
     return posNow;
 
 }
+void Player::setPos(sf::Vector2f posi)
+{
+    posNow[0]=posi.x;
+    posNow[1]=posi.y;
+    posBef=posNow;
+
+}
 sf::Sprite Player::getSprite()
 {
     return sprite;

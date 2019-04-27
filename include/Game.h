@@ -19,15 +19,14 @@ class Game
         Game(int resol_x, int resol_y, string gamename);
         virtual ~Game();
         void Gloop();
-        void updateDataScore(int i_score,int i_hiscore,int i_round,int i_time,int i_en,int i_bal,int i_lives);
         void drawDataScore();
         void updateGameState(sf::Time et);
-        void updateBalancines();
         void handleEvents();
+        void generateEnemigos();
         void handleInputs(sf::Keyboard::Key key, bool isPressed);
         float handleBalancin();
         float handleCollision();
-        float handleECollision();
+        float handleECollision(int i);
         void render(double i);//Se le pasa la interpolacion
 
 
@@ -45,7 +44,10 @@ class Game
     ///MAPA
     Mapa *mapa;
     ///...
-    Enemigo *enemigo;
+    vector < Enemigo* > enemigos;
+    sf::Clock Spawn;
+    sf::Clock Death;
+
 
 
     sf::Clock updateClock;

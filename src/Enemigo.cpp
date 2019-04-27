@@ -24,9 +24,9 @@ Enemigo::Enemigo()
     sprite.scale(1.2,1.2);
 
 
-    renderPos.push_back(100.0);
-    renderPos.push_back(300.0);
-    posNow.push_back(100.0),posNow.push_back(150.0);
+    renderPos.push_back(0.0);
+    renderPos.push_back(0.0);
+    posNow.push_back(0.0),posNow.push_back(0.0);
     posBef.push_back(0.0),posBef.push_back(0.0);
     vel.push_back(0.0),vel.push_back(0.0);
 
@@ -116,6 +116,13 @@ vector<double> Enemigo::getPos()
 {
 
     return posNow;
+
+}
+void Enemigo::setPos(sf::Vector2f posi)
+{
+    posNow[0]=posi.x;
+    posNow[1]=posi.y;
+    posBef=posNow;
 
 }
 sf::Sprite Enemigo::getSprite()
@@ -220,7 +227,7 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, float of)
         decideds=false;
     }
 
-    if((abs((int)(x-posNow[0]))<30)&&(abs((int)(y-posNow[1]))<30))
+    if((abs((int)(x-posNow[0]))<60)&&(abs((int)(y-posNow[1]))<60))
     {
         if(x<posNow[0])
         {
@@ -230,10 +237,10 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, float of)
         {
             velx=pow;
         }
-        if(y<posNow[1])
+        /*if(y<posNow[1])
             vely=-pow;
         else
-            vely=pow;
+            vely=pow;*/
     }
     else
     {

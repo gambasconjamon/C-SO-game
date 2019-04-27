@@ -20,6 +20,8 @@ class Mapa
         void deleteElemento(int tipo,int i );
         void updateBalancin(int id);
         bool getBalancinTog(int id);
+        sf::Vector2f getSpawn(int id);
+        int getNumSpawns(){return spawn.size();}
 
     protected:
 
@@ -45,6 +47,8 @@ class Mapa
 
     vector< sf::Rect<float> > a_escalera;
     vector< sf::Rect<float> > a_salto;
+
+    vector<sf::Vector2f> spawn;
     ///...
 };
 

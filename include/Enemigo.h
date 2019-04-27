@@ -18,6 +18,7 @@ class Enemigo
         void setFrame(int f);
 
         vector<double> getPos();
+        void setPos(sf::Vector2f posi);
         sf::Sprite getSprite();
         sf::Rect<float> getColliderTop();
         sf::Rect<float>  getColliderDown();
@@ -39,7 +40,6 @@ class Enemigo
          int getUltPuerta();
 
          /**IA**/
-         //sf::Clock mover;
          int dir;
 
 

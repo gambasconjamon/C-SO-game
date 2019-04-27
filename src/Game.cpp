@@ -18,7 +18,6 @@ Game::Game(int resol_x, int resol_y, string gamename)
 
     player= new Player();
     mapa= new Mapa(0);
-    enemigo= new Enemigo();
 
     i_score=0,i_hiscore=300,i_round=00,i_time=100,i_en=5,i_bal=5,i_lives=2;
 
@@ -55,9 +54,13 @@ void Game::Gloop()
 
             //updateamos dependiendo del tiempo pasado
 
-
+           // if(Death.getElapsedTime().asSeconds()>5){
 
             updateGameState(elapsedTime);
+           // }else{
+            //player->setPos(sf::Vector2f(240,240));
+            //Spawn.restart();
+            //}
         }
 
         //Se calcula el porcentaje de interpolacion
@@ -107,11 +110,7 @@ void Game::handleInputs(sf::Keyboard::Key key, bool isPressed)
 
 }
 
-void Game::updateDataScore(int i_score,int i_hiscore,int i_round,int i_time,int i_en,int i_bal,int i_lives)
-{
 
-
-}
 void Game::drawDataScore()
 {
 
@@ -199,7 +198,18 @@ void Game::drawDataScore()
     window->draw(t_lives);
 
 }
+void Game::generateEnemigos(){
 
+int i= rand() % mapa->getNumSpawns();
+
+if(enemigos.size()<2){
+Enemigo* auxen= new Enemigo();
+cout<<"Spawnea en"<< mapa->getSpawn(i).x <<" , "<<mapa->getSpawn(i).y<<endl;
+auxen->setPos(mapa->getSpawn(i));
+enemigos.push_back(auxen);
+}
+
+}
 void Game::updateGameState(sf::Time t)
 {
 
@@ -245,13 +255,19 @@ void Game::updateGameState(sf::Time t)
 
     }
     player->updatePlayer(x,y,t,handleCollision()); //Handle collision devuelve el offset de interseccion
-    enemigo->updateEnemigo(player->getPos()[0],player->getPos()[1],t,handleECollision());
-    handleBalancin();
+    if(enemigos.size()!=0)
+    {
+        for(unsigned i=0; i< enemigos.size(); i++)
+        {
+            enemigos[i]->updateEnemigo(player->getPos()[0],player->getPos()[1],t,handleECollision(i));
+        }
+    }
+    if(Spawn.getElapsedTime().asSeconds()>5){
+    generateEnemigos();
+    Spawn.restart();
+    }
+    //handleBalancin();
 
-
-}
-void Game::updateBalancines()
-{
 
 }
 
@@ -264,17 +280,19 @@ float Game::handleCollision()
     player->setTouchingEscalera(false);
     player->setTouchingTrampolin(false);
     player->setTouchingPuerta(false);
-    for(int t=0 ; t<5; t++)
+    for(int t=0 ; t<6; t++)
         for(int i=0; i<mapa->getElementos(t).size(); i++)
         {
 
-            if(t<4&&player->getColliderDown().intersects(mapa->getElementos(t)[i].getGlobalBounds()))
+            if(t<5&&player->getColliderDown().intersects(mapa->getElementos(t)[i].getGlobalBounds()))
             {
 
                 if (t==0)
                 {
                     player->setTouchingFloor(true);
                     offsety= player->getColliderDown().top-mapa->getElementos(t)[i].getGlobalBounds().top+1;
+
+
                     //cout<<"Offset de colision "<<offset  << endl;
                 }
                 if (t==1)
@@ -312,10 +330,10 @@ float Game::handleCollision()
             }
             else if(player->getSprite().getGlobalBounds().intersects(mapa->getElementos(t)[i].getGlobalBounds()))
             {
-                if (t==4)
+                if (t==5)
                 {
 
-                    mapa->deleteElemento(4,i);
+                    mapa->deleteElemento(5,i);
                     this->i_score+=40;
                 }
             }
@@ -325,95 +343,90 @@ float Game::handleCollision()
     return offsety;
 }
 
-float Game::handleECollision()
+float Game::handleECollision(int en)
 {
     int last=0;
-
     float offsety=0;
-    enemigo->setTouchingFloor(false);
-    enemigo->setTouchingEscalera(false);
-    enemigo->setTouchingTrampolin(false);
-    enemigo->setTouchingPuerta(false);
-    for(int t=0 ; t<10; t++)
-    {
-        if(t<6)
-        {
-            for(int i=0; i<mapa->getElementos(t).size(); i++)
+
+            enemigos[en]->setTouchingFloor(false);
+            enemigos[en]->setTouchingEscalera(false);
+            enemigos[en]->setTouchingTrampolin(false);
+            enemigos[en]->setTouchingPuerta(false);
+            for(int t=0 ; t<10; t++)
             {
-
-                if(t<4&&enemigo->getColliderDown().intersects(mapa->getElementos(t)[i].getGlobalBounds()))
+                if(t<6)
                 {
-
-                    if (t==0)
-                    {
-                        enemigo->setTouchingFloor(true);
-                        offsety= enemigo->getColliderDown().top-mapa->getElementos(t)[i].getGlobalBounds().top+1;
-                        //cout<<"Offset de colision "<<offset  << endl;
-                    }
-                    if (t==1)
-                    {
-                        enemigo->setTouchingEscalera(true);
-
-                    }
-                    if (t==2)
-                    {
-                        offsety= enemigo->getColliderDown().top-mapa->getElementos(t)[i].getGlobalBounds().top+1;
-                        enemigo->setTouchingTrampolin(true);
-
-                    }
-                    if (t==3)
+                    for(int i=0; i<mapa->getElementos(t).size(); i++)
                     {
 
-                        offsety= enemigo->getColliderDown().top-mapa->getElementos(t)[i].getGlobalBounds().top+1;
-                        if(i==0 && (i+1)<mapa->getElementos(t).size())
+                        if(t<4&&enemigos[en]->getColliderDown().intersects(mapa->getElementos(t)[i].getGlobalBounds()))
                         {
-                            last=i+1;
+
+                            if (t==0)
+                            {
+                                enemigos[en]->setTouchingFloor(true);
+                                offsety= enemigos[en]->getColliderDown().top-mapa->getElementos(t)[i].getGlobalBounds().top+1;
+                                //cout<<"Offset de colision "<<offset  << endl;
+                            }
+                            if (t==1)
+                            {
+                                enemigos[en]->setTouchingEscalera(true);
+
+                            }
+                            if (t==2)
+                            {
+                                offsety= enemigos[en]->getColliderDown().top-mapa->getElementos(t)[i].getGlobalBounds().top+1;
+                                enemigos[en]->setTouchingTrampolin(true);
+
+                            }
+                            if (t==3)
+                            {
+
+                                offsety= enemigos[en]->getColliderDown().top-mapa->getElementos(t)[i].getGlobalBounds().top+1;
+                                if(i==0 && (i+1)<mapa->getElementos(t).size())
+                                {
+                                    last=i+1;
+                                }
+                                else
+                                {
+                                    last=i-1;
+                                }
+                                enemigos[en]->setUltPuerta(i,mapa->getElementos(t)[last].getPosition());
+                                enemigos[en]->setTouchingPuerta(true);
+
+
+                            }
+
+
+
+
+
                         }
-                        else
-                        {
-                            last=i-1;
-                        }
-                        enemigo->setUltPuerta(i,mapa->getElementos(t)[last].getPosition());
-                        enemigo->setTouchingPuerta(true);
 
 
                     }
-
-
-
-
-
                 }
 
-
-            }
-        }
-
-        if (t>=6)
-        {
-            for(int i=0; i<mapa->getAccion(t).size(); i++)
-            {
-                if(enemigo->getColliderDown().intersects(mapa->getAccion(t)[i]))
+                if (t>=6)
                 {
+                    for(int i=0; i<mapa->getAccion(t).size(); i++)
+                    {
+                        if(enemigos[en]->getColliderDown().intersects(mapa->getAccion(t)[i]))
+                        {
 
 
-                    offsety= enemigo->getColliderDown().top-mapa->getAccion(t)[i].top+1;
+                            offsety= enemigos[en]->getColliderDown().top-mapa->getAccion(t)[i].top+1;
 
-                    if(t==8)
-                        enemigo->setDecidingJump(true);
+                            if(t==8)
+                                enemigos[en]->setDecidingJump(true);
 
-                    if(t==9)
-                        enemigo->setDecidingStairs(true);
-
-
-
-
+                            if(t==9)
+                                enemigos[en]->setDecidingStairs(true);
+                        }
+                    }
 
                 }
             }
-
-        }
-    }
 
     return offsety;
 }
@@ -422,7 +435,8 @@ float Game::handleBalancin()
 {
 
     bool endol=false,endor=false,enupl=false,enupr=false,pldol=false,pldor=false,plupl=false,plupr=false,tog=false;
-    int id=0;
+    int id=0,ene=0;
+
     for(int t=6 ; t<8; t++)
     {
         for(int i=0; i<mapa->getAccion(t).size(); i++)
@@ -443,7 +457,7 @@ float Game::handleBalancin()
 
                 id=i;
             }
-            if(player->getColliderTop().intersects(mapa->getAccion(t)[i]))
+            else if(player->getColliderTop().intersects(mapa->getAccion(t)[i]))
             {
                 if(t==6)
                 {
@@ -456,42 +470,92 @@ float Game::handleBalancin()
                 {
                     plupl=true;
                 }
-id=i;
+                id=i;
             }
-            if(enemigo->getColliderDown().intersects(mapa->getAccion(t)[i]))
-            {
-                if(t==6)
-                {
 
-                    endor=true;
+                for(unsigned en=0; en< enemigos.size(); en++)
+                {
+                    if(enemigos[en]->getColliderDown().intersects(mapa->getAccion(t)[i]))
+                    {
+                        if(t==6)
+                        {
+
+                            endor=true;
 
 
+                        }
+                        if(t==7)
+                        {
+                            endol=true;
+                        }
+                       id=i;
+                    ene=en;
+                    en=enemigos.size();
+                    }
+                    else if(enemigos[en]->getColliderTop().intersects(mapa->getAccion(t)[i]))
+                    {
+                        if(t==6)
+                        {
+                            enupr=true;
+                        }
+                        if(t==7)
+                        {
+                            enupl=true;
+                        }
+                        id=i;
+                        ene=en;
+                        en=enemigos.size();
+                    }
                 }
-                if(t==7)
-                {
-                    endol=true;
-                }
-id=i;
-            }
-            if(enemigo->getColliderTop().intersects(mapa->getAccion(t)[i]))
-            {
-                if(t==6)
-                {
-                    enupr=true;
-                }
-                if(t==7)
-                {
-                    enupl=true;
-                }
-id=i;
-            }
+
         }
     }
 
-//endor&&pldol&&mapa->getBalancinTog(id)==false
-    if(pldol&&mapa->getBalancinTog(id)==false){
 
-    mapa->updateBalancin(id);
+//endor&&pldol&&mapa->getBalancinTog(id)==false
+    if(mapa->getBalancinTog(id)==false)
+    {
+
+        if(pldol)
+        {
+            if(endor||enupl)
+            {
+                cout<<"Enemigo muere"<<endl;
+                enemigos.erase(enemigos.begin()+ene);
+            }
+            mapa->updateBalancin(id);
+        }
+        if(endol)
+        {
+            if(pldor||plupl)
+            {
+                cout<<"Player muere"<<endl;
+                Death.restart();
+            }
+            mapa->updateBalancin(id);
+        }
+    }
+    if(mapa->getBalancinTog(id)==true)
+    {
+
+        if(pldor)
+        {
+            if(endol||enupr)
+            {
+                cout<<"Enemigo muere: "<<ene<<" de "<<enemigos.size()-1<<endl;
+                enemigos.erase(enemigos.begin()+ene);
+            }
+            mapa->updateBalancin(id);
+        }
+        if(endor)
+        {
+            if(pldol||plupr)
+            {
+                cout<<"Player muere"<<endl;
+                Death.restart();
+            }
+            mapa->updateBalancin(id);
+        }
     }
 
 
@@ -504,7 +568,13 @@ void Game::render(double i)
     //lvl.drawLevel(*ventana,i);
 
     mapa->drawMapa(*window,i);
-    enemigo->drawEnemigo(*window,i);
+    if(enemigos.size()!=0)//Cuidado con esto, si no hay enemigos no te deja updatear el balancin
+            {
+                for(unsigned en=0; en< enemigos.size(); en++)
+                {
+    enemigos[en]->drawEnemigo(*window,i);
+    }
+    }
     player->drawPlayer(*window,i);
 
     this->drawDataScore();

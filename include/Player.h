@@ -13,7 +13,7 @@ class Player
     public:
         Player();
         virtual ~Player();
-        void updatePlayer(double velx, double vely, sf::Time et, float of);
+        void updatePlayer(double velx, double vely, sf::Time et, sf::Vector2f of);
         void drawPlayer(sf::RenderWindow& w, double i);
         void setFrame(int f);
 

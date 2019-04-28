@@ -13,7 +13,7 @@ class Enemigo
     public:
         Enemigo();
         virtual ~Enemigo();
-        void updateEnemigo(double x, double y,sf::Time et, float of);
+        void updateEnemigo(double x, double y, sf::Time et, sf::Vector2f of);
         void drawEnemigo(sf::RenderWindow& w, double i);
         void setFrame(int f);
 

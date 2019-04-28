@@ -7,7 +7,7 @@
 1553102088 source:/home/samuel/FV/C-SO/src/Enemy.cpp
 	"Enemy.h"
 
-1556390552 source:/home/samuel/FV/C-SO/src/Game.cpp
+1556453733 source:/home/samuel/FV/C-SO/src/Game.cpp
 	"Game.h"
 
 1553102136 source:/home/samuel/FV/C-SO/src/Item.cpp
@@ -22,7 +22,7 @@
 1553251248 source:/home/samuel/FV/C-SO/src/physicsState.cpp
 	"physicsState.h"
 
-1556388162 source:/home/samuel/FV/C-SO/src/Player.cpp
+1556450136 source:/home/samuel/FV/C-SO/src/Player.cpp
 	"Player.h"
 	<SFML/Graphics.hpp>
 
@@ -54,7 +54,7 @@
 	<iostream>
 	<string.h>
 
-1556386935 source:/home/samuel/FV/C-SO/src/Mapa.cpp
+1556450247 source:/home/samuel/FV/C-SO/src/Mapa.cpp
 	"Mapa.h"
 
 1554572412 /home/samuel/FV/C-SO/include/Balancin.h
@@ -64,7 +64,7 @@
 	<vector>
 	<SFML/Graphics.hpp>
 
-1556368184 source:/home/samuel/FV/C-SO/src/Enemigo.cpp
+1556452876 source:/home/samuel/FV/C-SO/src/Enemigo.cpp
 	"Enemigo.h"
 	<SFML/Graphics.hpp>
 

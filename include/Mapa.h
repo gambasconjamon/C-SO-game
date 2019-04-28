@@ -34,13 +34,16 @@ class Mapa
     sf::Texture *Props;
     sf::Texture *Bg;
     sf::Sprite sbg;
-    vector<sf::Sprite> plataformas; //0
-    vector<sf::Sprite> escaleras; //1
-    vector<sf::Sprite> trampolines;//2
-    vector<sf::Sprite> puertas;//3
-    vector<sf::Sprite> items;//4
 
-    vector<sf::Sprite> balancines;//5
+
+    vector<sf::Sprite> plataformas; //1
+    vector<sf::Sprite> escaleras; //2
+    vector<sf::Sprite> trampolines;//3
+    vector<sf::Sprite> puertas;//4
+    vector<sf::Sprite> paredes; //5
+    vector<sf::Sprite> items;//6
+
+    vector<sf::Sprite> balancines;//6
     vector<bool> b_toggles;//5.1
     vector< sf::Rect<float> > b_rights;//5.2
     vector< sf::Rect<float> > b_lefts;//5.3

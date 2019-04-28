@@ -4,35 +4,35 @@ Mapa::Mapa(int id)
 {
     //Aqui ira un loop que genera el mapa, mientras voy a hacer solo una plataforma
 
-    blueprint += "bwwwwwwwwwwwwbbb-----------------------b.";
-    blueprint += "bwwwwwwwwwwwwbbb-----------------------b.";
-    blueprint += "bwwwwwwwbbbbbbbb----------f------------b.";
-    blueprint += "bbwwwwwwwbbbbbbbE--o--j------j----s-dE-b.";
-    blueprint += "bwwwwwwwbbbbbbbbepppppr------lpppppppepb.";
-    blueprint += "bwwwwwwwwbbbbbbbe--------------------e-b.";
-    blueprint += "bbbbbbbbbbbbbbbbe--------------------e-b.";
+    blueprint += "bwwwwwwwwwwwwbb------------------------b.";
+    blueprint += "bwwwwwwwwwwwwbb------------------------b.";
+    blueprint += "bwwwwwwwbbbbbbb-----------f------------b.";
+    blueprint += "bbwwwwwwwbbbbbb-E--o--j------j----s-dE-b.";
+    blueprint += "bwwwwwwwbbbbbbbpepppppr------lpppppppepb.";
+    blueprint += "bwwwwwwwwbbbbbb-e--------------------e-b.";
+    blueprint += "bbbbbbbbbbbbbbb-e--------------------e-b.";
     blueprint += "b---------------e--------------------e-b.";
     blueprint += "b---------------E-------j---j--------E-b.";
     blueprint += "b---------------eppppppppp^-r-------lepb.";
     blueprint += "b---------------e--------------------e-b.";
     blueprint += "b---------------e--------------------e-b.";
     blueprint += "b---------------e--------------------e-b.";
-    blueprint += "b-------j-j-----E--------j--o--j--j--E-b.";
+    blueprint += "b-------j--j----E--------j--o--j--j--E-b.";
     blueprint += "beppppppr-flpppper-------ppppppp^-pppepb.";
     blueprint += "be--------------e--------------------e-b.";
     blueprint += "be--------------e----------f---------e-b.";
     blueprint += "be--------------e--------------------e-b.";
-    blueprint += "be--j----j---o--E----j--------j-d-s--E-b.";
+    blueprint += "be--j----j-j-o-jE----j--------j-d-s--E-b.";
     blueprint += "beppr----lppppppepp^-pr-------lppppppe-b.";
     blueprint += "be--------------e--------------------e-b.";
     blueprint += "be--------------e--------------------e-b.";
     blueprint += "be--------------e--------------------e-b.";
-    blueprint += "be--j--j--------E----j---j--j---o----E-b.";
+    blueprint += "be--j--j--------E----j---j--jj--o--j-E-b.";
     blueprint += "beppp^-pr----lppeppppp--lp^-pppppppppepb.";
     blueprint += "b--f---------------------------------e-b.";
     blueprint += "b------------------------------------e-b.";
     blueprint += "b------------------------------------e-b.";
-    blueprint += "b--------j--j---j----------o---------E-b.";
+    blueprint += "b--------j--j---j-------j--o--j------E-b.";
     blueprint += "bppppppppp^-pppppppppppppppppppppppppppb.";
 
 
@@ -121,7 +121,7 @@ Mapa::Mapa(int id)
 
             map_s.setTextureRect(sf::IntRect(16,320,16,16));
             map_s.setPosition(mx*16,my*16);
-            escaleras.push_back(map_s);
+            paredes.push_back(map_s);
         }
         if(blueprint.at(i) == 'w')
         {
@@ -129,7 +129,7 @@ Mapa::Mapa(int id)
 
             map_s.setTextureRect(sf::IntRect(48,48,16,16));
             map_s.setPosition(mx*16,my*16);
-            escaleras.push_back(map_s);
+            paredes.push_back(map_s);
         }
 
         if(blueprint.at(i) == 'f')
@@ -216,17 +216,11 @@ Mapa::Mapa(int id)
 
 }
 
-sf::Sprite Mapa::getElemento(int id, int tipo)
-{
-
-    return plataformas[id];
-
-}
 void Mapa::deleteElemento(int tipo,int i )
 {
     cout<<items.size()<<endl;
 
-    if( tipo==5 && items.size()!=0)
+    if( tipo==6 && items.size()!=0)
     {
         cout<<items.size()<<endl;
         items.erase(items.begin()+i);
@@ -252,6 +246,8 @@ vector<sf::Sprite> Mapa::getElementos(int tipo)
         return balancines;
 
     if(tipo==5)
+    return paredes;
+    if(tipo==6)
     return items;
 
 
@@ -286,15 +282,15 @@ bool Mapa::getBalancinTog(int id)
 vector< sf::Rect<float> > Mapa::getAccion(int tipo)
 {
 
-    if(tipo==6)
-        return b_rights;
     if(tipo==7)
+        return b_rights;
+    if(tipo==8)
         return b_lefts;
 
-    if(tipo==8)
+    if(tipo==9)
         return a_salto;
 
-    if(tipo==9)
+    if(tipo==10)
         return a_escalera;
 }
 
@@ -340,6 +336,12 @@ void Mapa::drawMapa(sf::RenderWindow& w, double i)
     for(int i=0; i<balancines.size(); i++)
     {
         w.draw(balancines[i]);
+
+
+    }
+    for(int i=0; i<paredes.size(); i++)
+    {
+        w.draw(paredes[i]);
 
 
     }

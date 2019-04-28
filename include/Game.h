@@ -25,8 +25,8 @@ class Game
         void generateEnemigos();
         void handleInputs(sf::Keyboard::Key key, bool isPressed);
         float handleBalancin();
-        float handleCollision();
-        float handleECollision(int i);
+        sf::Vector2f handleCollision();
+        sf::Vector2f  handleECollision(int i);
         void render(double i);//Se le pasa la interpolacion
 
 

@@ -120,7 +120,7 @@ sf::Rect<float>  Player::getColliderDown()
     return colliderDown;
 }
 
-void Player::updatePlayer(double velx, double vely, sf::Time et, float of)
+void Player::updatePlayer(double velx, double vely, sf::Time et,sf::Vector2f of)
 {
 
 
@@ -137,14 +137,21 @@ void Player::updatePlayer(double velx, double vely, sf::Time et, float of)
     }
     /**MAP DELIMITER**/
 
-
+    if(of.x<7&&of.x>0){
+    cout<<"pared izquierda?"<<endl;
+    velx+=200;
+    }
+    if(of.x>-22&&of.x<-10){
+    cout<<"pared derecha?"<<endl;
+    velx-=200;
+    }
     if(isTouchingFloor()||isTouchingEscalera()||isTouchingTrampolin())
     {
         if(isTouchingEscalera())//Escalera
         {
 
             vel[1]=vely;
-            of=0;
+            of.y=0;
 
         }
 
@@ -153,7 +160,7 @@ void Player::updatePlayer(double velx, double vely, sf::Time et, float of)
             vel[1]=vely;
 
         }
-        if(isTouchingTrampolin()&&of>0)//Trampolin: Si el offset es = 0, esta a la altura del trampolin, no se activa, solo lo hace cuando cae encime, que of>0
+        if(isTouchingTrampolin()&&of.y>0)//Trampolin: Si el offset es = 0, esta a la altura del trampolin, no se activa, solo lo hace cuando cae encime, que of>0
         {
 
             vel[1]=-100*4.5;
@@ -184,7 +191,7 @@ void Player::updatePlayer(double velx, double vely, sf::Time et, float of)
 
     }else{
     posNow[0] += vel[0]*et.asSeconds();
-    posNow[1] += vel[1]*et.asSeconds()-of;
+    posNow[1] += vel[1]*et.asSeconds()-of.y;
     }
 
 
@@ -202,7 +209,7 @@ void Player::drawPlayer(sf::RenderWindow& w, double i)
 
     colliderDown.top=renderPos[1]+9;
     colliderDown.left=renderPos[0]-8;
-    colliderTop.top=renderPos[1]-9;
+    colliderTop.top=renderPos[1]-16;
     colliderTop.left=renderPos[0]-8;
 
     collisionBox.setSize(sf::Vector2f(colliderDown.width,colliderDown.height));

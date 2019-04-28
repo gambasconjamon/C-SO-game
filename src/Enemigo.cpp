@@ -139,7 +139,7 @@ sf::Rect<float>  Enemigo::getColliderDown()
     return colliderDown;
 }
 
-void Enemigo::updateEnemigo(double x, double y, sf::Time et, float of)
+void Enemigo::updateEnemigo(double x, double y, sf::Time et, sf::Vector2f of)
 {
 
     double velx=0.0, vely=0.0, pow=70;
@@ -237,10 +237,7 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, float of)
         {
             velx=pow;
         }
-        /*if(y<posNow[1])
-            vely=-pow;
-        else
-            vely=pow;*/
+
     }
     else
     {
@@ -262,11 +259,6 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, float of)
         velx=0;
     }
 
-
-    /**AI SECTION**/
-
-
-
     /**MAP DELIMITER**/
     if((velx<0)&&posNow[0]<16)
     {
@@ -279,6 +271,20 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, float of)
         dir=0;
     }
     /**MAP DELIMITER**/
+    if(of.x<7&&of.x>0){
+    cout<<"pared izquierda?"<<endl;
+    velx+=200;
+     dir=1;
+    }
+    if(of.x>-22&&of.x<-10){
+    cout<<"pared derecha?"<<endl;
+    velx-=200;
+     dir=0;
+    }
+    /**AI SECTION**/
+
+
+
 
 
     if(isTouchingFloor()||isTouchingEscalera()||isTouchingTrampolin())
@@ -287,7 +293,7 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, float of)
         {
 
             vel[1]=vely;
-            of=0;
+            of.y=0;
 
 
         }
@@ -297,7 +303,7 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, float of)
             vel[1]=vely;
 
         }
-        if(isTouchingTrampolin()&&of>0)//Trampolin: Si el offset es = 0, esta a la altura del trampolin, no se activa, solo lo hace cuando cae encime, que of>0
+        if(isTouchingTrampolin()&&of.y>0)//Trampolin: Si el offset es = 0, esta a la altura del trampolin, no se activa, solo lo hace cuando cae encime, que of>0
         {
 
             vel[1]=-100*4.5;
@@ -331,7 +337,7 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, float of)
     else
     {
         posNow[0] += vel[0]*et.asSeconds();
-        posNow[1] += vel[1]*et.asSeconds()-of;
+        posNow[1] += vel[1]*et.asSeconds()-of.y;
     }
 
 
@@ -349,7 +355,7 @@ void Enemigo::drawEnemigo(sf::RenderWindow& w, double i)
 
     colliderDown.top=renderPos[1]+9;
     colliderDown.left=renderPos[0]-8;
-     colliderTop.top=renderPos[1]-9;
+     colliderTop.top=renderPos[1]-16;
     colliderTop.left=renderPos[0]-8;
 
     collisionBox.setSize(sf::Vector2f(colliderDown.width,colliderDown.height));

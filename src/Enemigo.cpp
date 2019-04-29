@@ -330,8 +330,13 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, sf::Vector2f of)
 
     if(isTouchingPuerta())
     {
-        posNow[0] = crdPuerta.x-20;
-        posNow[1] = crdPuerta.y;
+       if(of.x<0)
+     posNow[0] = crdPuerta.x+32;
+     else
+     posNow[0] = crdPuerta.x-32;
+
+    posNow[1] = crdPuerta.y;
+       posBef=posNow;
 
     }
     else

@@ -1,14 +1,16 @@
 #include "Game.h"
 using namespace std;
 
-/** GLOBAL **/
-const sf::Time Game::timePerFrame = sf::milliseconds(1000.0/25.0);
-const float Game::Gscale = 1.5;
-const int timelimit = 100;
-/** GLOBAL **/
+
 
 Game::Game(int resol_x, int resol_y, string gamename)
 {
+
+/** GLOBAL **/
+timePerFrame = sf::milliseconds(1000.0/25.0);
+Gscale = 1.5;
+time_limit = 100;
+/** GLOBAL **/
 
     //ctor
     window= new sf::RenderWindow(sf::VideoMode(resol_x,resol_y),gamename);
@@ -38,7 +40,7 @@ Game::Game(int resol_x, int resol_y, string gamename)
 
 }
 
-void Game::Gloop()
+int Game::Gloop()
 {
 
     while (window->isOpen())
@@ -53,16 +55,23 @@ void Game::Gloop()
             elapsedTime=updateClock.restart();
 
             //updateamos dependiendo del tiempo pasado
-
-            if(Death.getElapsedTime().asSeconds()>5)
+            if(i_lives>=0&&i_time>=0&&i_en>=0)
             {
+                if(Death.getElapsedTime().asSeconds()>2)
+                {
 
-                updateGameState(elapsedTime);
+                    updateGameState(elapsedTime);
+                }
+                else
+                {
+                    player->setPos(sf::Vector2f(240,420));
+                    Spawn.restart();
+                    enemigos.clear();
+                }
             }
             else
             {
-                player->setPos(sf::Vector2f(240,240));
-                Spawn.restart();
+                return i_en;
             }
         }
 
@@ -73,6 +82,8 @@ void Game::Gloop()
         render(interpolation);
 
     }
+
+    return 0;
 
 }
 
@@ -206,7 +217,7 @@ void Game::generateEnemigos()
 
     int i= rand() % mapa->getNumSpawns();
 
-    if(enemigos.size()<2)
+    if(enemigos.size()<3&&i_en>0)
     {
         Enemigo* auxen= new Enemigo();
         cout<<"Spawnea en"<< mapa->getSpawn(i).x <<" , "<<mapa->getSpawn(i).y<<endl;
@@ -222,7 +233,7 @@ void Game::updateGameState(sf::Time t)
     double x=0,y=0,potencia=100;
     int frame=0;
 
-    this->i_time=timelimit-Timer.getElapsedTime().asSeconds();
+    this->i_time=time_limit-Timer.getElapsedTime().asSeconds();
     if(this->i_time==0)
     {
         exit(0);
@@ -287,6 +298,7 @@ sf::Vector2f Game::handleCollision()
     player->setTouchingTrampolin(false);
     player->setTouchingPuerta(false);
     for(int t=0 ; t<7; t++)
+    {
         for(int i=0; i<mapa->getElementos(t).size(); i++)
         {
 
@@ -315,7 +327,8 @@ sf::Vector2f Game::handleCollision()
                 if (t==3)
                 {
 
-                    offsety= player->getColliderDown().top-mapa->getElementos(t)[i].getGlobalBounds().top+1;
+                    offsetx= player->getColliderDown().left-mapa->getElementos(t)[i].getGlobalBounds().left+1;
+                    cout<<"Offset de x es: "<<offsetx<<endl;
                     if(i==0 && (i+1)<mapa->getElementos(t).size())
                     {
                         last=i+1;
@@ -332,17 +345,10 @@ sf::Vector2f Game::handleCollision()
                 if (t==5)
                 {
 
-
-
                     offsetx= player->getSprite().getGlobalBounds().left-mapa->getElementos(t)[i].getGlobalBounds().left+1;
                     cout<<"Offset de x es: "<<offsetx<<endl;
 
-
-
                 }
-
-
-
 
             }
             else if(player->getSprite().getGlobalBounds().intersects(mapa->getElementos(t)[i].getGlobalBounds()))
@@ -351,11 +357,25 @@ sf::Vector2f Game::handleCollision()
                 {
 
                     mapa->deleteElemento(6,i);
-                    this->i_score+=40;
+                    i_score+=40;
+                    time_limit+=10;
                 }
             }
 
         }
+    }
+    for(unsigned en=0; en< enemigos.size(); en++)
+    {
+
+        if(enemigos[en]->getColliderDown().intersects(player->getSprite().getGlobalBounds()))
+        {
+            cout<<"Player muere por colision"<<endl;
+            Death.restart();
+            time_limit+=5;
+            i_lives--;
+        }
+
+    }
 
     return sf::Vector2f(offsetx,offsety);
 }
@@ -399,7 +419,8 @@ sf::Vector2f Game::handleECollision(int en)
                     if (t==3)
                     {
 
-                        offsety= enemigos[en]->getColliderDown().top-mapa->getElementos(t)[i].getGlobalBounds().top+1;
+                         offsetx= enemigos[en]->getColliderDown().left-mapa->getElementos(t)[i].getGlobalBounds().left+1;
+                    cout<<"Offset de x es: "<<offsetx<<endl;
                         if(i==0 && (i+1)<mapa->getElementos(t).size())
                         {
                             last=i+1;
@@ -551,6 +572,8 @@ float Game::handleBalancin()
 
                     if(enemigos.size()!=0)
                     enemigos.erase(enemigos.begin()+ene);
+                    i_en--;
+                    i_score+=100;
 
                 }
                     mapa->updateBalancin(id);
@@ -561,6 +584,8 @@ float Game::handleBalancin()
                 {
                     cout<<"Player muere \ "<<endl;
                     Death.restart();
+                    i_lives--;
+                     time_limit+=2;
                 }
                     mapa->updateBalancin(id);
                 }
@@ -576,6 +601,9 @@ float Game::handleBalancin()
                     cout<<ene<<" de "<<enemigos.size()<<endl;
                     if(enemigos.size()!=0)
                     enemigos.erase(enemigos.begin()+ene);
+                    i_en--;
+                    i_score+=100;
+
                 }
                     mapa->updateBalancin(id);
                 }
@@ -585,6 +613,8 @@ float Game::handleBalancin()
                 {
                     cout<<"Player muere / "<<endl;
                     Death.restart();
+                    i_lives--;
+                     time_limit+=2;
                 }
                     mapa->updateBalancin(id);
                 }

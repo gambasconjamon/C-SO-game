@@ -7,28 +7,28 @@ Mapa::Mapa(int id)
     blueprint += "bwwwwwwwwwwwwbb------------------------b.";
     blueprint += "bwwwwwwwwwwwwbb------------------------b.";
     blueprint += "bwwwwwwwbbbbbbb-----------f------------b.";
-    blueprint += "bbwwwwwwwbbbbbb-E--o--j------j----s-dE-b.";
-    blueprint += "bwwwwwwwbbbbbbbpepppppr------lpppppppepb.";
+    blueprint += "bbwwwwwwwbbbbbb----o--j------j----sd---b.";
+    blueprint += "bwwwwwwwbbbbbbbpEpppppr------lpppppppEpb.";
     blueprint += "bwwwwwwwwbbbbbb-e--------------------e-b.";
     blueprint += "bbbbbbbbbbbbbbb-e--------------------e-b.";
     blueprint += "b---------------e--------------------e-b.";
-    blueprint += "b---------------E-------j---j--------E-b.";
-    blueprint += "b---------------eppppppppp^-r-------lepb.";
+    blueprint += "b---------------e-------j---j--------e-b.";
+    blueprint += "b---------------Eppppppppp^-r-------lEpb.";
     blueprint += "b---------------e--------------------e-b.";
     blueprint += "b---------------e--------------------e-b.";
     blueprint += "b---------------e--------------------e-b.";
-    blueprint += "b-------j--j----E--------j--o--j--j--E-b.";
-    blueprint += "beppppppr-flpppper-------ppppppp^-pppepb.";
+    blueprint += "b-------j--j----e--------j--o--j--j--e-b.";
+    blueprint += "bEppppppr-flppppEr-------ppppppp^-pppEpb.";
     blueprint += "be--------------e--------------------e-b.";
     blueprint += "be--------------e----------f---------e-b.";
     blueprint += "be--------------e--------------------e-b.";
-    blueprint += "be--j----j-j-o-jE----j--------j-d-s--E-b.";
-    blueprint += "beppr----lppppppepp^-pr-------lppppppe-b.";
+    blueprint += "be--j----j-j-o-je----j--------j-d-s--e-b.";
+    blueprint += "bEppr----lppppppEpp^-pr-------lppppppE-b.";
     blueprint += "be--------------e--------------------e-b.";
     blueprint += "be--------------e--------------------e-b.";
     blueprint += "be--------------e--------------------e-b.";
-    blueprint += "be--j--j--------E----j---j--jj--o--j-E-b.";
-    blueprint += "beppp^-pr----lppeppppp--lp^-pppppppppepb.";
+    blueprint += "be--j--j--------e----j---j--jj--o--j-e-b.";
+    blueprint += "bEppp^-pr----lppEppppp--lp^-pppppppppEpb.";
     blueprint += "b--f---------------------------------e-b.";
     blueprint += "b------------------------------------e-b.";
     blueprint += "b------------------------------------e-b.";
@@ -163,13 +163,13 @@ Mapa::Mapa(int id)
         {
             map_s.setTexture(*Props);
 
-            map_s.setTextureRect(sf::IntRect(219,26,80,16));
-            map_s.setOrigin(40,8);
-            map_s.setPosition(mx*16,my*16);
-            map_s.rotate(30);
+            map_s.setTextureRect(sf::IntRect(230,27,60,16));
+            map_s.setOrigin(30,8);
+            map_s.setPosition(mx*16+8,my*16);
+           map_s.rotate(30);
             balancines.push_back(map_s);
             b_rights.push_back(sf::FloatRect(mx*16+16,my*16+16,16,8));
-            b_lefts.push_back(sf::FloatRect(mx*16-32,my*16-16,16,8));
+            b_lefts.push_back(sf::FloatRect(mx*16-16,my*16-16,16,8));
             b_toggles.push_back(false);
             map_s.rotate(-30);
 

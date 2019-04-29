@@ -186,8 +186,15 @@ void Player::updatePlayer(double velx, double vely, sf::Time et,sf::Vector2f of)
 
 
     if(isTouchingPuerta()){
-     posNow[0] = crdPuerta.x-20;
+
+    if(of.x<0)
+     posNow[0] = crdPuerta.x+32;
+     else
+     posNow[0] = crdPuerta.x-32;
+
+
     posNow[1] = crdPuerta.y;
+    posBef=posNow;
 
     }else{
     posNow[0] += vel[0]*et.asSeconds();

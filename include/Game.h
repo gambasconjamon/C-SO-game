@@ -18,7 +18,7 @@ class Game
     public:
         Game(int resol_x, int resol_y, string gamename);
         virtual ~Game();
-        void Gloop();
+        int Gloop();
         void drawDataScore();
         void updateGameState(sf::Time et);
         void handleEvents();
@@ -34,9 +34,9 @@ class Game
     protected:
 
     private:
-    static const sf::Time	timePerFrame;
-    static const float Gscale;
-    static const int time_limit;
+    sf::Time	timePerFrame;
+     float Gscale;
+     int time_limit;
 
     ///JUGADOR
     Player *player;

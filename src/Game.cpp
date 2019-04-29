@@ -6,22 +6,10 @@ using namespace std;
 Game::Game(int resol_x, int resol_y, string gamename)
 {
 
-/** GLOBAL **/
-timePerFrame = sf::milliseconds(1000.0/25.0);
-Gscale = 1.5;
-time_limit = 100;
-/** GLOBAL **/
 
     //ctor
     window= new sf::RenderWindow(sf::VideoMode(resol_x,resol_y),gamename);
     window->setVerticalSyncEnabled(true);
-
-
-
-    player= new Player();
-    mapa= new Mapa(0);
-
-    i_score=0,i_hiscore=300,i_round=00,i_time=100,i_en=5,i_bal=5,i_lives=2;
 
     font.loadFromFile("resources/Mario-Kart-DS.ttf");
     if (!font.loadFromFile("resources/Mario-Kart-DS.ttf"))
@@ -30,13 +18,31 @@ time_limit = 100;
         exit(0);
     }
 
-    //Para los eventos
+
+}
+
+void Game::newLevel(string blueprint, string bg, int round){
+
+delete player;
+delete mapa;
+
+/** GLOBAL **/
+timePerFrame = sf::milliseconds(1000.0/25.0);
+Gscale = 1.5;
+time_limit = 100;
+/** GLOBAL **/
+player= new Player();
+mapa= new Mapa(0,blueprint,bg);
+i_score=0,i_hiscore=300,i_round=round,i_time=100,i_en=5,i_bal=5,i_lives=2;
+//Para los eventos
     eJump=false;
     eDown=false;
     eLeft=false;
     eRight=false;
 
     gravity=0;
+
+
 
 }
 
@@ -55,7 +61,7 @@ int Game::Gloop()
             elapsedTime=updateClock.restart();
 
             //updateamos dependiendo del tiempo pasado
-            if(i_lives>=0&&i_time>=0&&i_en>=0)
+            if(i_lives>=0&&i_time>=0&&i_en>0)
             {
                 if(Death.getElapsedTime().asSeconds()>2)
                 {
@@ -71,6 +77,7 @@ int Game::Gloop()
             }
             else
             {
+
                 return i_en;
             }
         }
@@ -217,12 +224,15 @@ void Game::generateEnemigos()
 
     int i= rand() % mapa->getNumSpawns();
 
-    if(enemigos.size()<3&&i_en>0)
+    if(enemigos.size()<3)
+    {
+     if(enemigos.size()<=i_en)
     {
         Enemigo* auxen= new Enemigo();
         cout<<"Spawnea en"<< mapa->getSpawn(i).x <<" , "<<mapa->getSpawn(i).y<<endl;
         auxen->setPos(mapa->getSpawn(i));
         enemigos.push_back(auxen);
+        }
     }
 
 }

@@ -163,7 +163,16 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, sf::Vector2f of)
             }
             else
             {
-                //dir= rand() % 2;
+
+                if(x<posNow[0])
+                {
+                    dir=0;
+                }
+                else
+                {
+                    dir=1;
+                }
+
 
             }
             decidedj=true;
@@ -189,8 +198,20 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, sf::Vector2f of)
             int escala = rand() % 2;
             if(!escala)
             {
+            cout<<"Enemigo decide Escalar"<<endl;
 
-                int subeobaja = rand() % 2;
+                //int subeobaja = rand() % 2;
+                int subeobaja;
+
+                if(y<posNow[1])
+                {
+                    subeobaja=0;
+                }
+                else
+                {
+                    subeobaja=1;
+                }
+
                 if(!subeobaja)
                 {
 
@@ -211,7 +232,16 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, sf::Vector2f of)
             }
             else
             {
-                //dir= rand() % 2;
+
+                if(x<posNow[0])
+                {
+                    dir=0;
+                }
+                else
+                {
+                    dir=1;
+                }
+
 
             }
             decideds=true;
@@ -227,27 +257,13 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, sf::Vector2f of)
         decideds=false;
     }
 
-    if((abs((int)(x-posNow[0]))<60)&&(abs((int)(y-posNow[1]))<60))
-    {
-        if(x<posNow[0])
-        {
-            velx=-pow;
-        }
-        else
-        {
-            velx=pow;
-        }
 
-    }
+    if(dir==1)
+        velx=pow;
     else
-    {
+        velx=-pow;
 
-        if(dir==1)
-            velx=pow;
-        else
-            velx=-pow;
 
-    }
     if(sube)
     {
         vely=-pow;
@@ -271,15 +287,17 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, sf::Vector2f of)
         dir=0;
     }
     /**MAP DELIMITER**/
-    if(of.x<7&&of.x>0){
-    cout<<"pared izquierda?"<<endl;
-    velx+=200;
-     dir=1;
+    if(of.x<7&&of.x>0)
+    {
+        cout<<"pared izquierda?"<<endl;
+        velx+=200;
+        dir=1;
     }
-    if(of.x>-22&&of.x<-10){
-    cout<<"pared derecha?"<<endl;
-    velx-=200;
-     dir=0;
+    if(of.x>-22&&of.x<-10)
+    {
+        cout<<"pared derecha?"<<endl;
+        velx-=200;
+        dir=0;
     }
     /**AI SECTION**/
 
@@ -330,13 +348,13 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, sf::Vector2f of)
 
     if(isTouchingPuerta())
     {
-       if(of.x<0)
-     posNow[0] = crdPuerta.x+32;
-     else
-     posNow[0] = crdPuerta.x-32;
+        if(of.x<0)
+            posNow[0] = crdPuerta.x+32;
+        else
+            posNow[0] = crdPuerta.x-32;
 
-    posNow[1] = crdPuerta.y;
-       posBef=posNow;
+        posNow[1] = crdPuerta.y;
+        posBef=posNow;
 
     }
     else
@@ -360,7 +378,7 @@ void Enemigo::drawEnemigo(sf::RenderWindow& w, double i)
 
     colliderDown.top=renderPos[1]+9;
     colliderDown.left=renderPos[0]-8;
-     colliderTop.top=renderPos[1]-16;
+    colliderTop.top=renderPos[1]-16;
     colliderTop.left=renderPos[0]-8;
 
     collisionBox.setSize(sf::Vector2f(colliderDown.width,colliderDown.height));

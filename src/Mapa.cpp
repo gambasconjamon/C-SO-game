@@ -1,47 +1,14 @@
 #include "Mapa.h"
 
-Mapa::Mapa(int id)
+Mapa::Mapa(int id,string blueprint, string backgr)
 {
     //Aqui ira un loop que genera el mapa, mientras voy a hacer solo una plataforma
 
-    blueprint += "bwwwwwwwwwwwwbb------------------------b.";
-    blueprint += "bwwwwwwwwwwwwbb------------------------b.";
-    blueprint += "bwwwwwwwbbbbbbb-----------f------------b.";
-    blueprint += "bbwwwwwwwbbbbbb----o--j------j----sd---b.";
-    blueprint += "bwwwwwwwbbbbbbbpEpppppr------lpppppppEpb.";
-    blueprint += "bwwwwwwwwbbbbbb-e--------------------e-b.";
-    blueprint += "bbbbbbbbbbbbbbb-e--------------------e-b.";
-    blueprint += "b---------------e--------------------e-b.";
-    blueprint += "b---------------e-------j---j--------e-b.";
-    blueprint += "b---------------Eppppppppp^-r-------lEpb.";
-    blueprint += "b---------------e--------------------e-b.";
-    blueprint += "b---------------e--------------------e-b.";
-    blueprint += "b---------------e--------------------e-b.";
-    blueprint += "b-------j--j----e--------j--o--j--j--e-b.";
-    blueprint += "bEppppppr-flppppEr-------ppppppp^-pppEpb.";
-    blueprint += "be--------------e--------------------e-b.";
-    blueprint += "be--------------e----------f---------e-b.";
-    blueprint += "be--------------e--------------------e-b.";
-    blueprint += "be--j----j-j-o-je----j--------j-d-s--e-b.";
-    blueprint += "bEppr----lppppppEpp^-pr-------lppppppE-b.";
-    blueprint += "be--------------e--------------------e-b.";
-    blueprint += "be--------------e--------------------e-b.";
-    blueprint += "be--------------e--------------------e-b.";
-    blueprint += "be--j--j--------e----j---j--jj--o--j-e-b.";
-    blueprint += "bEppp^-pr----lppEppppp--lp^-pppppppppEpb.";
-    blueprint += "b--f---------------------------------e-b.";
-    blueprint += "b------------------------------------e-b.";
-    blueprint += "b------------------------------------e-b.";
-    blueprint += "b--------j--j---j-------j--o--j------E-b.";
-    blueprint += "bppppppppp^-pppppppppppppppppppppppppppb.";
-
-
-
     Bg = new sf::Texture();
-    Bg->loadFromFile("resources/Sunny-land-files/PNG/environment/layers/back.png");
-    if (!Bg->loadFromFile("resources/Sunny-land-files/PNG/environment/layers/back.png"))
+    Bg->loadFromFile(backgr);
+    if (!Bg->loadFromFile(backgr))
     {
-        std::cerr << "Error cargando la imagen sp_alien_texture.png";
+        std::cerr << "Error cargando la imagen "<<backgr ;
         exit(0);
     }
 

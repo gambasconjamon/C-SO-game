@@ -11,7 +11,7 @@ using namespace std;
 class Mapa
 {
     public:
-        Mapa(int id);
+        Mapa(int id,string plano, string bg);
         virtual ~Mapa();
         void drawMapa(sf::RenderWindow& w, double i);
         sf::Sprite getElemento(int id,int tipo);

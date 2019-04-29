@@ -20,6 +20,7 @@ class Game
         virtual ~Game();
         int Gloop();
         void drawDataScore();
+        void newLevel(string mapa, string bg, int round);
         void updateGameState(sf::Time et);
         void handleEvents();
         void generateEnemigos();
@@ -57,6 +58,7 @@ class Game
     sf::RenderWindow * window;
 
     int i_score,i_hiscore,i_round,i_time,i_en,i_bal,i_lives;
+
     sf::Font font;
     sf::Text t_score,t_hiscore,t_round,t_time,t_en,t_bal,t_lives;
 

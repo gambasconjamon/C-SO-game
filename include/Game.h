@@ -39,6 +39,9 @@ class Game
      float Gscale;
      int time_limit;
 
+     ///JUEGO
+     vector <string> Niveles, Fondos;
+
     ///JUGADOR
     Player *player;
     ///...

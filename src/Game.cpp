@@ -7,6 +7,116 @@ Game::Game(int resol_x, int resol_y, string gamename)
 {
 
 
+    string blueprint,blueprint1,blueprint2,bg,bg1;
+
+
+
+    bg="resources/Sunny-land-files/PNG/environment/layers/back.png";
+    blueprint = "bwwwwwwwwwwwwbb------------------------b.";
+    blueprint += "bwwwwwwwwwwwwbb------------------------b.";
+    blueprint += "bwwwwwwwbbbbbbb-----------f------------b.";
+    blueprint += "bbwwwwwwwbbbbbb----o--j------j----sd---b.";
+    blueprint += "bwwwwwwwbbbbbbbpEpppppr------lpppppppEpb.";
+    blueprint += "bwwwwwwwwbbbbbb-e--------------------e-b.";
+    blueprint += "bbbbbbbbbbbbbbb-e--------------------e-b.";
+    blueprint += "b---------------e--------------------e-b.";
+    blueprint += "b---------------e-------j---j--------e-b.";
+    blueprint += "b---------------Eppppppppp^-r-------lEpb.";
+    blueprint += "b---------------e--------------------e-b.";
+    blueprint += "b---------------e--------------------e-b.";
+    blueprint += "b---------------e--------------------e-b.";
+    blueprint += "b-------j--j----e--------j--o--j--j--e-b.";
+    blueprint += "bEppppppr-flppppEr-------ppppppp^-pppEpb.";
+    blueprint += "be--------------e--------------------e-b.";
+    blueprint += "be--------------e----------f---------e-b.";
+    blueprint += "be--------------e--------------------e-b.";
+    blueprint += "be--j----j-j-o-je----j--------j-d-s--e-b.";
+    blueprint += "bEppr----lppppppEpp^-pr-------lppppppE-b.";
+    blueprint += "be--------------e--------------------e-b.";
+    blueprint += "be--------------e--------------------e-b.";
+    blueprint += "be--------------e--------------------e-b.";
+    blueprint += "be--j--j--------e----j---j--jj--o--j-e-b.";
+    blueprint += "bEppp^-pr----lppEppppp--lp^-pppppppppEpb.";
+    blueprint += "b--f---------------------------------e-b.";
+    blueprint += "b------------------------------------e-b.";
+    blueprint += "b------------------------------------e-b.";
+    blueprint += "b--------j--j---j-------j--o--j------E-b.";
+    blueprint += "bppppppppp^-pppppppppppppppppppppppppppb.";
+    Niveles.push_back(blueprint);
+    Fondos.push_back(bg);
+
+    bg="resources/Sunny-land-files/PNG/environment/layers/back2.png";
+    blueprint = "bwwwwwwwwwwwwbb------------------------b.";
+    blueprint += "bwwwwwwwwwwwwbb------------------------b.";
+    blueprint += "bwwwwwwwbbbbbbb------------------------b.";
+    blueprint += "bbwwwwwwwbbbbbb------------------------b.";
+    blueprint += "bwwwwwwwbbbbbbb------------------------b.";
+    blueprint += "bwwwwwwwwbbbbbb------------------------b.";
+    blueprint += "bbbbbbbbbbbbbbb------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b------p--l--b--r--e--w--s--j----------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------o-----------b.";
+    blueprint += "bppppppppppppppppppppppppppppppppppppppb.";
+    Niveles.push_back(blueprint);
+    Fondos.push_back(bg);
+
+    blueprint = "bwwwwwwwwwwwwbb------------------------b.";
+    blueprint += "bwwwwwwwwwwwwbb------------------------b.";
+    blueprint += "bwwwwwwwbbbbbbb------------------------b.";
+    blueprint += "bbwwwwwwwbbbbbb------------------------b.";
+    blueprint += "bwwwwwwwbbbbbbb------------------------b.";
+    blueprint += "bwwwwwwwwbbbbbb------------------------b.";
+    blueprint += "bbbbbbbbbbbbbbb------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b-----b-------b------------------------b.";
+    blueprint += "b----bwb-----bwb-----------------------b.";
+    blueprint += "b-----bwb---bbbbbbbbbb-----------------b.";
+    blueprint += "b------bwbbbwbbwwwwwwb--bwb----bwb-----b.";
+    blueprint += "b-------bwwwb-bw----wb--bwb----bwb-----b.";
+    blueprint += "b--------bwb--bw----wb--bwb----bwb-----b.";
+    blueprint += "b--------bwb--bw----wb--bwbbbbbbwb-----b.";
+    blueprint += "b--------bwb--bwwwwwwb--bwwwwwwwwb-----b.";
+    blueprint += "b--------bwb--bbbbbbbb--bbbbbbbbbb-----b.";
+    blueprint += "b-------b-----------b------------------b.";
+    blueprint += "b------bwb----b----bwb--ww--ww----ww---b.";
+    blueprint += "b------bwb---bwb--bwb-------www---ww---b.";
+    blueprint += "b-------bwb-bbbwbbwb----ww--ww-w--ww---b.";
+    blueprint += "b--------bwwwb-bbwb-----ww--ww--w-ww---b.";
+    blueprint += "b---------bbb---bb------ww--ww---www---b.";
+    blueprint += "b------p--l--b--r--e--w--s--j----------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------o-----------b.";
+    blueprint += "bppppppppppppppppppppppppppppppppppppppb.";
+    Niveles.push_back(blueprint);
+    Fondos.push_back(bg);
+
+
+
+
+
+
     //ctor
     window= new sf::RenderWindow(sf::VideoMode(resol_x,resol_y),gamename);
     window->setVerticalSyncEnabled(true);
@@ -19,21 +129,41 @@ Game::Game(int resol_x, int resol_y, string gamename)
     }
 
 
+    int ronda=0;
+    while(ronda<Niveles.size())
+    {
+        newLevel(Niveles[ronda],Fondos[ronda],(ronda+1));
+
+
+        if(this->Gloop()!=0)
+        {
+            cout<<"-----------"<<endl<<"Has perdido"<<endl<<"-----------------";
+            ronda=Niveles.size();
+        }
+        else
+        {
+        cout<<"-----------"<<endl<<"Siguiente Nivel"<<endl<<"-----------------";
+            ronda++;
+        }
+    }
+
+
 }
 
-void Game::newLevel(string blueprint, string bg, int round){
+void Game::newLevel(string blueprint, string bg, int round)
+{
 
-delete player;
-delete mapa;
+    delete player;
+    delete mapa;
 
-/** GLOBAL **/
-timePerFrame = sf::milliseconds(1000.0/25.0);
-Gscale = 1.5;
-time_limit = 100;
-/** GLOBAL **/
-player= new Player();
-mapa= new Mapa(0,blueprint,bg);
-i_score=0,i_hiscore=300,i_round=round,i_time=100,i_en=5,i_bal=5,i_lives=2;
+    /** GLOBAL **/
+    timePerFrame = sf::milliseconds(1000.0/25.0);
+    Gscale = 1.5;
+    time_limit = 100;
+    /** GLOBAL **/
+    player= new Player();
+    mapa= new Mapa(0,blueprint,bg);
+    i_score=0,i_hiscore=300,i_round=round,i_time=100,i_en=5,i_bal=5,i_lives=2;
 //Para los eventos
     eJump=false;
     eDown=false;
@@ -41,6 +171,7 @@ i_score=0,i_hiscore=300,i_round=round,i_time=100,i_en=5,i_bal=5,i_lives=2;
     eRight=false;
 
     gravity=0;
+    Timer.restart();
 
 
 
@@ -226,12 +357,12 @@ void Game::generateEnemigos()
 
     if(enemigos.size()<3)
     {
-     if(enemigos.size()<=i_en)
-    {
-        Enemigo* auxen= new Enemigo();
-        cout<<"Spawnea en"<< mapa->getSpawn(i).x <<" , "<<mapa->getSpawn(i).y<<endl;
-        auxen->setPos(mapa->getSpawn(i));
-        enemigos.push_back(auxen);
+        if(enemigos.size()<=i_en)
+        {
+            Enemigo* auxen= new Enemigo();
+            cout<<"Spawnea en"<< mapa->getSpawn(i).x <<" , "<<mapa->getSpawn(i).y<<endl;
+            auxen->setPos(mapa->getSpawn(i));
+            enemigos.push_back(auxen);
         }
     }
 
@@ -429,8 +560,8 @@ sf::Vector2f Game::handleECollision(int en)
                     if (t==3)
                     {
 
-                         offsetx= enemigos[en]->getColliderDown().left-mapa->getElementos(t)[i].getGlobalBounds().left+1;
-                    cout<<"Offset de x es: "<<offsetx<<endl;
+                        offsetx= enemigos[en]->getColliderDown().left-mapa->getElementos(t)[i].getGlobalBounds().left+1;
+                        cout<<"Offset de x es: "<<offsetx<<endl;
                         if(i==0 && (i+1)<mapa->getElementos(t).size())
                         {
                             last=i+1;
@@ -595,7 +726,7 @@ float Game::handleBalancin()
                     cout<<"Player muere \ "<<endl;
                     Death.restart();
                     i_lives--;
-                     time_limit+=2;
+                    time_limit+=2;
                 }
                     mapa->updateBalancin(id);
                 }
@@ -624,7 +755,7 @@ float Game::handleBalancin()
                     cout<<"Player muere / "<<endl;
                     Death.restart();
                     i_lives--;
-                     time_limit+=2;
+                    time_limit+=2;
                 }
                     mapa->updateBalancin(id);
                 }

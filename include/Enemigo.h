@@ -1,5 +1,6 @@
 #ifndef ENEMIGO_H
 #define ENEMIGO_H
+#include "SprAnimado.h"
 #include <iostream>
 #include <vector>
 #include <SFML/Graphics.hpp>
@@ -14,7 +15,7 @@ class Enemigo
         Enemigo();
         virtual ~Enemigo();
         void updateEnemigo(double x, double y, sf::Time et, sf::Vector2f of);
-        void drawEnemigo(sf::RenderWindow& w, double i);
+        void drawEnemigo(sf::RenderWindow* w, double i);
         void setFrame(int f);
 
         vector<double> getPos();
@@ -38,6 +39,7 @@ class Enemigo
          bool isDecidingJump();
          bool isDecidingStairs();
          int getUltPuerta();
+          SprAnimado* getSprAnimado();
 
          /**IA**/
          int dir;
@@ -47,8 +49,7 @@ class Enemigo
     protected:
 
     private:
-    sf::Texture  texture;
-    sf::Sprite sprite;
+     SprAnimado* enespr;
     sf::Rect<float>  colliderTop;
     sf::Rect<float>  colliderDown;
     sf::RectangleShape collisionBox;

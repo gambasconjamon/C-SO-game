@@ -142,7 +142,7 @@ Game::Game(int resol_x, int resol_y, string gamename)
         }
         else
         {
-        cout<<"-----------"<<endl<<"Siguiente Nivel"<<endl<<"-----------------";
+            cout<<"-----------"<<endl<<"Siguiente Nivel"<<endl<<"-----------------";
             ronda++;
         }
     }
@@ -194,17 +194,10 @@ int Game::Gloop()
             //updateamos dependiendo del tiempo pasado
             if(i_lives>=0&&i_time>=0&&i_en>0)
             {
-                if(Death.getElapsedTime().asSeconds()>2)
-                {
 
-                    updateGameState(elapsedTime);
-                }
-                else
-                {
-                    player->setPos(sf::Vector2f(240,420));
-                    Spawn.restart();
-                    enemigos.clear();
-                }
+                updateGameState(elapsedTime);
+
+
             }
             else
             {
@@ -370,63 +363,75 @@ void Game::generateEnemigos()
 void Game::updateGameState(sf::Time t)
 {
 
-
-    double x=0,y=0,potencia=100;
-    int frame=0;
-
-    this->i_time=time_limit-Timer.getElapsedTime().asSeconds();
-    if(this->i_time==0)
+    if(Death.getElapsedTime().asSeconds()>2)
     {
-        exit(0);
-    }
-    if(eRight)
-    {
-        x=potencia;
-
-    }
-    if(eLeft)
-    {
-        x=-potencia;
-
-    }
-    if(eJump)
-    {
-
-        if(player->isTouchingFloor())
+        if(player->isDead())
         {
-            y=-potencia*2.5;
+            player->setPos(sf::Vector2f(240,420));
+            player->setDead(false);
         }
-
-    }
-    if(eUp)
-    {
-        if(player->isTouchingEscalera())
-            y=-potencia;
-    }
-    else if(eDown)
-    {
+        double x=0,y=0,potencia=100;
+        int frame=0;
 
 
-        y=potencia;
-
-
-    }
-    player->updatePlayer(x,y,t,handleCollision()); //Handle collision devuelve el offset de interseccion
-    if(enemigos.size()!=0)
-    {
-        for(unsigned i=0; i< enemigos.size(); i++)
+        this->i_time=time_limit-Timer.getElapsedTime().asSeconds();
+        if(this->i_time==0)
         {
-            enemigos[i]->updateEnemigo(player->getPos()[0],player->getPos()[1],t,handleECollision(i));
+            exit(0);
         }
+        if(eRight)
+        {
+            x=potencia;
+
+        }
+        if(eLeft)
+        {
+            x=-potencia;
+
+        }
+        if(eJump)
+        {
+
+            if(player->isTouchingFloor())
+            {
+                y=-potencia*2.5;
+            }
+
+        }
+        if(eUp)
+        {
+            if(player->isTouchingEscalera())
+                y=-potencia;
+        }
+        else if(eDown)
+        {
+
+
+            y=potencia;
+
+
+        }
+        player->updatePlayer(x,y,t,handleCollision()); //Handle collision devuelve el offset de interseccion
+        if(enemigos.size()!=0)
+        {
+            for(unsigned i=0; i< enemigos.size(); i++)
+            {
+                enemigos[i]->updateEnemigo(player->getPos()[0],player->getPos()[1],t,handleECollision(i));
+            }
+        }
+        if(Spawn.getElapsedTime().asSeconds()>5)
+        {
+            generateEnemigos();
+            Spawn.restart();
+        }
+        handleBalancin();
+
     }
-    if(Spawn.getElapsedTime().asSeconds()>5)
+    else
     {
-        generateEnemigos();
         Spawn.restart();
+        enemigos.clear();
     }
-    handleBalancin();
-
-
 }
 
 sf::Vector2f Game::handleCollision()
@@ -486,13 +491,13 @@ sf::Vector2f Game::handleCollision()
                 if (t==5)
                 {
 
-                    offsetx= player->getSprite().getGlobalBounds().left-mapa->getElementos(t)[i].getGlobalBounds().left+1;
+                    offsetx= player->getSprAnimado()->getActualSprite()->getGlobalBounds().left-mapa->getElementos(t)[i].getGlobalBounds().left+1;
                     cout<<"Offset de x es: "<<offsetx<<endl;
 
                 }
 
             }
-            else if(player->getSprite().getGlobalBounds().intersects(mapa->getElementos(t)[i].getGlobalBounds()))
+            else if(player->getSprAnimado()->getActualSprite()->getGlobalBounds().intersects(mapa->getElementos(t)[i].getGlobalBounds()))
             {
                 if (t==6)
                 {
@@ -508,9 +513,10 @@ sf::Vector2f Game::handleCollision()
     for(unsigned en=0; en< enemigos.size(); en++)
     {
 
-        if(enemigos[en]->getColliderDown().intersects(player->getSprite().getGlobalBounds()))
+        if(enemigos[en]->getColliderDown().intersects(player->getSprAnimado()->getActualSprite()->getGlobalBounds()))
         {
             cout<<"Player muere por colision"<<endl;
+            player->setDead(true);
             Death.restart();
             time_limit+=5;
             i_lives--;
@@ -579,7 +585,7 @@ sf::Vector2f Game::handleECollision(int en)
                     if (t==5)
                     {
 
-                        offsetx= enemigos[en]->getSprite().getGlobalBounds().left-mapa->getElementos(t)[i].getGlobalBounds().left+1;
+                        offsetx= enemigos[en]->getSprAnimado()->getActualSprite()->getGlobalBounds().left-mapa->getElementos(t)[i].getGlobalBounds().left+1;
                         cout<<"Offset de x es: "<<offsetx<<endl;
 
                     }
@@ -724,6 +730,7 @@ float Game::handleBalancin()
                     if(pldor||plupl)
                 {
                     cout<<"Player muere \ "<<endl;
+                    player->setDead(true);
                     Death.restart();
                     i_lives--;
                     time_limit+=2;
@@ -753,6 +760,7 @@ float Game::handleBalancin()
                     if(pldol||plupr)
                 {
                     cout<<"Player muere / "<<endl;
+                     player->setDead(true);
                     Death.restart();
                     i_lives--;
                     time_limit+=2;
@@ -769,15 +777,15 @@ float Game::handleBalancin()
 
                     //lvl.drawLevel(*ventana,i);
 
-                    mapa->drawMapa(*window,i);
+                    mapa->drawMapa(window,i);
                     if(enemigos.size()!=0)//Cuidado con esto, si no hay enemigos no te deja updatear el balancin
                 {
                     for(unsigned en=0; en< enemigos.size(); en++)
                 {
-                    enemigos[en]->drawEnemigo(*window,i);
+                    enemigos[en]->drawEnemigo(window,i);
                 }
                 }
-                    player->drawPlayer(*window,i);
+                    player->drawPlayer(window,i);
 
                     this->drawDataScore();
                     window->display();

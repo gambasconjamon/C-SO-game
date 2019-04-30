@@ -7,7 +7,7 @@
 1553102088 source:/home/samuel/FV/C-SO/src/Enemy.cpp
 	"Enemy.h"
 
-1556576002 source:/home/samuel/FV/C-SO/src/Game.cpp
+1556648775 source:/home/samuel/FV/C-SO/src/Game.cpp
 	"Game.h"
 
 1553102136 source:/home/samuel/FV/C-SO/src/Item.cpp
@@ -22,7 +22,7 @@
 1553251248 source:/home/samuel/FV/C-SO/src/physicsState.cpp
 	"physicsState.h"
 
-1556536440 source:/home/samuel/FV/C-SO/src/Player.cpp
+1556639185 source:/home/samuel/FV/C-SO/src/Player.cpp
 	"Player.h"
 	<SFML/Graphics.hpp>
 
@@ -32,7 +32,7 @@
 1553102054 source:/home/samuel/FV/C-SO/src/GSprite.cpp
 	"GSprite.h"
 
-1556013695 /home/samuel/FV/C-SO/include/Game.h
+1556575376 /home/samuel/FV/C-SO/include/Game.h
 	"Player.h"
 	"Mapa.h"
 	"Enemigo.h"
@@ -43,28 +43,39 @@
 	<iomanip>
 	<SFML/Graphics.hpp>
 
-1555055179 /home/samuel/FV/C-SO/include/Player.h
+1556638725 /home/samuel/FV/C-SO/include/Player.h
+	"SprAnimado.h"
 	<iostream>
 	<vector>
 	<SFML/Graphics.hpp>
 
-1556034406 /home/samuel/FV/C-SO/include/Mapa.h
-	"Balancin.h"
+1556648718 /home/samuel/FV/C-SO/include/Mapa.h
+	"SprAnimado.h"
 	<SFML/Graphics.hpp>
 	<iostream>
 	<string.h>
 
-1556561013 source:/home/samuel/FV/C-SO/src/Mapa.cpp
+1556648878 source:/home/samuel/FV/C-SO/src/Mapa.cpp
 	"Mapa.h"
 
 1554572412 /home/samuel/FV/C-SO/include/Balancin.h
 
-1556033925 /home/samuel/FV/C-SO/include/Enemigo.h
+1556646224 /home/samuel/FV/C-SO/include/Enemigo.h
+	"SprAnimado.h"
 	<iostream>
 	<vector>
 	<SFML/Graphics.hpp>
 
-1556558437 source:/home/samuel/FV/C-SO/src/Enemigo.cpp
+1556647054 source:/home/samuel/FV/C-SO/src/Enemigo.cpp
 	"Enemigo.h"
 	<SFML/Graphics.hpp>
+
+1556648677 /home/samuel/FV/C-SO/include/SprAnimado.h
+	<iostream>
+	<vector>
+	<cmath>
+	<SFML/Graphics.hpp>
+
+1556648357 source:/home/samuel/FV/C-SO/src/SprAnimado.cpp
+	"SprAnimado.h"
 

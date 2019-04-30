@@ -4,28 +4,38 @@ using namespace std;
 
 Enemigo::Enemigo()
 {
-    //inicializamos matriz de frames
-    frames.resize(4);
-    for (int i = 0 ; i < 4 ; i++)
-        frames[i].resize(2);
+    enespr = new SprAnimado("resources/Sunny-land-files/PNG/sprites/enemy.png",8,1.2,true);
+    enespr->setSpeed(0.1);
 
-    frames[0][0]=sf::IntRect(0, 0,32, 32);//Frente 0----0
-    //La carga de texturas podria ser otra clase
-    texture.loadFromFile("resources/Sunny-land-files/PNG/sprites/player/player.png");
-    if (!texture.loadFromFile("resources/Sunny-land-files/PNG/sprites/player/player.png"))
-    {
-        std::cerr << "Error cargando la imagen player.png";
-        exit(0);
-    }
+    enespr->addFrame(sf::IntRect(1, 2,28,25),0);//izq
+    enespr->addFrame(sf::IntRect(37, 6,29,22),0);//izq
+    enespr->addFrame(sf::IntRect(73, 8,32,20),0);//izq
+    enespr->addFrame(sf::IntRect(109, 8,35,20),0);//izq
+    enespr->addFrame(sf::IntRect(145, 8,35,20),0);//izq
+    enespr->addFrame(sf::IntRect(181, 5,31,23),0);//izq
 
-    sprite.setTexture(texture);
-    sprite.setOrigin(28/2,44/2);
-    sprite.setTextureRect(frames[0][0]);
-    sprite.scale(1.2,1.2);
+    enespr->addFrame(sf::IntRect(184, 32,28,25),1);//dcha
+    enespr->addFrame(sf::IntRect(147, 36,29,22),1);//dcha
+    enespr->addFrame(sf::IntRect(108, 38,32,20),1);//dcha
+    enespr->addFrame(sf::IntRect(69,38,35,20),1);//dcha
+    enespr->addFrame(sf::IntRect(33, 38,35,20),1);//dcha
+    enespr->addFrame(sf::IntRect(1,35,31,23),1);//dcha
+
+    enespr->addFrame(sf::IntRect(6,66,23,31),2);//abajo
+    enespr->addFrame(sf::IntRect(6,98,20,35),2);//abajo
+    enespr->addFrame(sf::IntRect(6,134,20,35),2);//abajo
+    enespr->addFrame(sf::IntRect(6,173,20,32),2);//abajo
+    enespr->addFrame(sf::IntRect(6,212,22,29),2);//abajo
+    enespr->addFrame(sf::IntRect(7,249,25,28),2);//abajo
+
+    enespr->addFrame(sf::IntRect(40,246,23,31),3);//arriba
+    enespr->addFrame(sf::IntRect(43,210,20,35),3);//arriba
+    enespr->addFrame(sf::IntRect(43,174,20,35),3);//arriba
+    enespr->addFrame(sf::IntRect(43,138,20,32),3);//arriba
+    enespr->addFrame(sf::IntRect(41,102,22,29),3);//arriba
+    enespr->addFrame(sf::IntRect(37,66,25,28),3);//arriba
 
 
-    renderPos.push_back(0.0);
-    renderPos.push_back(0.0);
     posNow.push_back(0.0),posNow.push_back(0.0);
     posBef.push_back(0.0),posBef.push_back(0.0);
     vel.push_back(0.0),vel.push_back(0.0);
@@ -125,9 +135,9 @@ void Enemigo::setPos(sf::Vector2f posi)
     posBef=posNow;
 
 }
-sf::Sprite Enemigo::getSprite()
+SprAnimado* Enemigo::getSprAnimado()
 {
-    return sprite;
+    return enespr;
 }
 
 sf::Rect<float>  Enemigo::getColliderTop()
@@ -198,37 +208,28 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, sf::Vector2f of)
             int escala = rand() % 2;
             if(!escala)
             {
-            cout<<"Enemigo decide Escalar"<<endl;
-
-                //int subeobaja = rand() % 2;
-                int subeobaja;
+                cout<<"Enemigo decide Escalar"<<endl;
 
                 if(y<posNow[1])
                 {
-                    subeobaja=0;
-                }
-                else
-                {
-                    subeobaja=1;
-                }
-
-                if(!subeobaja)
-                {
-
                     vely-=pow;
                     sube=true;
                     baja=false;
                 }
                 else
                 {
-                    if(posNow[1]>464)
+                    vely-=pow;
+                    sube=false;
+                    baja=true;
+                }
+
+                 if(posNow[1]>464)
                     {
 
                         vely=pow;
                         sube=false;
                         baja=true;
                     }
-                }
             }
             else
             {
@@ -300,7 +301,14 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, sf::Vector2f of)
         dir=0;
     }
     /**AI SECTION**/
-
+    if(velx>0)
+        enespr->setAnimation(1);
+    else if(velx<0)
+        enespr->setAnimation(0);
+    if(baja)
+        enespr->setAnimation(2);
+    else if(sube)
+        enespr->setAnimation(3);
 
 
 
@@ -366,27 +374,28 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, sf::Vector2f of)
 
 }
 
-void Enemigo::drawEnemigo(sf::RenderWindow& w, double i)
+void Enemigo::drawEnemigo(sf::RenderWindow* w, double i)
 {
 
     //sprite.setTextureRect(frames[dir][frame]);
-    sprite.setTextureRect(frames[0][0]);
+    /*sprite.setTextureRect(frames[0][0]);
     renderPos[0]=(posNow[0]-posBef[0])*i+posBef[0];
     renderPos[1]=(posNow[1]-posBef[1])*i+posBef[1];
-    sprite.setPosition(renderPos[0],renderPos[1]);
-    w.draw(sprite);
+    sprite.setPosition(renderPos[0],renderPos[1]);*/
+    enespr->drawSprAnimado(posBef,posNow,w,i);
+    //w.draw(sprite);
 
-    colliderDown.top=renderPos[1]+9;
-    colliderDown.left=renderPos[0]-8;
-    colliderTop.top=renderPos[1]-16;
-    colliderTop.left=renderPos[0]-8;
+    colliderDown.top=enespr->getRenderPos()[1]+9;
+    colliderDown.left=enespr->getRenderPos()[0]-8;
+    colliderTop.top=enespr->getRenderPos()[1]-16;
+    colliderTop.left=enespr->getRenderPos()[0]-8;
 
-    collisionBox.setSize(sf::Vector2f(colliderDown.width,colliderDown.height));
+   /* collisionBox.setSize(sf::Vector2f(colliderDown.width,colliderDown.height));
     collisionBox.setFillColor(sf::Color(100, 250, 50));
     collisionBox.setPosition(colliderDown.left,colliderDown.top);
-    w.draw(collisionBox);
+    w->draw(collisionBox);
     collisionBox.setPosition(colliderTop.left,colliderTop.top);
-    w.draw(collisionBox);
+    w->draw(collisionBox);*/
 
 
 

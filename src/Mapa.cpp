@@ -27,6 +27,7 @@ Mapa::Mapa(int id,string blueprint, string backgr)
     sf::Sprite map_s;
     map_s.setTexture(*Base);
 
+
     Items = new sf::Texture();
     Items->loadFromFile("resources/Sunny-land-files/PNG/spritesheets/cherry.png");
     if (!Items->loadFromFile("resources/Sunny-land-files/PNG/spritesheets/cherry.png"))
@@ -101,11 +102,18 @@ Mapa::Mapa(int id,string blueprint, string backgr)
 
         if(blueprint.at(i) == 'f')
         {
-            map_s.setTexture(*Items);
+            iteme=new SprAnimado("resources/Sunny-land-files/PNG/spritesheets/gem.png",1,1.5,true);
+            iteme->addFrame(sf::IntRect(1, 1,13,11),0);//dcha
+            iteme->addFrame(sf::IntRect(16, 1,13,11),0);//dcha
+            iteme->addFrame(sf::IntRect(31, 1,13,11),0);//dcha
+            iteme->addFrame(sf::IntRect(46, 1,13,11),0);//dcha
+            iteme->addFrame(sf::IntRect(61, 1,13,11),0);//dcha
+            iteme->setSpeed(0.1);
 
-            map_s.setTextureRect(sf::IntRect(0,3,17,15));
-            map_s.setPosition(mx*16,my*16);
-            items.push_back(map_s);
+           iteme->setPosition(sf::Vector2f(mx*16,my*16+8));
+
+
+            items.push_back(iteme);
             cout<<items.size()<<endl;
         }
         if(blueprint.at(i) == '^')
@@ -133,7 +141,7 @@ Mapa::Mapa(int id,string blueprint, string backgr)
             map_s.setTextureRect(sf::IntRect(230,27,60,16));
             map_s.setOrigin(30,8);
             map_s.setPosition(mx*16+8,my*16);
-           map_s.rotate(30);
+            map_s.rotate(30);
             balancines.push_back(map_s);
             b_rights.push_back(sf::FloatRect(mx*16+16,my*16+16,16,8));
             b_lefts.push_back(sf::FloatRect(mx*16-16,my*16-16,16,8));
@@ -213,9 +221,14 @@ vector<sf::Sprite> Mapa::getElementos(int tipo)
         return balancines;
 
     if(tipo==5)
-    return paredes;
-    if(tipo==6)
-    return items;
+        return paredes;
+    if(tipo==6){
+        vector<sf::Sprite> itemes;
+        for(unsigned i=0; i< items.size(); i++){
+        itemes.push_back(*(items[i]->getActualSprite()));
+        }
+        return itemes;
+        }
 
 
 
@@ -266,92 +279,92 @@ sf::Vector2f Mapa::getSpawn(int id)
     return spawn[id];
 }
 
-void Mapa::drawMapa(sf::RenderWindow& w, double i)
+void Mapa::drawMapa(sf::RenderWindow* w, double i)
 {
 
-    w.draw(sbg);
+    w->draw(sbg);
 
     for(int i=0; i<plataformas.size(); i++)
     {
-        w.draw(plataformas[i]);
+        w->draw(plataformas[i]);
 
     }
     for(int i=0; i<escaleras.size(); i++)
     {
-        w.draw(escaleras[i]);
+        w->draw(escaleras[i]);
 
 
     }
     for(int i=0; i<trampolines.size(); i++)
     {
-        w.draw(trampolines[i]);
+        w->draw(trampolines[i]);
 
 
     }
     for(int i=0; i<puertas.size(); i++)
     {
-        w.draw(puertas[i]);
+        w->draw(puertas[i]);
 
 
     }
     for(int i=0; i<items.size(); i++)
     {
-        w.draw(items[i]);
+        items[i]->drawSprAnimado(items[i]->getPosition(),items[i]->getPosition(),w,i);
 
 
     }
     for(int i=0; i<balancines.size(); i++)
     {
-        w.draw(balancines[i]);
+        w->draw(balancines[i]);
 
 
     }
     for(int i=0; i<paredes.size(); i++)
     {
-        w.draw(paredes[i]);
+        w->draw(paredes[i]);
 
 
     }
-    for(int i=0; i<a_salto.size(); i++)
-    {
-        sf::RectangleShape action;
-        action.setSize(sf::Vector2f(a_salto[i].width,a_salto[i].height));
-        action.setFillColor(sf::Color(100, 250, 50));
-        action.setPosition(a_salto[i].left,a_salto[i].top);
-        w.draw(action);
+    /* for(int i=0; i<a_salto.size(); i++)
+     {
+         sf::RectangleShape action;
+         action.setSize(sf::Vector2f(a_salto[i].width,a_salto[i].height));
+         action.setFillColor(sf::Color(100, 250, 50));
+         action.setPosition(a_salto[i].left,a_salto[i].top);
+         w.draw(action);
 
 
-    }
-    for(int i=0; i<a_escalera.size(); i++)
-    {
-        sf::RectangleShape action;
-        action.setSize(sf::Vector2f(a_escalera[i].width,a_escalera[i].height));
-        action.setFillColor(sf::Color(100, 250, 50));
-        action.setPosition(a_escalera[i].left,a_escalera[i].top);
-        w.draw(action);
+     }
+     for(int i=0; i<a_escalera.size(); i++)
+     {
+         sf::RectangleShape action;
+         action.setSize(sf::Vector2f(a_escalera[i].width,a_escalera[i].height));
+         action.setFillColor(sf::Color(100, 250, 50));
+         action.setPosition(a_escalera[i].left,a_escalera[i].top);
+         w.draw(action);
 
 
-    }
-    for(int i=0; i<b_rights.size(); i++)
-    {
-        sf::RectangleShape trampolindcha;
-        trampolindcha.setSize(sf::Vector2f(b_rights[i].width,b_rights[i].height));
-        trampolindcha.setFillColor(sf::Color(200, 150, 50));
-        trampolindcha.setPosition(b_rights[i].left,b_rights[i].top);
-        w.draw(trampolindcha);
+     }
+     for(int i=0; i<b_rights.size(); i++)
+     {
+         sf::RectangleShape trampolindcha;
+         trampolindcha.setSize(sf::Vector2f(b_rights[i].width,b_rights[i].height));
+         trampolindcha.setFillColor(sf::Color(200, 150, 50));
+         trampolindcha.setPosition(b_rights[i].left,b_rights[i].top);
+         w.draw(trampolindcha);
 
 
-    }
-    for(int i=0; i<b_lefts.size(); i++)
-    {
-        sf::RectangleShape trampolinizqda;
-        trampolinizqda.setSize(sf::Vector2f(b_lefts[i].width,b_lefts[i].height));
-        trampolinizqda.setFillColor(sf::Color(200, 150, 50));
-        trampolinizqda.setPosition(b_lefts[i].left,b_lefts[i].top);
-        w.draw(trampolinizqda);
+     }
+     for(int i=0; i<b_lefts.size(); i++)
+     {
+         sf::RectangleShape trampolinizqda;
+         trampolinizqda.setSize(sf::Vector2f(b_lefts[i].width,b_lefts[i].height));
+         trampolinizqda.setFillColor(sf::Color(200, 150, 50));
+         trampolinizqda.setPosition(b_lefts[i].left,b_lefts[i].top);
+         w.draw(trampolinizqda);
 
 
-    }
+     }*/
 
 
 }

@@ -1,6 +1,6 @@
 #ifndef MAPA_H
 #define MAPA_H
-
+#include "SprAnimado.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string.h>
@@ -13,7 +13,7 @@ class Mapa
     public:
         Mapa(int id,string plano, string bg);
         virtual ~Mapa();
-        void drawMapa(sf::RenderWindow& w, double i);
+        void drawMapa(sf::RenderWindow* w, double i);
         sf::Sprite getElemento(int id,int tipo);
         vector<sf::Sprite> getElementos(int tipo);
         vector< sf::Rect<float> > getAccion(int tipo);
@@ -34,6 +34,7 @@ class Mapa
     sf::Texture *Props;
     sf::Texture *Bg;
     sf::Sprite sbg;
+    SprAnimado *iteme;
 
 
     vector<sf::Sprite> plataformas; //1
@@ -41,7 +42,7 @@ class Mapa
     vector<sf::Sprite> trampolines;//3
     vector<sf::Sprite> puertas;//4
     vector<sf::Sprite> paredes; //5
-    vector<sf::Sprite> items;//6
+    vector<SprAnimado*> items;//6
 
     vector<sf::Sprite> balancines;//6
     vector<bool> b_toggles;//5.1

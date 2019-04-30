@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add library="sfml-graphics" />
@@ -27,6 +28,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -44,11 +46,13 @@
 		<Unit filename="include/Game.h" />
 		<Unit filename="include/Mapa.h" />
 		<Unit filename="include/Player.h" />
+		<Unit filename="include/SprAnimado.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Enemigo.cpp" />
 		<Unit filename="src/Game.cpp" />
 		<Unit filename="src/Mapa.cpp" />
 		<Unit filename="src/Player.cpp" />
+		<Unit filename="src/SprAnimado.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

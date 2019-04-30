@@ -15,7 +15,7 @@ Game::Game(int resol_x, int resol_y, string gamename)
     blueprint = "bwwwwwwwwwwwwbb------------------------b.";
     blueprint += "bwwwwwwwwwwwwbb------------------------b.";
     blueprint += "bwwwwwwwbbbbbbb-----------f------------b.";
-    blueprint += "bbwwwwwwwbbbbbb----o--j------j----sd---b.";
+    blueprint += "bbwwwwwwwbbbbbb--j-o--j------j----sd---b.";
     blueprint += "bwwwwwwwbbbbbbbpEpppppr------lpppppppEpb.";
     blueprint += "bwwwwwwwwbbbbbb-e--------------------e-b.";
     blueprint += "bbbbbbbbbbbbbbb-e--------------------e-b.";
@@ -25,7 +25,7 @@ Game::Game(int resol_x, int resol_y, string gamename)
     blueprint += "b---------------e--------------------e-b.";
     blueprint += "b---------------e--------------------e-b.";
     blueprint += "b---------------e--------------------e-b.";
-    blueprint += "b-------j--j----e--------j--o--j--j--e-b.";
+    blueprint += "b-------j--j----e---------j-o-j---j--e-b.";
     blueprint += "bEppppppr-flppppEr-------ppppppp^-pppEpb.";
     blueprint += "be--------------e--------------------e-b.";
     blueprint += "be--------------e----------f---------e-b.";
@@ -35,47 +35,47 @@ Game::Game(int resol_x, int resol_y, string gamename)
     blueprint += "be--------------e--------------------e-b.";
     blueprint += "be--------------e--------------------e-b.";
     blueprint += "be--------------e--------------------e-b.";
-    blueprint += "be--j--j--------e----j---j--jj--o--j-e-b.";
+    blueprint += "be--j--j--------e----j---j--j-j-o-j--e-b.";
     blueprint += "bEppp^-pr----lppEppppp--lp^-pppppppppEpb.";
     blueprint += "b--f---------------------------------e-b.";
     blueprint += "b------------------------------------e-b.";
     blueprint += "b------------------------------------e-b.";
-    blueprint += "b--------j--j---j-------j--o--j------E-b.";
+    blueprint += "b--------j--j---j--------j-o-j-------E-b.";
     blueprint += "bppppppppp^-pppppppppppppppppppppppppppb.";
     Niveles.push_back(blueprint);
     Fondos.push_back(bg);
 
     bg="resources/Sunny-land-files/PNG/environment/layers/back2.png";
     blueprint = "bwwwwwwwwwwwwbb------------------------b.";
-    blueprint += "bwwwwwwwwwwwwbb------------------------b.";
+    blueprint += "bwwwwwwwwwwwwbb--------------f---------b.";
     blueprint += "bwwwwwwwbbbbbbb------------------------b.";
-    blueprint += "bbwwwwwwwbbbbbb------------------------b.";
-    blueprint += "bwwwwwwwbbbbbbb------------------------b.";
-    blueprint += "bwwwwwwwwbbbbbb------------------------b.";
-    blueprint += "bbbbbbbbbbbbbbb------------------------b.";
-    blueprint += "b--------------------------------------b.";
-    blueprint += "b--------------------------------------b.";
-    blueprint += "b--------------------------------------b.";
-    blueprint += "b--------------------------------------b.";
-    blueprint += "b--------------------------------------b.";
-    blueprint += "b--------------------------------------b.";
-    blueprint += "b--------------------------------------b.";
-    blueprint += "b--------------------------------------b.";
-    blueprint += "b--------------------------------------b.";
-    blueprint += "b--------------------------------------b.";
-    blueprint += "b--------------------------------------b.";
-    blueprint += "b--------------------------------------b.";
-    blueprint += "b--------------------------------------b.";
-    blueprint += "b--------------------------------------b.";
-    blueprint += "b--------------------------------------b.";
-    blueprint += "b--------------------------------------b.";
-    blueprint += "b------p--l--b--r--e--w--s--j----------b.";
-    blueprint += "b--------------------------------------b.";
-    blueprint += "b--------------------------------------b.";
-    blueprint += "b--------------------------------------b.";
-    blueprint += "b--------------------------------------b.";
-    blueprint += "b--------------------------o-----------b.";
-    blueprint += "bppppppppppppppppppppppppppppppppppppppb.";
+    blueprint += "bbwwwwwwwbbbbbb------sd----------------b.";
+    blueprint += "bwwwwwwwbbbbbbb-lppEpppr--lpEppppppr---b.";
+    blueprint += "bwwwwwwwwbbbbbb----e--------e----------b.";
+    blueprint += "bbbbbbbbbbbbbbb----e--------e----------b.";
+    blueprint += "b------------------e--------e----------b.";
+    blueprint += "b------------------e----j---e----------b.";
+    blueprint += "b---------------lppEpppppp^-Epr----l^-rb.";
+    blueprint += "b-----f------------e-------------------b.";
+    blueprint += "b------------------e---f---------------b.";
+    blueprint += "b------------------e-------------------b.";
+    blueprint += "b-j-o-j----j-o-j---e--------j--j--j----b.";
+    blueprint += "bEpppppr--lppppppprEr-----rppppp^-pprElb.";
+    blueprint += "be-----------------------------------e-b.";
+    blueprint += "be-----------------------------------e-b.";
+    blueprint += "be-----------------------------------e-b.";
+    blueprint += "be-j-o-j----j---------j-------j-o-j--e-b.";
+    blueprint += "bEppppppr---pppppppEpppp^-pppppppppprE-b.";
+    blueprint += "be-----------------e-----------------e-b.";
+    blueprint += "be-----------------e------------f----e-b.";
+    blueprint += "be-----------------e-----------------e-b.";
+    blueprint += "be-j-o-j-----j-----e----j---j----j---e-b.";
+    blueprint += "bEppppppppr--lpppppEpppppp^-r----lpppEpb.";
+    blueprint += "be---f-------------e-------f---------e-b.";
+    blueprint += "be-----------------e-----------------e-b.";
+    blueprint += "be-----------------e-----------------e-b.";
+    blueprint += "bE-------j--j--sd--E---j-o-j--j--j---E-b.";
+    blueprint += "bppppppppp^-ppppppppppppppppppp^-ppppppb.";
     Niveles.push_back(blueprint);
     Fondos.push_back(bg);
 
@@ -117,6 +117,7 @@ Game::Game(int resol_x, int resol_y, string gamename)
 
 
 
+
     //ctor
     window= new sf::RenderWindow(sf::VideoMode(resol_x,resol_y),gamename);
     window->setVerticalSyncEnabled(true);
@@ -129,21 +130,48 @@ Game::Game(int resol_x, int resol_y, string gamename)
     }
 
 
+
+
+    ui =new sf::Texture();
+    ui->loadFromFile("resources/Sunny-land-files/PNG/ui.png");
+
+    lives=new sf::Sprite();
+    lives->setTexture(*ui);
+    //lives->setOrigin(18/2,22/2);
+    lives->setTextureRect(sf::IntRect(105,15,18,22));
+    lives->setPosition(14.0,79.0);
+    lives->scale(0.7,0.7);
+
+    en=new sf::Sprite();
+    en->setTexture(*ui);
+    //en->setOrigin(32/2,20/2);
+    en->setTextureRect(sf::IntRect(56,15,32,20));
+    en->setPosition(14.0,65.0);
+    en->scale(0.7,0.7);
+
+    balloon=new sf::Sprite();
+    balloon->setTexture(*ui);
+    //balloon->setOrigin(35/2,32/2);
+    balloon->setTextureRect(sf::IntRect(3,6,35,32));
+    balloon->setPosition(75.0,65.0);
+    balloon->scale(0.5,0.5);
+
     int ronda=0;
+    newLevel(Niveles[ronda],Fondos[ronda],(ronda+1));
     while(ronda<Niveles.size())
     {
-        newLevel(Niveles[ronda],Fondos[ronda],(ronda+1));
-
-
         if(this->Gloop()!=0)
         {
+
             cout<<"-----------"<<endl<<"Has perdido"<<endl<<"-----------------";
             ronda=Niveles.size();
         }
         else
         {
-            cout<<"-----------"<<endl<<"Siguiente Nivel"<<endl<<"-----------------";
+
+            cout<<"-----------"<<endl<<"Enemigos  Siguiente Nivel"<<endl<<"-----------------";
             ronda++;
+            newLevel(Niveles[ronda],Fondos[ronda],(ronda+1));
         }
     }
 
@@ -153,8 +181,8 @@ Game::Game(int resol_x, int resol_y, string gamename)
 void Game::newLevel(string blueprint, string bg, int round)
 {
 
-    delete player;
-    delete mapa;
+    //delete player;
+    //delete mapa;
 
     /** GLOBAL **/
     timePerFrame = sf::milliseconds(1000.0/25.0);
@@ -169,9 +197,12 @@ void Game::newLevel(string blueprint, string bg, int round)
     eDown=false;
     eLeft=false;
     eRight=false;
+    GodMode=false;
 
     gravity=0;
     Timer.restart();
+    player->setDead(true);
+    Death.restart();
 
 
 
@@ -252,6 +283,20 @@ void Game::handleInputs(sf::Keyboard::Key key, bool isPressed)
         eRight = isPressed;
     if (key == sf::Keyboard::Up)
         eUp = isPressed;
+    if (key == sf::Keyboard::G)///**********GOD MODE
+    {
+        if(isPressed)
+        {
+            if(GodMode)
+            {
+                GodMode=false;
+            }
+            else
+            {
+                GodMode=true;
+            }
+        }
+    }
 
 }
 
@@ -322,6 +367,19 @@ void Game::drawDataScore()
     t_bal.setOrigin(0,0);
     t_bal.setPosition(96.0,56.0);
 
+
+
+    if(GodMode){
+    t_lives.setFont(font);
+    std::stringstream ss6;  // #include <sstream>
+    t_lives.setString("god mode");
+    t_lives.setCharacterSize(23);
+    t_lives.setColor(sf::Color::Yellow);
+    t_lives.setStyle(sf::Text::Bold);
+    t_lives.setOrigin(0,0);
+    t_lives.setPosition(32.0,72.0);
+
+    }else{
     t_lives.setFont(font);
     std::stringstream ss6;  // #include <sstream>
     ss6 << setw(2) << setfill('0') << i_lives;
@@ -331,6 +389,7 @@ void Game::drawDataScore()
     t_lives.setStyle(sf::Text::Bold);
     t_lives.setOrigin(0,0);
     t_lives.setPosition(32.0,72.0);
+    }
 
 
 
@@ -367,7 +426,7 @@ void Game::updateGameState(sf::Time t)
     {
         if(player->isDead())
         {
-            player->setPos(sf::Vector2f(240,420));
+            player->setPos(sf::Vector2f(580,440));
             player->setDead(false);
         }
         double x=0,y=0,potencia=100;
@@ -411,6 +470,7 @@ void Game::updateGameState(sf::Time t)
 
 
         }
+         handleBalancin();
         player->updatePlayer(x,y,t,handleCollision()); //Handle collision devuelve el offset de interseccion
         if(enemigos.size()!=0)
         {
@@ -424,7 +484,7 @@ void Game::updateGameState(sf::Time t)
             generateEnemigos();
             Spawn.restart();
         }
-        handleBalancin();
+
 
     }
     else
@@ -515,11 +575,17 @@ sf::Vector2f Game::handleCollision()
 
         if(enemigos[en]->getColliderDown().intersects(player->getSprAnimado()->getActualSprite()->getGlobalBounds()))
         {
+            if(!GodMode){
             cout<<"Player muere por colision"<<endl;
             player->setDead(true);
             Death.restart();
             time_limit+=5;
             i_lives--;
+            }else{
+             enemigos.erase(enemigos.begin()+en);
+                    i_en--;
+                    i_score+=100;
+            }
         }
 
     }
@@ -718,9 +784,11 @@ float Game::handleBalancin()
                     cout<<ene<<" de "<<enemigos.size()<<endl;
 
                     if(enemigos.size()!=0)
+                {
                     enemigos.erase(enemigos.begin()+ene);
                     i_en--;
                     i_score+=100;
+                }
 
                 }
                     mapa->updateBalancin(id);
@@ -729,11 +797,14 @@ float Game::handleBalancin()
                 {
                     if(pldor||plupl)
                 {
+                if(!GodMode){
                     cout<<"Player muere \ "<<endl;
-                    player->setDead(true);
-                    Death.restart();
-                    i_lives--;
-                    time_limit+=2;
+
+            player->setDead(true);
+            Death.restart();
+            time_limit+=2;
+            i_lives--;
+                    }
                 }
                     mapa->updateBalancin(id);
                 }
@@ -748,9 +819,11 @@ float Game::handleBalancin()
                     cout<<"Enemigo muere estampado / "<<endl;
                     cout<<ene<<" de "<<enemigos.size()<<endl;
                     if(enemigos.size()!=0)
+                {
                     enemigos.erase(enemigos.begin()+ene);
                     i_en--;
                     i_score+=100;
+                }
 
                 }
                     mapa->updateBalancin(id);
@@ -759,11 +832,13 @@ float Game::handleBalancin()
                 {
                     if(pldol||plupr)
                 {
+                if(!GodMode){
                     cout<<"Player muere / "<<endl;
-                     player->setDead(true);
-                    Death.restart();
-                    i_lives--;
-                    time_limit+=2;
+                    player->setDead(true);
+            Death.restart();
+            time_limit+=2;
+            i_lives--;
+                    }
                 }
                     mapa->updateBalancin(id);
                 }
@@ -788,6 +863,9 @@ float Game::handleBalancin()
                     player->drawPlayer(window,i);
 
                     this->drawDataScore();
+                    window->draw(*en);
+                    window->draw(*lives);
+                    window->draw(*balloon);
                     window->display();
                 }
 

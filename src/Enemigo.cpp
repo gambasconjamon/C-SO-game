@@ -212,24 +212,18 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, sf::Vector2f of)
 
                 if(y<posNow[1])
                 {
-                    vely-=pow;
+
                     sube=true;
                     baja=false;
                 }
                 else
                 {
-                    vely-=pow;
+
                     sube=false;
                     baja=true;
                 }
 
-                 if(posNow[1]>464)
-                    {
 
-                        vely=pow;
-                        sube=false;
-                        baja=true;
-                    }
             }
             else
             {
@@ -249,6 +243,14 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, sf::Vector2f of)
 
 
         }
+        if((baja==true)&&posNow[1]>434)
+                    {
+                    cout<<"ENEMIGO ATASCADO EN ESCALERA"<<endl;
+
+
+                        sube=true;
+                        baja=false;
+                    }
         DecidingStairs=false;
 
     }
@@ -272,7 +274,7 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, sf::Vector2f of)
     }
     if(baja)
     {
-        vely=+pow;
+        vely=pow;
         velx=0;
     }
 
@@ -356,10 +358,14 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, sf::Vector2f of)
 
     if(isTouchingPuerta())
     {
-        if(of.x<0)
+        if(of.x<0){
             posNow[0] = crdPuerta.x+32;
-        else
+            dir=1;
+            }
+        else{
             posNow[0] = crdPuerta.x-32;
+            dir=0;
+            }
 
         posNow[1] = crdPuerta.y;
         posBef=posNow;

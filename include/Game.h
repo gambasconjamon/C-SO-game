@@ -61,15 +61,18 @@ class Game
     sf::RenderWindow * window;
 
     int i_score,i_hiscore,i_round,i_time,i_en,i_bal,i_lives;
+    sf::Texture* ui;
+    sf::Sprite *en,*lives,*balloon;
 
     sf::Font font;
-    sf::Text t_score,t_hiscore,t_round,t_time,t_en,t_bal,t_lives;
+    sf::Text t_score,t_hiscore,t_round,t_time,t_en,t_bal,t_lives,t_GOD;
 
     bool			eJump;
     bool			eDown;
     bool			eRight;
     bool			eLeft;
     bool            eUp;
+    bool            GodMode;
 
     double interpolation;
     double gravity;

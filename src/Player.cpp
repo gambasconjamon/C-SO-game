@@ -50,8 +50,8 @@ Player::Player()
 
     //renderPos.push_back(17.0);
     //renderPos.push_back(300.0);
-    posNow.push_back(240.0),posNow.push_back(420.0);
-    posBef.push_back(240.0),posBef.push_back(420.0);
+    posNow.push_back(580.0),posNow.push_back(440.0);
+    posBef=posNow;
     vel.push_back(0.0),vel.push_back(0.0);
 
 

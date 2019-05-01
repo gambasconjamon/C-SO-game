@@ -167,7 +167,14 @@ Game::Game(int resol_x, int resol_y, string gamename)
     balloon->setPosition(75.0,65.0);
     balloon->scale(0.5,0.5);
 
-    int ronda=0;
+    LvlLoop();
+
+}
+
+void Game::LvlLoop(){
+
+
+int ronda=0;
     newLevel(Niveles[ronda],Fondos[ronda],(ronda+1));
     while(ronda<Niveles.size())
     {
@@ -208,9 +215,10 @@ Game::Game(int resol_x, int resol_y, string gamename)
             newLevel(Niveles[ronda],Fondos[ronda],(ronda+1));
         }
     }
-
+    i_hiscore=i_score;
+    i_score=0;
+    LvlLoop();
 }
-
 
 
 
@@ -227,8 +235,9 @@ void Game::newLevel(string blueprint, string bg, int round)
     /** GLOBAL **/
     player= new Player();
     mapa= new Mapa(0,blueprint,bg);
-    //i_score=0
-    i_hiscore=1080,i_round=round,i_time=100,i_en=5,i_bal=5,i_lives=2;
+    //i_score=0;
+    //i_hiscore=0;
+    i_round=round,i_time=100,i_en=5,i_bal=5,i_lives=2;
 //Para los eventos
     eJump=false;
     eDown=false;
@@ -333,6 +342,10 @@ void Game::handleInputs(sf::Keyboard::Key key, bool isPressed)
                 GodMode=true;
             }
         }
+    }if (key == sf::Keyboard::Q)///**********GOD MODE
+    {
+     if(isPressed)
+        {exit(0);}
     }
 
 }
@@ -477,10 +490,7 @@ void Game::updateGameState(sf::Time t)
 
 
         this->i_time=time_limit-Timer.getElapsedTime().asSeconds();
-        if(this->i_time==0)
-        {
-            exit(0);
-        }
+
         if(eRight)
         {
             x=potencia;

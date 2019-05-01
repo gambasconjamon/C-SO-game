@@ -7,7 +7,7 @@
 1553102088 source:/home/samuel/FV/C-SO/src/Enemy.cpp
 	"Enemy.h"
 
-1556704932 source:/home/samuel/FV/C-SO/src/Game.cpp
+1556718164 source:/home/samuel/FV/C-SO/src/Game.cpp
 	"Game.h"
 
 1553102136 source:/home/samuel/FV/C-SO/src/Item.cpp
@@ -32,7 +32,7 @@
 1553102054 source:/home/samuel/FV/C-SO/src/GSprite.cpp
 	"GSprite.h"
 
-1556660055 /home/samuel/FV/C-SO/include/Game.h
+1556717252 /home/samuel/FV/C-SO/include/Game.h
 	"Player.h"
 	"Mapa.h"
 	"Enemigo.h"

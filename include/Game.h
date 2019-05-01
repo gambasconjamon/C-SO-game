@@ -19,6 +19,7 @@ class Game
         Game(int resol_x, int resol_y, string gamename);
         virtual ~Game();
         int Gloop();
+        void LvlLoop();
         void drawDataScore();
         void newLevel(string mapa, string bg, int round);
         void updateGameState(sf::Time et);

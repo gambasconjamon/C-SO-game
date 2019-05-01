@@ -165,10 +165,11 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, sf::Vector2f of)
         baja=false;
         if(!decidedj)
         {
+        cout<<"Enemigo "<<this<<": Entra en decision de salto"<<endl;
             int salto = rand() % 2;
             if(!salto)
             {
-
+                cout<<"Enemigo "<<this<<": Decide saltar"<<endl;
                 vely-=pow*3.5;
             }
             else
@@ -176,10 +177,12 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, sf::Vector2f of)
 
                 if(x<posNow[0])
                 {
+                cout<<"Enemigo "<<this<<": Decide continuar a la derecha"<<endl;
                     dir=0;
                 }
                 else
                 {
+                cout<<"Enemigo "<<this<<": Decide continuar a la izquierda"<<endl;
                     dir=1;
                 }
 
@@ -201,23 +204,27 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, sf::Vector2f of)
     if(isDecidingStairs())
     {
 
+
         if(!decideds)
         {
+          cout<<"Enemigo "<<this<<": Entra en decision de escaleras"<<endl;
             sube=false;
             baja=false;
             int escala = rand() % 2;
             if(!escala)
             {
-                cout<<"Enemigo decide Escalar"<<endl;
+
 
                 if(y<posNow[1])
                 {
+                cout<<"Enemigo "<<this<<": Decide subir"<<endl;
 
                     sube=true;
                     baja=false;
                 }
                 else
                 {
+                cout<<"Enemigo "<<this<<": Decide bajar"<<endl;
 
                     sube=false;
                     baja=true;
@@ -231,10 +238,12 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, sf::Vector2f of)
                 if(x<posNow[0])
                 {
                     dir=0;
+                    cout<<"Enemigo "<<this<<": Decide continuar a la derecha"<<endl;
                 }
                 else
                 {
                     dir=1;
+                    cout<<"Enemigo "<<this<<": Decide continuar a la izquierda"<<endl;
                 }
 
 
@@ -245,7 +254,7 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, sf::Vector2f of)
         }
         if((baja==true)&&posNow[1]>434)
                     {
-                    cout<<"ENEMIGO ATASCADO EN ESCALERA"<<endl;
+                    cout<<"Enemigo atascado "<<this<<": Corrige rumbo"<<endl;
 
 
                         sube=true;
@@ -292,13 +301,13 @@ void Enemigo::updateEnemigo(double x, double y, sf::Time et, sf::Vector2f of)
     /**MAP DELIMITER**/
     if(of.x<7&&of.x>0)
     {
-        cout<<"pared izquierda?"<<endl;
+    cout<<"Enemigo "<<this<<": Colisiona con pared izquierda, corrige rumbo"<<endl;
         velx+=200;
         dir=1;
     }
     if(of.x>-22&&of.x<-10)
     {
-        cout<<"pared derecha?"<<endl;
+    cout<<"Enemigo "<<this<<": Colisiona con pared derecha, corrige rumbo"<<endl;
         velx-=200;
         dir=0;
     }

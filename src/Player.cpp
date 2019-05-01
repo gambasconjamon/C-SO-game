@@ -178,12 +178,10 @@ void Player::updatePlayer(double velx, double vely, sf::Time et,sf::Vector2f of)
 
     if(of.x<7&&of.x>0)
     {
-        cout<<"pared izquierda?"<<endl;
         velx+=200;
     }
     if(of.x>-22&&of.x<-10)
     {
-        cout<<"pared derecha?"<<endl;
         velx-=200;
     }
     if(isTouchingFloor()||isTouchingEscalera()||isTouchingTrampolin())

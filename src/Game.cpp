@@ -8,7 +8,12 @@ Game::Game(int resol_x, int resol_y, string gamename)
 
 
     string blueprint,blueprint1,blueprint2,bg,bg1;
-
+    cout<<"******************************"<<endl;
+    cout<<"******************************"<<endl;
+    cout<<"**·······C-SO!: Remix·······**"<<endl;
+    cout<<"**··························**"<<endl;
+    cout<<"********Nueva Partida*********"<<endl;
+    cout<<"******************************"<<endl;
 
 
     bg="resources/Sunny-land-files/PNG/environment/layers/back.png";
@@ -79,6 +84,7 @@ Game::Game(int resol_x, int resol_y, string gamename)
     Niveles.push_back(blueprint);
     Fondos.push_back(bg);
 
+    bg="resources/Sunny-land-files/PNG/environment/layers/bglose.png";
     blueprint = "bwwwwwwwwwwwwbb------------------------b.";
     blueprint += "bwwwwwwwwwwwwbb------------------------b.";
     blueprint += "bwwwwwwwbbbbbbb------------------------b.";
@@ -87,30 +93,35 @@ Game::Game(int resol_x, int resol_y, string gamename)
     blueprint += "bwwwwwwwwbbbbbb------------------------b.";
     blueprint += "bbbbbbbbbbbbbbb------------------------b.";
     blueprint += "b--------------------------------------b.";
-    blueprint += "b-----b-------b------------------------b.";
-    blueprint += "b----bwb-----bwb-----------------------b.";
-    blueprint += "b-----bwb---bbbbbbbbbb-----------------b.";
-    blueprint += "b------bwbbbwbbwwwwwwb--bwb----bwb-----b.";
-    blueprint += "b-------bwwwb-bw----wb--bwb----bwb-----b.";
-    blueprint += "b--------bwb--bw----wb--bwb----bwb-----b.";
-    blueprint += "b--------bwb--bw----wb--bwbbbbbbwb-----b.";
-    blueprint += "b--------bwb--bwwwwwwb--bwwwwwwwwb-----b.";
-    blueprint += "b--------bwb--bbbbbbbb--bbbbbbbbbb-----b.";
-    blueprint += "b-------b-----------b------------------b.";
-    blueprint += "b------bwb----b----bwb--ww--ww----ww---b.";
-    blueprint += "b------bwb---bwb--bwb-------www---ww---b.";
-    blueprint += "b-------bwb-bbbwbbwb----ww--ww-w--ww---b.";
-    blueprint += "b--------bwwwb-bbwb-----ww--ww--w-ww---b.";
-    blueprint += "b---------bbb---bb------ww--ww---www---b.";
-    blueprint += "b------p--l--b--r--e--w--s--j----------b.";
     blueprint += "b--------------------------------------b.";
     blueprint += "b--------------------------------------b.";
     blueprint += "b--------------------------------------b.";
     blueprint += "b--------------------------------------b.";
-    blueprint += "b--------------------------o-----------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
+    blueprint += "b--------------------------------------b.";
     blueprint += "bppppppppppppppppppppppppppppppppppppppb.";
     Niveles.push_back(blueprint);
     Fondos.push_back(bg);
+
+    bg="resources/Sunny-land-files/PNG/environment/layers/bgwin.png";
+    Niveles.push_back(blueprint);
+    Fondos.push_back(bg);
+
 
 
 
@@ -160,23 +171,48 @@ Game::Game(int resol_x, int resol_y, string gamename)
     newLevel(Niveles[ronda],Fondos[ronda],(ronda+1));
     while(ronda<Niveles.size())
     {
-        if(this->Gloop()!=0)
-        {
+        bool lose= false;
+        int enes = this->Gloop();
 
-            cout<<"-----------"<<endl<<"Has perdido"<<endl<<"-----------------";
-            ronda=Niveles.size();
+        if(enes!=0)
+        {
+            lose=true;
+        }
+
+        ronda++;
+        if(lose)
+        {
+            newLevel(Niveles[Niveles.size()-2],Fondos[Niveles.size()-2],0);
+            time_limit=10;
+            ronda++;
+
+    cout<<"******************************"<<endl;
+    cout<<"**·······Has perdido········**"<<endl;
+    cout<<"******************************"<<endl;
+
+        }
+
+        else if(ronda==2)
+        {
+            newLevel(Niveles[Niveles.size()-1],Fondos[Niveles.size()-1],0);
+            time_limit=10;
+    cout<<"******************************"<<endl;
+    cout<<"**·······Has ganado!········**"<<endl;
+    cout<<"******************************"<<endl;
         }
         else
         {
-
-            cout<<"-----------"<<endl<<"Enemigos  Siguiente Nivel"<<endl<<"-----------------";
-            ronda++;
+    cout<<"******************************"<<endl;
+    cout<<"**·······Siguiente nivel····**"<<endl;
+    cout<<"******************************"<<endl;
             newLevel(Niveles[ronda],Fondos[ronda],(ronda+1));
         }
     }
 
-
 }
+
+
+
 
 void Game::newLevel(string blueprint, string bg, int round)
 {
@@ -191,7 +227,8 @@ void Game::newLevel(string blueprint, string bg, int round)
     /** GLOBAL **/
     player= new Player();
     mapa= new Mapa(0,blueprint,bg);
-    i_score=0,i_hiscore=300,i_round=round,i_time=100,i_en=5,i_bal=5,i_lives=2;
+    //i_score=0
+    i_hiscore=1080,i_round=round,i_time=100,i_en=5,i_bal=5,i_lives=2;
 //Para los eventos
     eJump=false;
     eDown=false;
@@ -369,26 +406,29 @@ void Game::drawDataScore()
 
 
 
-    if(GodMode){
-    t_lives.setFont(font);
-    std::stringstream ss6;  // #include <sstream>
-    t_lives.setString("god mode");
-    t_lives.setCharacterSize(23);
-    t_lives.setColor(sf::Color::Yellow);
-    t_lives.setStyle(sf::Text::Bold);
-    t_lives.setOrigin(0,0);
-    t_lives.setPosition(32.0,72.0);
+    if(GodMode)
+    {
+        t_lives.setFont(font);
+        std::stringstream ss6;  // #include <sstream>
+        t_lives.setString("god mode");
+        t_lives.setCharacterSize(23);
+        t_lives.setColor(sf::Color::Yellow);
+        t_lives.setStyle(sf::Text::Bold);
+        t_lives.setOrigin(0,0);
+        t_lives.setPosition(32.0,72.0);
 
-    }else{
-    t_lives.setFont(font);
-    std::stringstream ss6;  // #include <sstream>
-    ss6 << setw(2) << setfill('0') << i_lives;
-    t_lives.setString("lives  "+ss6.str()+"");
-    t_lives.setCharacterSize(23);
-    t_lives.setColor(sf::Color::White);
-    t_lives.setStyle(sf::Text::Bold);
-    t_lives.setOrigin(0,0);
-    t_lives.setPosition(32.0,72.0);
+    }
+    else
+    {
+        t_lives.setFont(font);
+        std::stringstream ss6;  // #include <sstream>
+        ss6 << setw(2) << setfill('0') << i_lives;
+        t_lives.setString("lives  "+ss6.str()+"");
+        t_lives.setCharacterSize(23);
+        t_lives.setColor(sf::Color::White);
+        t_lives.setStyle(sf::Text::Bold);
+        t_lives.setOrigin(0,0);
+        t_lives.setPosition(32.0,72.0);
     }
 
 
@@ -405,6 +445,7 @@ void Game::drawDataScore()
 void Game::generateEnemigos()
 {
 
+    if(mapa->getNumSpawns()!=0){
     int i= rand() % mapa->getNumSpawns();
 
     if(enemigos.size()<3)
@@ -412,10 +453,12 @@ void Game::generateEnemigos()
         if(enemigos.size()<=i_en)
         {
             Enemigo* auxen= new Enemigo();
-            cout<<"Spawnea en"<< mapa->getSpawn(i).x <<" , "<<mapa->getSpawn(i).y<<endl;
+            cout<<"Nuevo Enemigo en: "<<"("<< mapa->getSpawn(i).x <<" , "<<mapa->getSpawn(i).y<<")"<<endl;
             auxen->setPos(mapa->getSpawn(i));
             enemigos.push_back(auxen);
+
         }
+    }
     }
 
 }
@@ -470,7 +513,7 @@ void Game::updateGameState(sf::Time t)
 
 
         }
-         handleBalancin();
+        handleBalancin();
         player->updatePlayer(x,y,t,handleCollision()); //Handle collision devuelve el offset de interseccion
         if(enemigos.size()!=0)
         {
@@ -515,9 +558,6 @@ sf::Vector2f Game::handleCollision()
                 {
                     player->setTouchingFloor(true);
                     offsety= player->getColliderDown().top-mapa->getElementos(t)[i].getGlobalBounds().top+1;
-
-
-                    //cout<<"Offset de colision "<<offset  << endl;
                 }
                 if (t==1)
                 {
@@ -534,7 +574,6 @@ sf::Vector2f Game::handleCollision()
                 {
 
                     offsetx= player->getColliderDown().left-mapa->getElementos(t)[i].getGlobalBounds().left+1;
-                    cout<<"Offset de x es: "<<offsetx<<endl;
                     if(i==0 && (i+1)<mapa->getElementos(t).size())
                     {
                         last=i+1;
@@ -552,7 +591,6 @@ sf::Vector2f Game::handleCollision()
                 {
 
                     offsetx= player->getSprAnimado()->getActualSprite()->getGlobalBounds().left-mapa->getElementos(t)[i].getGlobalBounds().left+1;
-                    cout<<"Offset de x es: "<<offsetx<<endl;
 
                 }
 
@@ -565,6 +603,7 @@ sf::Vector2f Game::handleCollision()
                     mapa->deleteElemento(6,i);
                     i_score+=40;
                     time_limit+=10;
+                    cout<<"Player recoge un item"<<endl;
                 }
             }
 
@@ -575,16 +614,20 @@ sf::Vector2f Game::handleCollision()
 
         if(enemigos[en]->getColliderDown().intersects(player->getSprAnimado()->getActualSprite()->getGlobalBounds()))
         {
-            if(!GodMode){
-            cout<<"Player muere por colision"<<endl;
-            player->setDead(true);
-            Death.restart();
-            time_limit+=5;
-            i_lives--;
-            }else{
-             enemigos.erase(enemigos.begin()+en);
-                    i_en--;
-                    i_score+=100;
+            if(!GodMode)
+            {
+                cout<<"Player muere por colision"<<endl;
+                player->setDead(true);
+                Death.restart();
+                time_limit+=5;
+                i_lives--;
+            }
+            else
+            {
+                enemigos.erase(enemigos.begin()+en);
+                i_en--;
+                i_score+=100;
+                cout<<"Enemigo muere porque Player es DIOS"<<endl;
             }
         }
 
@@ -633,7 +676,6 @@ sf::Vector2f Game::handleECollision(int en)
                     {
 
                         offsetx= enemigos[en]->getColliderDown().left-mapa->getElementos(t)[i].getGlobalBounds().left+1;
-                        cout<<"Offset de x es: "<<offsetx<<endl;
                         if(i==0 && (i+1)<mapa->getElementos(t).size())
                         {
                             last=i+1;
@@ -652,7 +694,6 @@ sf::Vector2f Game::handleECollision(int en)
                     {
 
                         offsetx= enemigos[en]->getSprAnimado()->getActualSprite()->getGlobalBounds().left-mapa->getElementos(t)[i].getGlobalBounds().left+1;
-                        cout<<"Offset de x es: "<<offsetx<<endl;
 
                     }
                 }
@@ -780,8 +821,7 @@ float Game::handleBalancin()
         {
             if(endor||enupl)
             {
-                cout<<"Enemigo muere estampado \ "<<endl;
-                    cout<<ene<<" de "<<enemigos.size()<<endl;
+                cout<<"Enemigo muere por balancin asi \ "<<endl;
 
                     if(enemigos.size()!=0)
                 {
@@ -797,14 +837,15 @@ float Game::handleBalancin()
                 {
                     if(pldor||plupl)
                 {
-                if(!GodMode){
-                    cout<<"Player muere \ "<<endl;
+                    if(!GodMode)
+                {
+                    cout<<"Player muere por balancin asi \ "<<endl;
 
-            player->setDead(true);
-            Death.restart();
-            time_limit+=2;
-            i_lives--;
-                    }
+                    player->setDead(true);
+                    Death.restart();
+                    time_limit+=2;
+                    i_lives--;
+                }
                 }
                     mapa->updateBalancin(id);
                 }
@@ -816,7 +857,7 @@ float Game::handleBalancin()
                 {
                     if(endol||enupr)
                 {
-                    cout<<"Enemigo muere estampado / "<<endl;
+                    cout<<"Enemigo muere por balancin asi / "<<endl;
                     cout<<ene<<" de "<<enemigos.size()<<endl;
                     if(enemigos.size()!=0)
                 {
@@ -832,13 +873,14 @@ float Game::handleBalancin()
                 {
                     if(pldol||plupr)
                 {
-                if(!GodMode){
-                    cout<<"Player muere / "<<endl;
+                    if(!GodMode)
+                {
+                    cout<<"Player muere por balancin asi / "<<endl;
                     player->setDead(true);
-            Death.restart();
-            time_limit+=2;
-            i_lives--;
-                    }
+                    Death.restart();
+                    time_limit+=2;
+                    i_lives--;
+                }
                 }
                     mapa->updateBalancin(id);
                 }
@@ -849,11 +891,8 @@ float Game::handleBalancin()
                     void Game::render(double i)
                 {
                     window->clear();
-
-                    //lvl.drawLevel(*ventana,i);
-
                     mapa->drawMapa(window,i);
-                    if(enemigos.size()!=0)//Cuidado con esto, si no hay enemigos no te deja updatear el balancin
+                    if(enemigos.size()!=0)
                 {
                     for(unsigned en=0; en< enemigos.size(); en++)
                 {

@@ -15,7 +15,7 @@ Mapa::Mapa(int id,string blueprint, string backgr)
     sbg.setTexture(*Bg);
     sbg.setTextureRect(sf::IntRect(0, 0,384,240));
     sbg.setPosition(0,0);
-    sbg.scale(2,2);
+    sbg.scale(1.7,2);
 
     Base = new sf::Texture();
     Base->loadFromFile("resources/Sunny-land-files/PNG/environment/layers/tileset.png");
@@ -114,7 +114,7 @@ Mapa::Mapa(int id,string blueprint, string backgr)
 
 
             items.push_back(iteme);
-            cout<<items.size()<<endl;
+
         }
         if(blueprint.at(i) == '^')
         {
@@ -123,7 +123,7 @@ Mapa::Mapa(int id,string blueprint, string backgr)
             map_s.setTextureRect(sf::IntRect(256,191,32,16));
             map_s.setPosition(mx*16,my*16);
             trampolines.push_back(map_s);
-            cout<<trampolines.size()<<endl;
+
         }
         if(blueprint.at(i) == 'd')
         {
@@ -132,7 +132,7 @@ Mapa::Mapa(int id,string blueprint, string backgr)
             map_s.setTextureRect(sf::IntRect(14,63,22,33));
             map_s.setPosition(mx*16,my*16-16);
             puertas.push_back(map_s);
-            cout<<puertas.size()<<endl;
+
         }
         if(blueprint.at(i) == 'o')
         {
@@ -150,13 +150,13 @@ Mapa::Mapa(int id,string blueprint, string backgr)
 
 
 
-            cout<<balancines.size()<<endl;
+
         }
         if(blueprint.at(i) == 'j')
         {
 
             a_salto.push_back(sf::FloatRect(mx*16,my*16+16,16,8));
-            cout<<"a saltoo:"<<a_salto.size()<<endl;
+
 
         }
         if(blueprint.at(i) == 'E')
@@ -168,14 +168,14 @@ Mapa::Mapa(int id,string blueprint, string backgr)
             escaleras.push_back(map_s);
 
             a_escalera.push_back(sf::FloatRect(mx*16+4,my*16,8,16));
-            cout<<"a escalera:"<<a_escalera.size()<<endl;
+
 
         }
         if(blueprint.at(i) == 's')
         {
 
             spawn.push_back(sf::Vector2f(mx*16+4,my*16));
-            cout<<"a spawn"<<a_escalera.size()<<endl;
+
 
         }
 
@@ -193,11 +193,11 @@ Mapa::Mapa(int id,string blueprint, string backgr)
 
 void Mapa::deleteElemento(int tipo,int i )
 {
-    cout<<items.size()<<endl;
+
 
     if( tipo==6 && items.size()!=0)
     {
-        cout<<items.size()<<endl;
+
         items.erase(items.begin()+i);
 
     }
@@ -256,8 +256,9 @@ void Mapa::updateBalancin(int id)
 bool Mapa::getBalancinTog(int id)
 {
 
-
+    if(!b_toggles.empty()){
     return b_toggles[id];
+    }
 }
 vector< sf::Rect<float> > Mapa::getAccion(int tipo)
 {
@@ -276,7 +277,10 @@ vector< sf::Rect<float> > Mapa::getAccion(int tipo)
 
 sf::Vector2f Mapa::getSpawn(int id)
 {
+    if(!spawn.empty())
     return spawn[id];
+    else
+    return sf::Vector2f(-1,-1);
 }
 
 void Mapa::drawMapa(sf::RenderWindow* w, double i)
